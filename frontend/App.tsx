@@ -10,13 +10,17 @@ import { store, persistor } from './src/store';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { NavigationContainer } from '@react-navigation/native';
+
+import Routes from './src/routes'
+
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <View style={styles.container}>
-          <Text>Open up App.tsx to start working on your app!</Text>
-        </View>
+        <NavigationContainer>
+          <Routes />
+        </NavigationContainer>
       </PersistGate>
     </Provider>
   );
