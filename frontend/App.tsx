@@ -10,13 +10,13 @@ import { store, persistor } from './src/store';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
+import Routes from './src/routes'
+
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <View style={styles.container}>
-          <Text>Open up App.tsx to start working on your app!</Text>
-        </View>
+        <Routes />
       </PersistGate>
     </Provider>
   );
