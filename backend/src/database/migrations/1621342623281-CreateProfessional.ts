@@ -7,11 +7,11 @@ export class CreateProfessional1621342623281 implements MigrationInterface {
             name:"professionals",
             columns:[
                 {
-                    name:"id",
-                    type:"INTEGER",
-                    isPrimary:true,
-                    generationStrategy:"increment",
-                    isGenerated:true
+                    name: "id",
+                    type: "varchar",
+                    isPrimary: true,
+                    isUnique: true,
+                    generationStrategy: 'uuid'
 
                 },
                 {
@@ -19,12 +19,7 @@ export class CreateProfessional1621342623281 implements MigrationInterface {
                     type:"varchar"
                     
                 },
-                {
-                    name:"email",
-                    type:"varchar"
-                    
-                },
-            
+               
                 {
                     name:"speciality",
                     type:"varchar"           
@@ -40,7 +35,7 @@ export class CreateProfessional1621342623281 implements MigrationInterface {
                 },
                 {
                     name:"user_id",
-                    type:"INTEGER",
+                    type:"varchar",
                 },
             ],
             foreignKeys:[

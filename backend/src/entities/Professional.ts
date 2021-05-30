@@ -1,10 +1,11 @@
-import {Entity, Column, PrimaryGeneratedColumn,} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn,} from 'typeorm';
+import { Client } from './Client';
 
   @Entity("professionals") //nome da tabela
   class Professional {
 
-      @PrimaryGeneratedColumn("increment")
-      id:number;
+      @PrimaryGeneratedColumn('uuid', { name: 'id' })
+      id:string;
 
       @Column()
       name:string;
@@ -20,6 +21,12 @@ import {Entity, Column, PrimaryGeneratedColumn,} from 'typeorm';
 
       @Column()
       crm_crp:string;
+
+      @OneToMany(()=> Client, client => client.professional,{
+        cascade:['insert','update','remove']
+      })
+      @JoinColumn({name:"client_id"})
+      clients!:Client[];
 
   } 
 

@@ -1,17 +1,17 @@
-import { MigrationInterface, QueryRunner,Table } from "typeorm";
+import {MigrationInterface, QueryRunner,Table} from "typeorm";
 
-export class CreatePatient1621342877532 implements MigrationInterface {
+export class CreateClient1622339738086 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         queryRunner.createTable(new Table({
-            name:"patients",
+            name:"clients",
             columns:[
                 {
-                    name:"id",
-                    type:"INTEGER",
-                    isPrimary:true,
-                    generationStrategy:"increment",
-                    isGenerated:true
+                    name: "id",
+                    type: "varchar",
+                    isPrimary: true,
+                    isUnique: true,
+                    generationStrategy: 'uuid'
 
                 },
                 {
@@ -20,23 +20,23 @@ export class CreatePatient1621342877532 implements MigrationInterface {
                     
                 },
                 {
-                    name:"email",
+                    name:"phone",
                     type:"varchar"
                     
                 },
                 {
                     name:"user_id",
-                    type:"INTEGER",
+                    type:"varchar",
                 },
                 {
                     name:"professional_id",
-                    type:"INTEGER",
+                    type:"varchar",
                     isNullable:true
                 }
             ],
             foreignKeys:[
                 {
-                    name:"FKUserPatient",
+                    name:"FKUserUser",
                     referencedTableName:"users",
                     referencedColumnNames:["id"],
                     columnNames:["user_id"],
@@ -57,7 +57,7 @@ export class CreatePatient1621342877532 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("patients")
+        await queryRunner.dropTable("clients")
     }
 
 
