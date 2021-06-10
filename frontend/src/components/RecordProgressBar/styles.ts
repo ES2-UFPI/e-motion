@@ -9,7 +9,7 @@ export const Container = styled.View`
     height: ${height/30}px;
     backgroundColor: #F1F1FA;
     borderRadius: 50px;
-    margin-bottom:51px;
+    margin-bottom:10px;
 `
 
 export const Progress = styled.View`
