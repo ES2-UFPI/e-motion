@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "e-motion",
+    "slug": "e-motion",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
