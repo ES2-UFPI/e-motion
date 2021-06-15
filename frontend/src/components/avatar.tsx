@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     },
     profilePictureAndLabelContainer: {
         paddingBottom: 15,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     },
     textContainer: {
         alignItems: 'center',
