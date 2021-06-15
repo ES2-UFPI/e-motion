@@ -15,8 +15,15 @@ export const Container = styled.View`
     flex: 1;
     backgroundColor: #FCFCFF;
     alignItems: center;
-    justifyContent: center;
+    justifyContent: space-between;
     paddingTop:60px;
     paddingHorizontal:10px;
+
+`
+
+export const NothingFound = styled.View`
+    flex: 2;
+    alignItems: center;
+    justifyContent: center;
 
 `

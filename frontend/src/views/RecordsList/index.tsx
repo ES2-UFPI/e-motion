@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, FlatList,Text,View } from 'react-native';
 import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
-import { Title,Container } from './styles';
+import { Title,Container,NothingFound } from './styles';
+import api from '../../services/api'
 
 interface Record{
     id:string;
@@ -13,20 +14,59 @@ interface Record{
 
 export default function RecordsList() {
 
+    const client_id = "1avb";
     const [idCurrent, setIdCurrent] = useState<string>("");
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 
-    const [records, setRecords] = useState<Record[]>([
-        {id:"1A", title: "Vi uma praia", date: "24/05/2021  às 14:30",completed:10},
-        {id:"2B", title: "Vi uma praia", date: "24/05/2021  às 14:30",completed:80},
-        {id:"3C", title: "Vi uma praia", date: "24/05/2021  às 14:30",completed:100},
-        {id:"4D", title: "Vi uma praia", date: "24/06/2020  às 14:30",completed:20} 
-    ])
+    const [records, setRecords] = useState<Record[]|undefined>([]);
+
+    async function getRecordsFromUser(client_id:string) {
+        try {
+            const reaponse = await api.get(`/reactions/${client_id}`);
+
+           const data = reaponse.data as [any];
+
+           if(data.length < 1){
+               setRecords(undefined)
+                return
+           }
+
+           const records_from_user = data.map(record => {
+
+                const fields = Object.entries(record);
+
+                const fields_cont = fields.filter( field => field[1] != null).length;
+
+                const fields_completed = Math.round(fields_cont / fields.length * 100);
+
+               return {
+                id:record.id.toString(),
+                title:record.title,
+                date:record.date,
+                completed:fields_completed
+               }
+           });
+
+           setRecords(records_from_user)
+
+        } catch (error) {
+            console.log(error)
+            Alert.alert("ERRO")
+        }
+    }
+
+
+    useEffect(() => {
+        if(client_id){
+            getRecordsFromUser(client_id)
+        }
+    }, [])
+
 
     function handleDelete(){
         //fazer requisicao para deletar then
 
-        const filteredRecord = records.filter((record) => record.id != idCurrent );
+        const filteredRecord = records?.filter((record) => record.id != idCurrent );
         setRecords(filteredRecord);
         setIdCurrent("");
         setModalIsVisible(false)
@@ -45,6 +85,7 @@ export default function RecordsList() {
         <Container >
            <Title> Meus registros </Title>
 
+           {records && records.length > 0 ?
            <FlatList 
              data={records}
              keyExtractor={(item) => item.id}
@@ -65,6 +106,23 @@ export default function RecordsList() {
                 paddingVertical:5
               }}
            />
+           :
+            records === undefined
+            ?
+                <NothingFound>
+                     <Text>
+                        Nenhum registo foi encontrado :(
+                    </Text>
+                    
+                </NothingFound>
+            :
+                <View>
+                    <Text>
+                        Carregando ....
+                    </Text>
+                </View>
+            
+        }
 
            <Alert2Options 
                 visible={modalIsVisible} 
