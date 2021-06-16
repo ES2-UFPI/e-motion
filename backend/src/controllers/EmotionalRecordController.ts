@@ -20,9 +20,23 @@ class EmotionalReactionController{
     }
 
 
-    
+    async destroy(request:Request,response:Response):Promise<Response>{
+        try {
+            const {client_id ,emotional_reaction_id} = request.params;
 
-    
+            const  emotionalReactionService = new EmotionalReactionService();
+
+            await emotionalReactionService.delete(client_id,emotional_reaction_id);
+
+            return response.json({message:"Deletada com sucesso!"})
+
+        } catch (error) {
+            return response.status(400).json({ erro:error })
+        }
+
+    }
+
+
 }
 
 export {EmotionalReactionController}
