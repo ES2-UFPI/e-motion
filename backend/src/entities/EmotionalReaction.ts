@@ -14,7 +14,7 @@ import { Client } from './Client';
     what_did_you_feel:string;
 
     @Column({default:""})
-    Wwat_did_you_think:string;
+    what_did_you_think:string;
 
     @Column({default:""})
     what_did_you_do:string;
@@ -61,7 +61,7 @@ import { Client } from './Client';
     @Column()
     client_id:string;
 
-    @JoinColumn()
+    @JoinColumn({name:"client_id"})
     @ManyToOne(()=> Client)
     client:Client;
 
