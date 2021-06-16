@@ -15,7 +15,11 @@ class EmotionalReactionService{
         return emotionalReactions;
     }
 
- 
+    
+    async delete(client_id:string,emotional_reaction_id:string){
+
+        await this.emotionalReactionRepository.delete({client_id,id:emotional_reaction_id});
+    }
 
      
 }
