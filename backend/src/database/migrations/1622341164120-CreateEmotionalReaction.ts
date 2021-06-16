@@ -42,7 +42,7 @@ export class CreateEmotionalReaction1622341164120 implements MigrationInterface 
 
                 {name:'do_you_engage_other_behavior_before_tb_occurs',type:'varchar',length:'150'},
 
-                {name:' circumstances_is_tb_less_likely_to_occur',type:'varchar',length:'150'},
+                {name:'circumstances_is_tb_less_likely_to_occur',type:'varchar',length:'150'},
 
                 {name:'what_happens_after_tb',type:'varchar',length:'150'},
 

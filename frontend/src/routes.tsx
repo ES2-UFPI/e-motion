@@ -4,6 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Home from './views/home'
 import { NavigationContainer } from '@react-navigation/native';
 import { Dimensions } from 'react-native'
+import RecordsList from './views/RecordsList';
 
 const Tab = createMaterialBottomTabNavigator<RoutesList>();
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -33,7 +34,7 @@ export default function Routes() {
             <MaterialCommunityIcons name="home-outline" color={color} size={iconSize} />
           ),
         }} />
-        <Tab.Screen name="History" component={Home} options={{
+        <Tab.Screen name="History" component={RecordsList} options={{
           tabBarLabel: 'Histórico',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="file-document-outline" color={color} size={iconSize} />
