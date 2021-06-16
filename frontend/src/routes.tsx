@@ -2,6 +2,7 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from './views/home'
+import Profile from './views/profile';
 import { NavigationContainer } from '@react-navigation/native';
 import { Dimensions } from 'react-native'
 
@@ -39,7 +40,7 @@ export default function Routes() {
             <MaterialCommunityIcons name="file-document-outline" color={color} size={iconSize} />
           ),
         }} />
-        <Tab.Screen name="Profile" component={Home} options={{
+        <Tab.Screen name="Profile" component={Profile} options={{
           tabBarLabel: 'Perfil',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account-outline" color={color} size={iconSize} />
