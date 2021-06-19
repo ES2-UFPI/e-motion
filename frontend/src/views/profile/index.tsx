@@ -18,7 +18,7 @@ export default function Profile() {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    const isProfissional = true;
+    const isProfissional = false;
     const name = 'Lulu';
     const email = 'julia_silva@mail.com';
     const profilePicture = require('../../assets/profile.png');
