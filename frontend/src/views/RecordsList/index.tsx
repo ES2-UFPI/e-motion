@@ -63,18 +63,21 @@ export default function RecordsList() {
     }, [])
 
 
-    function handleDelete(){
-        //fazer requisicao para deletar then
+    async function handleDelete(){
 
-        const filteredRecord = records?.filter((record) => record.id != idCurrent );
-        setRecords(filteredRecord);
-        setIdCurrent("");
-        setModalIsVisible(false)
+        await api.delete(`/reactions/${client_id}/${idCurrent}`)
+        .then(()=>{
+            const filteredRecord = records?.filter((record) => record.id != idCurrent );
+            setRecords(filteredRecord);
+            setIdCurrent("");
+            setModalIsVisible(false)
+        })
+
     }
 
     function onPressDelete(id:string){
         setIdCurrent(id);
-        setModalIsVisible(true)
+        setModalIsVisible(true);
     }
 
     function onPressCard(){
