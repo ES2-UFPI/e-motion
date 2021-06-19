@@ -21,7 +21,7 @@ import api from '../../services/api'
 
 
 export default function ProfessionalAssociationCode({ navigation }: any) {
-    const iconColor = '#91919F';
+    const iconColor = '#212325';
     const SCREEN_WIDTH = Dimensions.get("window").width;
     const iconSize = SCREEN_WIDTH * 0.075;
     const [code, setCode] = useState<string[]|[]>([])

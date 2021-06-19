@@ -9,6 +9,7 @@ export const ContainerAll = styled.View`
     height: 100%;
     background: #E1948B;
     flex: 1;
+    
 `
 
 export const Container = styled.View`
@@ -16,10 +17,10 @@ export const Container = styled.View`
     backgroundColor: #FCFCFF;
     alignItems: center;
     justifyContent: flex-start;
-    paddingTop:15px;
+    paddingTop:10px;
     paddingHorizontal:10px;
-    borderTopLeftRadius:35px;
-    borderTopRightRadius:35px;
+    borderTopLeftRadius:30px;
+    borderTopRightRadius:30px;
     margin-top: ${Constants.statusBarHeight +9}px;
     
 `
