@@ -13,4 +13,5 @@ web-build/
 .DS_Store
 
 yarn.lock
-package-lock.jsongit
+package-lock.json
+
