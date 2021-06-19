@@ -7,21 +7,25 @@ import {
     Switch
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Avatar from '../../components/avatar';
+import Avatar from '../../components/Avatar/avatar';
 import { Dimensions } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#91919F';
 const iconSize = SCREEN_WIDTH * 0.075;
 
-export default function Profile() {
+export default function Profile({ navigation }: any) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    const isProfissional = false;
+    const isProfissional = true;
     const name = 'Lulu';
     const email = 'julia_silva@mail.com';
     const profilePicture = require('../../assets/profile.png');
+
+    function navigateToGenerateCode( ){
+         navigation.navigate('GenerateAssociationCode')
+    }
 
     return (
         <View style={styles.container}>
@@ -38,7 +42,7 @@ export default function Profile() {
                     <Text style={styles.accountSettingsText}>Configurações da conta</Text>
                     {!isProfissional ?
                         <View>
-                            <TouchableOpacity style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { isProfissional: isProfissional })} >
                                 <Text style={styles.optionText}>Editar perfil</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>
@@ -58,11 +62,11 @@ export default function Profile() {
                             </View>
                         </View> :
                         <View>
-                            <TouchableOpacity style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { isProfissional: isProfissional })}>
                                 <Text style={styles.optionText}>Editar perfil</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionContainer} onPress={navigateToGenerateCode}>
                                 <Text style={styles.optionText}>Código de vinculação</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>

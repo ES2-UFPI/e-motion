@@ -18,7 +18,8 @@ export const Container = styled.View`
     justifyContent: flex-start;
     paddingTop:15px;
     paddingHorizontal:10px;
-    border-radius:35px;
+    borderTopLeftRadius:35px;
+    borderTopRightRadius:35px;
     margin-top: ${Constants.statusBarHeight +9}px;
     
 `

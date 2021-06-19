@@ -20,7 +20,7 @@ import Clipboard from 'expo-clipboard';
 import api from '../../services/api'
 
 
-export default function ProfessionalAssociationCode() {
+export default function ProfessionalAssociationCode({ navigation }: any) {
     const iconColor = '#91919F';
     const SCREEN_WIDTH = Dimensions.get("window").width;
     const iconSize = SCREEN_WIDTH * 0.075;
@@ -32,6 +32,10 @@ export default function ProfessionalAssociationCode() {
         Clipboard.setString("Este é o meu código de profissional no e-motion: "+code.join("") + "." + "\n\nUse ele para se associar a mim e permitir que lhe acompanhe pelo app.");
 
     }
+
+    function goBack( ){
+        navigation.goBack()
+   }
 
     function genereteNewCode(){
         setLoading(true);
@@ -59,7 +63,7 @@ export default function ProfessionalAssociationCode() {
             <Container>
                 <GoBackContainer>
 
-                    <GoBackButton>
+                    <GoBackButton onPress={goBack}>
 
                         <MaterialCommunityIcons  name="chevron-left" color={iconColor} size={iconSize}  />
                         <GoBackText> Voltar </GoBackText>
