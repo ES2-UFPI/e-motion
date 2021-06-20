@@ -8,38 +8,39 @@ import {
     Button,
     TextButton
 } from './styles';
+import Header from '../../../../components/Header';
 import { useNavigation } from '@react-navigation/native';
 
-const img = require('../../assets/home.png');
+const img = require('../../../../assets/alone-woman.png');
 
-const HomeClient = () => {
+const RegistrationStepZero = () => {
 
     const navigation = useNavigation();
 
     const navigateToRegistration = () => {
-        navigation.navigate('Registration');
     }
 
     return (
-        <>
         <Container>
+            <Header>
+                Novo registro
+            </Header>
             <ContainerMain>
                 <Title>
-                    Olá, Lulu!
+                    Lulu, vamos iniciar agora um novo registro
                 </Title>
-                <Image source={img} resizeMode="contain"/>
+                <Image source={img} resizeMode="contain" />
                 <Content>
-                Como você está se sentindo hoje?
+                    Você só precisa responder às perguntas que te deixarem confortável, tudo bem?
                 </Content>
                 <Button onPress={navigateToRegistration}>
                     <TextButton>
-                        Novo registro
+                        Vamos lá
                     </TextButton>
                 </Button>
             </ContainerMain>
         </Container>
-        </>
     )
 }
 
-export default HomeClient;
+export default RegistrationStepZero;
