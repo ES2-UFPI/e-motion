@@ -18,6 +18,7 @@ const RegistrationStepZero = () => {
     const navigation = useNavigation();
 
     const navigateToRegistration = () => {
+        navigation.navigate('StepOne');
     }
 
     return (

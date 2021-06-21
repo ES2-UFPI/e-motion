@@ -17,6 +17,7 @@ const HomeClient = () => {
     const navigation = useNavigation();
 
     const navigateToRegistration = () => {
+        navigation.navigate('Registration');
     }
 
     return (
