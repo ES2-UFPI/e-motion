@@ -26,6 +26,9 @@ export default function Profile({ navigation }: any) {
     function navigateToGenerateCode( ){
          navigation.navigate('GenerateAssociationCode')
     }
+    function navigateToAssociateCode( ){
+        navigation.navigate('GerenciarProfessional')
+   }
 
     return (
         <View style={styles.container}>
@@ -46,7 +49,7 @@ export default function Profile({ navigation }: any) {
                                 <Text style={styles.optionText}>Editar perfil</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionContainer} onPress={navigateToAssociateCode}>  
                                 <Text style={styles.optionText}>Gerenciar profissional</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>

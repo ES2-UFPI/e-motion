@@ -11,9 +11,6 @@ import { Client } from './Client';
       name:string;
 
       @Column()
-      email:string;
-
-      @Column()
       speciality:string;
 
       @Column()
