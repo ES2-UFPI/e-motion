@@ -13,58 +13,76 @@ import { Feather } from '@expo/vector-icons';
 import Header from '../../../../components/Header';
 import Flux from '../../../../components/Flux';
 import Alert from '../../../../components/AlertConfirm';
-import CheckBoxGroup from './CheckBoxGroup';
 import Input from '../../../../components/Input';
-import { sentimentos } from './mock';
 import { useNavigation } from '@react-navigation/native';
 
-const RegistrationStepZero = () => {
-
+const RegistrationStepTwo = () => {
     const alertRef = useRef<any>();
 
     const navigation = useNavigation();
 
     const navigateToNextStep = () => {
-        navigation.navigate('StepTwo');
+        navigation.navigate('RegistrationThree');
     }
-    
+
     return (
         <Container>
             <Header>
                 Novo registro
             </Header>
-                <Flux selected={1} />
+            <Flux selected={2} />
             <ScrollView>
                 <ContentContainer>
                     <SectionTtile>
-                        Como você gostaria de nomear este evento?
+                        Quando isso costuma ocorrer?
                     </SectionTtile>
                     <Input
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
-                        onChangeText={() => {}}
+                        multiline
                     />
-                    <SectionTtile>
-                        O que você sentiu?
-                    </SectionTtile>
-                    <CheckBoxGroup sentimentos={sentimentos} />
-                    <SectionTtile>
-                        O que você pensou?
-                    </SectionTtile>
-                    <Input
-                        placeholder="Digite aqui seus pensamentos"
-                        selectionColor="#91919F"
-                        multiline={true}
-                        numberOfLines={4}
 
-                    />
                     <SectionTtile>
-                        O que você fez?
+                        Onde isso ocorre?
                     </SectionTtile>
                     <Input
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
-                        multiline={true}
+                        multiline
+                    />
+
+                    <SectionTtile>
+                        Quem está presente quando isso ocorre?
+                    </SectionTtile>
+                    <Input
+                        placeholder="Digite aqui seus pensamentos"
+                        selectionColor="#91919F"
+                        multiline
+                    />
+                    <SectionTtile>
+                        O que aconteceu antes disso?
+                    </SectionTtile>
+                    <Input
+                        placeholder="Digite aqui seus pensamentos"
+                        selectionColor="#91919F"
+                        multiline
+                    />
+                    <SectionTtile>
+                        O que as outras pessoas dizem ou fazem antes disso acontecer?
+                    </SectionTtile>
+                    <Input
+                        placeholder="Digite aqui seus pensamentos"
+                        selectionColor="#91919F"
+                        multiline
+                    />
+
+                    <SectionTtile>
+                        Você se envolve em algum outro comportamento antes disso acontecer?
+                    </SectionTtile>
+                    <Input
+                        placeholder="Digite aqui seus pensamentos"
+                        selectionColor="#91919F"
+                        multiline
                     />
 
                     <ContainerButton>
@@ -79,8 +97,8 @@ const RegistrationStepZero = () => {
             </ScrollView>
             <Alert
                 ref={alertRef}
-                title="Muito bem!"
-                content="Você já passou da primeira etapa do cadastro do registro! Faltam apenas duas etapas. Você consegue!"
+                title="Que incrível!"
+                content="Você já chegou até aqui! Estamos quase finalizando. Você consegue!"
                 textButton="Vamos lá!"
                 onConfirm={navigateToNextStep}
             />
@@ -88,4 +106,4 @@ const RegistrationStepZero = () => {
     )
 }
 
-export default RegistrationStepZero;
+export default RegistrationStepTwo;
