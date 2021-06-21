@@ -14,7 +14,7 @@ export const Container = styled.View`
     position: absolute;
     width: ${width*0.90}px;
     height: ${height*0.06}px;
-    top: ${height*0.10}px;
+    top: ${height*0.05}px;
 
     background: #FFFFFF;
     box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
