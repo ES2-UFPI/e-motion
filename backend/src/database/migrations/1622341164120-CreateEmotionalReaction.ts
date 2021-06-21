@@ -22,53 +22,53 @@ export class CreateEmotionalReaction1622341164120 implements MigrationInterface 
                     generationStrategy: 'uuid'
 
                 },
-                {name:"title",type:"varchar",length:'150'},
+                {name:"title",type:"varchar",length:'150',default:"'(Sem nome)'"},
 
-                {name:'what_did_you_feel',type:'varchar',length:'150'},
+                {name:'what_did_you_feel',type:'varchar',length:'150',default:"''"},
 
-                {name:'Wwat_did_you_think',type:'varchar',length:'150'},
+                {name:'what_did_you_think',type:'varchar',length:'150',default:"''"},
 
-                {name:'what_did_you_do',type:'varchar',length:'150'},
+                {name:'what_did_you_do',type:'varchar',length:'150',default:"''"},
 
-                {name:'when_does_tb_usually_occur',type:'varchar',length:'150'},
+                {name:'when_does_tb_usually_occur',type:'varchar',length:'150',default:"''"},
 
-                {name:'who_is_present_when_tb_occurs',type:'varchar',length:'150'},
+                {name:'who_is_present_when_tb_occurs',type:'varchar',length:'150',default:"''"},
 
-                {name:'where_does_tb_occur',type:'varchar',length:'150'},
+                {name:'where_does_tb_occur',type:'varchar',length:'150',default:"''"},
 
-                {name:'which_activitie_precede_tb',type:'varchar',length:'150'},
+                {name:'which_activitie_precede_tb',type:'varchar',length:'150',default:"''"},
 
-                {name:'wd_other_people_sod_before_tb',type:'varchar',length:'150'},
+                {name:'wd_other_people_sod_before_tb',type:'varchar',length:'150',default:"''"},
 
-                {name:'do_you_engage_other_behavior_before_tb_occurs',type:'varchar',length:'150'},
+                {name:'do_you_engage_other_behavior_before_tb_occurs',type:'varchar',length:'150',default:"''"},
 
-                {name:'circumstances_is_tb_less_likely_to_occur',type:'varchar',length:'150'},
+                {name:'circumstances_is_tb_less_likely_to_occur',type:'varchar',length:'150',default:"''"},
 
-                {name:'what_happens_after_tb',type:'varchar',length:'150'},
+                {name:'what_happens_after_tb',type:'varchar',length:'150',default:"''"},
 
-                {name:'wdyd_when_tb_occurs',type:'varchar',length:'150'},
+                {name:'wdyd_when_tb_occurs',type:'varchar',length:'150',default:"''"},
 
-                {name:'wd_other_people_do_when_tb_occurs',type:'varchar',length:'150'},
+                {name:'wd_other_people_do_when_tb_occurs',type:'varchar',length:'150',default:"''"},
 
-                {name:'what_changes_after_tb_occurs',type:'varchar',length:'150'},
+                {name:'what_changes_after_tb_occurs',type:'varchar',length:'150',default:"''"},
 
-                {name:'wd_you_get_after_tb',type:'varchar',length:'150'},
+                {name:'wd_you_get_after_tb',type:'varchar',length:'150',default:"''"},
 
-                {name:'wdyd_or_avoid_after_tb',type:'varchar',length:'150'},
+                {name:'wdyd_or_avoid_after_tb',type:'varchar',length:'150',default:"''"},
                 
                 {name:"client_id", type: "varchar"}
                
             ],
-            foreignKeys:[
-                {
-                    name:"FKClient",
-                    referencedTableName:"clients",
-                    referencedColumnNames:["id"],
-                    columnNames:["client_id"],
-                    onDelete:"CASCADE",
-                    onUpdate:"CASCADE"
-                }
-            ]
+            // foreignKeys:[
+            //     {
+            //         name:"FKClient",
+            //         referencedTableName:"clients",
+            //         referencedColumnNames:["id"],
+            //         columnNames:["client_id"],
+            //         onDelete:"CASCADE",
+            //         onUpdate:"CASCADE"
+            //     }
+            // ]
            
         }))
 
