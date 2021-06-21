@@ -16,13 +16,13 @@ import Alert from '../../../../components/AlertConfirm';
 import Input from '../../../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 
-const RegistrationStepTwo = () => {
+const RegistrationStepThree = () => {
     const alertRef = useRef<any>();
 
     const navigation = useNavigation();
 
-    const navigateToNextStep = () => {
-        navigation.navigate('StepThree');
+    const navigateToHome = () => {
+        navigation.navigate('BottomNavigation');
     }
 
     return (
@@ -30,11 +30,11 @@ const RegistrationStepTwo = () => {
             <Header>
                 Novo registro
             </Header>
-            <Flux selected={2} />
+            <Flux selected={3} />
             <ScrollView>
                 <ContentContainer>
                     <SectionTtile>
-                        Quando isso costuma ocorrer?
+                        O que aconteceu depois disso?
                     </SectionTtile>
                     <Input
                         placeholder="Digite aqui seus pensamentos"
@@ -43,7 +43,7 @@ const RegistrationStepTwo = () => {
                     />
 
                     <SectionTtile>
-                        Onde isso ocorre?
+                        O que você fez quando isso ocorreu?
                     </SectionTtile>
                     <Input
                         placeholder="Digite aqui seus pensamentos"
@@ -52,7 +52,7 @@ const RegistrationStepTwo = () => {
                     />
 
                     <SectionTtile>
-                        Quem está presente quando isso ocorre?
+                        O que as outras pessoas fizeram quando isso ocorreu?
                     </SectionTtile>
                     <Input
                         placeholder="Digite aqui seus pensamentos"
@@ -60,7 +60,7 @@ const RegistrationStepTwo = () => {
                         multiline
                     />
                     <SectionTtile>
-                        O que aconteceu antes disso?
+                        O que mudou depois que isso aconteceu?
                     </SectionTtile>
                     <Input
                         placeholder="Digite aqui seus pensamentos"
@@ -68,16 +68,7 @@ const RegistrationStepTwo = () => {
                         multiline
                     />
                     <SectionTtile>
-                        O que as outras pessoas dizem ou fazem antes disso acontecer?
-                    </SectionTtile>
-                    <Input
-                        placeholder="Digite aqui seus pensamentos"
-                        selectionColor="#91919F"
-                        multiline
-                    />
-
-                    <SectionTtile>
-                        Você se envolve em algum outro comportamento antes disso acontecer?
+                        O que você obteve depois que isso aconteceu?
                     </SectionTtile>
                     <Input
                         placeholder="Digite aqui seus pensamentos"
@@ -97,13 +88,13 @@ const RegistrationStepTwo = () => {
             </ScrollView>
             <Alert
                 ref={alertRef}
-                title="Que incrível!"
-                content="Você já chegou até aqui! Estamos quase finalizando. Você consegue!"
-                textButton="Vamos lá!"
-                onConfirm={navigateToNextStep}
+                title="Parabéns!"
+                content="Você concluiu o cadastro de um novo registro. Nós salvamos ele no seu histórico!"
+                textButton="Ok"
+                onConfirm={navigateToHome}
             />
         </Container>
     )
 }
 
-export default RegistrationStepTwo;
+export default RegistrationStepThree;
