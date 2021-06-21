@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList,Text,View } from 'react-native';
+import { FlatList,ActivityIndicator} from 'react-native';
 import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
-import { Title,Container,NothingFound } from './styles';
+import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
 import api from '../../services/api'
 
 interface Record{
@@ -16,12 +16,15 @@ export default function RecordsList() {
 
     const client_id = "1avb";
     const [idCurrent, setIdCurrent] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
 
     async function getRecordsFromUser(client_id:string) {
+
         try {
+            setLoading(true)
             const reaponse = await api.get(`/reactions/${client_id}`);
 
            const data = reaponse.data as [any];
@@ -48,10 +51,10 @@ export default function RecordsList() {
            });
 
            setRecords(records_from_user)
-
+           setLoading(false)
         } catch (error) {
             console.log(error)
-            Alert.alert("ERRO")
+            setLoading(false)
         }
     }
 
@@ -85,10 +88,19 @@ export default function RecordsList() {
     }
 
     return (
-        <Container >
+       <ContainerAll>
+            <Container >
            <Title> Meus registros </Title>
 
-           {records && records.length > 0 ?
+           {
+           loading ?
+           <NothingFound>
+                <ActivityIndicator size={80} color="#fad2d2" />  
+           </NothingFound>
+           
+           :
+           records && records.length > 0 ?
+
            <FlatList 
              data={records}
              keyExtractor={(item) => item.id}
@@ -102,28 +114,18 @@ export default function RecordsList() {
                     onPress={onPressCard}
                 />}
              horizontal={false}
-             keyboardShouldPersistTaps='always'
-             keyboardDismissMode='on-drag'
              contentContainerStyle={{
                 paddingHorizontal:4,
                 paddingVertical:5
               }}
            />
            :
-            records === undefined
-            ?
-                <NothingFound>
-                     <Text>
-                        Nenhum registo foi encontrado :(
-                    </Text>
-                    
-                </NothingFound>
-            :
-                <View>
-                    <Text>
-                        Carregando ....
-                    </Text>
-                </View>
+            <NothingFound>
+                <TextNothingFound>
+                    Nenhum registo foi encontrado :(
+                 </TextNothingFound>
+                
+            </NothingFound>
             
         }
 
@@ -136,5 +138,6 @@ export default function RecordsList() {
             />
             
         </Container>
+       </ContainerAll>
     );
 }
