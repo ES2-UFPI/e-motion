@@ -10,6 +10,8 @@ routes.get("/reactions/:client_id",emotionalReactionController.index);
 
 routes.delete("/reactions/:client_id/:emotional_reaction_id",emotionalReactionController.destroy);
 
-routes.post("/reactions/:client_id",emotionalReactionController.create);
+routes.post("/reactions/create/:client_id",emotionalReactionController.create);
+
+routes.post("/reactions/update/:reaction_id",emotionalReactionController.update);
 
 export {routes}

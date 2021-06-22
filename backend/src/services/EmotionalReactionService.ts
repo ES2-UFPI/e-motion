@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, getConnection } from 'typeorm';
 import { EmotionalReaction } from '../entities/EmotionalReaction';
 
 class EmotionalReactionService {
@@ -26,6 +26,18 @@ class EmotionalReactionService {
             return (await this.emotionalReactionRepository.insert({ client_id })).generatedMaps[0].id
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    async update(reaction_id: string, values: EmotionalReaction) {
+        try {
+            await this.emotionalReactionRepository.findOneOrFail({ id: reaction_id });
+
+            await this.emotionalReactionRepository.update({ id: reaction_id }, values);
+
+            return true;
+        } catch (err) {
+            throw new Error('Registro emocional não encontrado.')
         }
     }
 
