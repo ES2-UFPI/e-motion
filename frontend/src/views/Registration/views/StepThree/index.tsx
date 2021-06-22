@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
     Container,
     ScrollView,
@@ -15,8 +15,29 @@ import Flux from '../../../../components/Flux';
 import Alert from '../../../../components/AlertConfirm';
 import Input from '../../../../components/Input';
 import { useNavigation } from '@react-navigation/native';
+import api from '../../../../services/api';
+import { AxiosResponse, AxiosError } from 'axios';
 
-const RegistrationStepThree = () => {
+interface Form {
+    what_happens_after_tb?: string
+    wdyd_when_tb_occurs?: string
+    wd_other_people_do_when_tb_occurs?: string
+    what_changes_after_tb_occurs?: string
+    wd_you_get_after_tb?: string
+}
+
+const RegistrationStepThree = (props: any) => {
+
+    const { id } = props.route.params;
+
+    const [formInput, setFormInput] = useState<Form>();
+
+    const handleConfirmation = () => {
+        api.post(`reactions/update/${id}`, formInput) 
+            .then((res: AxiosResponse) => {console.log(res.data.message); navigateToHome()})
+            .catch((err: AxiosError) => console.log(err.message));
+    }
+
     const alertRef = useRef<any>();
 
     const navigation = useNavigation();
@@ -40,6 +61,8 @@ const RegistrationStepThree = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.what_happens_after_tb}
+                        onChangeText={(text) => setFormInput({...formInput, what_happens_after_tb: text})}
                     />
 
                     <SectionTtile>
@@ -49,6 +72,8 @@ const RegistrationStepThree = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.wdyd_when_tb_occurs}
+                        onChangeText={(text) => setFormInput({...formInput, wdyd_when_tb_occurs: text})}
                     />
 
                     <SectionTtile>
@@ -58,6 +83,8 @@ const RegistrationStepThree = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.wd_other_people_do_when_tb_occurs}
+                        onChangeText={(text) => setFormInput({...formInput, wd_other_people_do_when_tb_occurs: text})}
                     />
                     <SectionTtile>
                         O que mudou depois que isso aconteceu?
@@ -66,6 +93,8 @@ const RegistrationStepThree = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.what_changes_after_tb_occurs}
+                        onChangeText={(text) => setFormInput({...formInput, what_changes_after_tb_occurs: text})}
                     />
                     <SectionTtile>
                         O que você obteve depois que isso aconteceu?
@@ -74,6 +103,8 @@ const RegistrationStepThree = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.wd_you_get_after_tb}
+                        onChangeText={(text) => setFormInput({...formInput, wd_you_get_after_tb: text})}
                     />
 
                     <ContainerButton>
@@ -91,7 +122,7 @@ const RegistrationStepThree = () => {
                 title="Parabéns!"
                 content="Você concluiu o cadastro de um novo registro. Nós salvamos ele no seu histórico!"
                 textButton="Ok"
-                onConfirm={navigateToHome}
+                onConfirm={handleConfirmation}
             />
         </Container>
     )
