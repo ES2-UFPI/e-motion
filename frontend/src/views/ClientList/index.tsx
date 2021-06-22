@@ -4,12 +4,15 @@ import { Dimensions } from 'react-native';
 import { BackGroundPage, ContainerMain, Item } from './styles';
 import SearchBarComponent from '../../components/SearchBar';
 import ClientCardComponent from '../../components/ClientCard';
+import { useNavigation } from '@react-navigation/native';
 
 const ClientList = (props: any) => {
     const { clients } = props;
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     const dimensions = Dimensions.get('window');
+
+    const navigation = useNavigation();
 
     const staticClients = [
         {
@@ -50,7 +53,7 @@ const ClientList = (props: any) => {
     ]
 
     function onPressClientCard(id:string){
-        
+        navigation.navigate('Acompanhamento');
     }
 
     return (

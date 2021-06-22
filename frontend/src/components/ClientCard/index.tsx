@@ -13,14 +13,14 @@ interface Props {
 
 export default function ClientCard({id, name, nickname, email, phone, onPress}: Props) {
     return (
-        <Container>
+        <Container onPress={(e) => onPress(id)}>
             <Row>
                 <DataContainer>
                     <Name>{name}</Name>
                     <ContactInformations>{nickname} | {email}</ContactInformations>
                     <ContactInformations>{phone}</ContactInformations>
                 </DataContainer>
-                <Icon name="chevron-right" onPress={(e) => onPress(id)}/>
+                <Icon name="chevron-right"/>
             </Row>
         </Container>
     )
