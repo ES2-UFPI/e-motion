@@ -4,8 +4,8 @@ module.exports = {
     "type": "mysql",
     "host": "localhost",
     "port": 3306,
-    "username": "root",
-    "password": process.env.PASSWORD,
+    "username": process.env.BD_USERNAME,
+    "password": process.env.BD_PASSWORD,
     "database": "emotion",
     "migrations":["./src/database/migrations/**.ts"],
     "cli":{
