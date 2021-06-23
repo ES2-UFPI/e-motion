@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Container,
     ContainerMain,
@@ -10,6 +10,9 @@ import {
 } from './styles';
 import Header from '../../../../components/Header';
 import { useNavigation } from '@react-navigation/native';
+import api from '../../../../services/api';
+import { AxiosError, AxiosResponse } from 'axios';
+import { ActivityIndicator } from 'react-native'
 
 const img = require('../../../../assets/alone-woman.png');
 
@@ -17,8 +20,22 @@ const RegistrationStepZero = () => {
 
     const navigation = useNavigation();
 
-    const navigateToRegistration = () => {
-        navigation.navigate('StepOne');
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const createEmotionalReaction = (): void => {
+        setLoading(true);
+        api.post(`reactions/create/${'1'}`)
+            .then((res: AxiosResponse) => {
+                const id = res.data['id'];
+
+                setLoading(false);
+                navigateToRegistration(id);
+            })
+            .catch((err: AxiosError) => { setLoading(false); console.log(err.message) });
+    }
+
+    const navigateToRegistration = (id: string): void => {
+        navigation.navigate('StepOne', { id });
     }
 
     return (
@@ -34,9 +51,9 @@ const RegistrationStepZero = () => {
                 <Content>
                     Você só precisa responder às perguntas que te deixarem confortável, tudo bem?
                 </Content>
-                <Button onPress={navigateToRegistration}>
+                <Button onPress={createEmotionalReaction}>
                     <TextButton>
-                        Vamos lá
+                        { loading ? <ActivityIndicator size="large" color="#FCFCFF" /> : "Vamos lá" }
                     </TextButton>
                 </Button>
             </ContainerMain>

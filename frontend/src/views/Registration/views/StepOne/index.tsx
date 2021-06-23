@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
     Container,
     ScrollView,
@@ -17,15 +17,45 @@ import CheckBoxGroup from './CheckBoxGroup';
 import Input from '../../../../components/Input';
 import { sentimentos } from './mock';
 import { useNavigation } from '@react-navigation/native';
+import api from '../../../../services/api';
+import { AxiosError, AxiosResponse } from 'axios';
 
-const RegistrationStepZero = () => {
+interface Form {
+    title?: string
+    emotions?: string
+    what_did_you_do?: string
+    what_did_you_think?: string
+}
+
+const RegistrationStepZero = (props: any) => {
+
+    const { id } = props.route.params;
+
+    const [formInput, setFormInput] = useState<Form>();
+
+    const checkboxGroupRef = useRef<any>();
+
+    const getEmotions = (): string => {
+        return checkboxGroupRef?.current?.getValues() || '';
+    }
+
+    const handleConfirmation = () => {
+
+        const emotions = getEmotions();
+
+        const data = {...formInput, emotions};
+
+        api.post(`reactions/update/${id}`, data) 
+            .then((res: AxiosResponse) => {console.log(res.data.message); navigateToNextStep()})
+            .catch((err: AxiosError) => console.log(err.message));
+    }
 
     const alertRef = useRef<any>();
 
     const navigation = useNavigation();
 
     const navigateToNextStep = () => {
-        navigation.navigate('StepTwo');
+        navigation.navigate('StepTwo', { id });
     }
     
     return (
@@ -42,12 +72,13 @@ const RegistrationStepZero = () => {
                     <Input
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
-                        onChangeText={() => {}}
+                        value={formInput?.title}
+                        onChangeText={(text) => setFormInput({...formInput, title: text})}
                     />
                     <SectionTtile>
                         O que você sentiu?
                     </SectionTtile>
-                    <CheckBoxGroup sentimentos={sentimentos} />
+                    <CheckBoxGroup ref={checkboxGroupRef} sentimentos={sentimentos} />
                     <SectionTtile>
                         O que você pensou?
                     </SectionTtile>
@@ -56,7 +87,8 @@ const RegistrationStepZero = () => {
                         selectionColor="#91919F"
                         multiline={true}
                         numberOfLines={4}
-
+                        value={formInput?.what_did_you_think}
+                        onChangeText={(text) => setFormInput({...formInput, what_did_you_think: text})}
                     />
                     <SectionTtile>
                         O que você fez?
@@ -65,6 +97,8 @@ const RegistrationStepZero = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline={true}
+                        value={formInput?.what_did_you_do}
+                        onChangeText={(text) => setFormInput({...formInput, what_did_you_do: text})}
                     />
 
                     <ContainerButton>
@@ -82,7 +116,7 @@ const RegistrationStepZero = () => {
                 title="Muito bem!"
                 content="Você já passou da primeira etapa do cadastro do registro! Faltam apenas duas etapas. Você consegue!"
                 textButton="Vamos lá!"
-                onConfirm={navigateToNextStep}
+                onConfirm={handleConfirmation}
             />
         </Container>
     )

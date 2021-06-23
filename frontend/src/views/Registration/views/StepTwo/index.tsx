@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
     Container,
     ScrollView,
@@ -15,14 +15,36 @@ import Flux from '../../../../components/Flux';
 import Alert from '../../../../components/AlertConfirm';
 import Input from '../../../../components/Input';
 import { useNavigation } from '@react-navigation/native';
+import api from '../../../../services/api';
+import { AxiosResponse, AxiosError } from 'axios';
 
-const RegistrationStepTwo = () => {
+interface Form {
+    when_does_tb_usually_occur?: string
+    where_does_tb_occur?: string
+    who_is_present_when_tb_occurs?: string
+    which_activitie_precede_tb?: string
+    wd_other_people_sod_before_tb?: string
+    do_you_engage_other_behavior_before_tb_occurs?: string
+}
+
+const RegistrationStepTwo = (props: any) => {
+
+    const { id } = props.route.params;
+
+    const [formInput, setFormInput] = useState<Form>();
+
+    const handleConfirmation = () => {
+        api.post(`reactions/update/${id}`, formInput) 
+            .then((res: AxiosResponse) => {console.log(res.data.message); navigateToNextStep()})
+            .catch((err: AxiosError) => console.log(err.message));
+    }
+
     const alertRef = useRef<any>();
 
     const navigation = useNavigation();
 
     const navigateToNextStep = () => {
-        navigation.navigate('StepThree');
+        navigation.navigate('StepThree', { id });
     }
 
     return (
@@ -40,6 +62,8 @@ const RegistrationStepTwo = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.when_does_tb_usually_occur}
+                        onChangeText={(text) => setFormInput({...formInput, when_does_tb_usually_occur: text})}
                     />
 
                     <SectionTtile>
@@ -49,6 +73,8 @@ const RegistrationStepTwo = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.where_does_tb_occur}
+                        onChangeText={(text) => setFormInput({...formInput, where_does_tb_occur: text})}
                     />
 
                     <SectionTtile>
@@ -58,6 +84,8 @@ const RegistrationStepTwo = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.who_is_present_when_tb_occurs}
+                        onChangeText={(text) => setFormInput({...formInput, who_is_present_when_tb_occurs: text})}
                     />
                     <SectionTtile>
                         O que aconteceu antes disso?
@@ -66,6 +94,8 @@ const RegistrationStepTwo = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.which_activitie_precede_tb}
+                        onChangeText={(text) => setFormInput({...formInput, which_activitie_precede_tb: text})}
                     />
                     <SectionTtile>
                         O que as outras pessoas dizem ou fazem antes disso acontecer?
@@ -74,6 +104,8 @@ const RegistrationStepTwo = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.wd_other_people_sod_before_tb}
+                        onChangeText={(text) => setFormInput({...formInput, wd_other_people_sod_before_tb: text})}
                     />
 
                     <SectionTtile>
@@ -83,6 +115,8 @@ const RegistrationStepTwo = () => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         multiline
+                        value={formInput?.do_you_engage_other_behavior_before_tb_occurs}
+                        onChangeText={(text) => setFormInput({...formInput, do_you_engage_other_behavior_before_tb_occurs: text})}
                     />
 
                     <ContainerButton>
@@ -100,7 +134,7 @@ const RegistrationStepTwo = () => {
                 title="Que incrível!"
                 content="Você já chegou até aqui! Estamos quase finalizando. Você consegue!"
                 textButton="Vamos lá!"
-                onConfirm={navigateToNextStep}
+                onConfirm={handleConfirmation}
             />
         </Container>
     )
