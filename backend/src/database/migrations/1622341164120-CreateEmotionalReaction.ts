@@ -24,6 +24,8 @@ export class CreateEmotionalReaction1622341164120 implements MigrationInterface 
                 },
                 {name:"title",type:"varchar",length:'150',default:"'(Sem nome)'"},
 
+                {name:"emotions",type:"varchar",length:'200',default:"''"},
+
                 {name:'what_did_you_feel',type:'varchar',length:'150',default:"''"},
 
                 {name:'what_did_you_think',type:'varchar',length:'150',default:"''"},

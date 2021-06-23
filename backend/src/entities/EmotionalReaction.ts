@@ -11,6 +11,9 @@ import { Client } from './Client';
     title:string;
 
     @Column({default:""})
+    emotions:string;
+
+    @Column({default:""})
     what_did_you_feel:string;
 
     @Column({default:""})
