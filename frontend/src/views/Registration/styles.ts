@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 
+interface ButtonProps {
+    color?: string
+}
+
 const { width } = Dimensions.get('window');
 
 export const Container = styled.View`
@@ -36,11 +40,11 @@ export const SectionTtile = styled.Text`
 export const ContainerButton = styled.View`
     width: 100%;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
 `
 
-export const Button = styled.TouchableOpacity`
-    background: #61C08C;
+export const Button = styled.TouchableOpacity<ButtonProps>`
+    background: ${(props: ButtonProps) => props.color || '#61C08C'};
     width: 45%;
     flex-direction: row;
     justify-content: center;

@@ -102,6 +102,7 @@ const RegistrationStepZero = (props: any) => {
                     />
 
                     <ContainerButton>
+                        <Button color="transparent"></Button>
                         <Button onPress={() => alertRef.current.show()}>
                             <TextButton>
                                 Continuar
