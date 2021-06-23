@@ -22,24 +22,23 @@ afterEach(() => {
 });
 
 
-test("store a Professional and fetch it", async () => {
+test("store a Client and fetch it", async () => {
 
-  const newProfessional = {
+  const newClient = {
       name: "Joe",
       email:"joe2@gmail.com",
-      speciality:"psicologia forense",
-      crm_crp:"071.122.811-79",
-      password:"joepsicologia",
-      type:1
+      phone:"(86)8988-8989",
+      password:"doidinho123",
+      type:0
   }
 
   const userService = new UserService();
 
-  await userService.createUser(newProfessional)
+  await userService.createUser(newClient)
 
-  let joe = await getRepository(Professional).findOne({
+  let joe = await getRepository(Client).findOne({
       where: {
-        crm_crp:"071.122.811-79"
+        name:"Joe"
       }
   });
   

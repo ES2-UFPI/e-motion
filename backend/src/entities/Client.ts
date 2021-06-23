@@ -15,7 +15,10 @@ import { EmotionalReaction } from './EmotionalReaction';
     @Column()
     phone:string;
 
-    @JoinColumn()
+    @Column()
+    user_id:string;
+
+    @JoinColumn({name:"user_id"})
     @OneToOne(()=> User)
     user:User;
 
