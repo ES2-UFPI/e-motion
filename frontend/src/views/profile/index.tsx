@@ -18,10 +18,17 @@ export default function Profile({ navigation }: any) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    const isProfissional = false;
+    const isProfissional = true;
     const name = 'Lulu';
     const email = 'julia_silva@mail.com';
     const profilePicture = require('../../assets/profile.png');
+
+    function navigateToGenerateCode( ){
+         navigation.navigate('GenerateAssociationCode')
+    }
+    function navigateToAssociateCode( ){
+        navigation.navigate('GerenciarProfessional')
+   }
 
     return (
         <View style={styles.container}>
@@ -42,7 +49,7 @@ export default function Profile({ navigation }: any) {
                                 <Text style={styles.optionText}>Editar perfil</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionContainer} onPress={navigateToAssociateCode}>  
                                 <Text style={styles.optionText}>Gerenciar profissional</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>
@@ -62,7 +69,7 @@ export default function Profile({ navigation }: any) {
                                 <Text style={styles.optionText}>Editar perfil</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.optionContainer}>
+                            <TouchableOpacity style={styles.optionContainer} onPress={navigateToGenerateCode}>
                                 <Text style={styles.optionText}>Código de vinculação</Text>
                                 <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                             </TouchableOpacity>

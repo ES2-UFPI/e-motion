@@ -61,9 +61,9 @@ import { Client } from './Client';
     @Column()
     client_id:string;
 
-    @JoinColumn({name:"client_id"})
-    @ManyToOne(()=> Client)
-    client:Client;
+    // @JoinColumn({name:"client_id"})
+    // @ManyToOne(()=> Client)
+    // client:Client;
 
 } 
 

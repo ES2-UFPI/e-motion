@@ -1,14 +1,17 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Home from '../../views/home';
+import HomeCliente from '../../views/HomeClient';
 import Profile from '../../views/profile';
 import { Dimensions } from 'react-native'
 import RecordsList from '../../views/RecordsList';
+import ClientList from '../../views/ClientList';
 
 const Tab = createMaterialBottomTabNavigator<RoutesList>();
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconSize = SCREEN_WIDTH * 0.07;
+
+const isClient = true;
 
 export default function BottomNavigation() {
   return (
@@ -27,14 +30,14 @@ export default function BottomNavigation() {
         }}
 
       >
-        <Tab.Screen name="Home" component={Home} options={{
+        <Tab.Screen name="Home" component={isClient ? HomeCliente : () => <></>} options={{
           tabBarLabel: 'Início',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home-outline" color={color} size={iconSize} />
           ),
         }} />
-        <Tab.Screen name="History" component={RecordsList} options={{
-          tabBarLabel: 'Histórico',
+        <Tab.Screen name="History" component={isClient ? RecordsList : ClientList} options={{
+          tabBarLabel: isClient ? 'Histórico' : 'Clientes',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="file-document-outline" color={color} size={iconSize} />
           ),

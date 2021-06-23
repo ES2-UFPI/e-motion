@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Group, Text } from './styles';
+import Input from '../../../../../components/Input';
+import { SectionTtile } from '../../../styles';
 
 const CheckBoxGroup = (props: any) => {
 
@@ -57,6 +59,18 @@ const CheckBoxGroup = (props: any) => {
                         />
                         <Text>Outro(s)</Text>
                     </Group>
+                    {
+                        outroValue &&
+                        <>
+                            <SectionTtile>
+                                Quais?
+                            </SectionTtile>
+                            <Input
+                                placeholder="Digite aqui seus pensamentos"
+                                selectionColor="#91919F"
+                            />
+                        </>
+                    }
                 </>
             }
         />

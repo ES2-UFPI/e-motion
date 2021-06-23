@@ -9,4 +9,4 @@ npm-debug.*
 *.orig.*
 web-build/
 ormconfig.json
-
+.env
