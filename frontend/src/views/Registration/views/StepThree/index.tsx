@@ -108,6 +108,12 @@ const RegistrationStepThree = (props: any) => {
                     />
 
                     <ContainerButton>
+                        <Button color="#E1948B" onPress={() => navigation.goBack()}>
+                            <Feather name="chevron-left" color="#FCFCFF" size={Dimensions.get('window').width * 0.05} />
+                            <TextButton>
+                                Anterior
+                            </TextButton>
+                        </Button>
                         <Button onPress={() => alertRef.current.show()}>
                             <TextButton>
                                 Continuar
