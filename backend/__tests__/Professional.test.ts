@@ -2,6 +2,7 @@ import { createConnection, getConnection, getRepository } from "typeorm";
 import { Client } from "../src/entities/Client";
 import { Professional } from "../src/entities/Professional";
 import { User } from "../src/entities/User";
+import { UserService } from "../src/services/UserService";
 
 
 beforeEach(() => {
@@ -23,19 +24,24 @@ afterEach(() => {
 
 test("store a Professional and fetch it", async () => {
 
-  await getRepository(Professional).insert({
+  const newProfessional = {
       name: "Joe",
-      email:"joe@gmail.com",
+      email:"joe2@gmail.com",
       speciality:"psicologia forense",
-      association_code:"1AS3T",
-      crm_crp:"071.122.811-79"
-  });
+      crm_crp:"071.122.811-79",
+      password:"joepsicologia",
+      type:1
+  }
 
-  let joe = await getRepository(Professional).find({
+  const userService = new UserService();
+
+  await userService.createUser(newProfessional)
+
+  let joe = await getRepository(Professional).findOne({
       where: {
-          email: "joe@gmail.com"
+        crm_crp:"071.122.811-79"
       }
   });
-
-  expect(joe[0].name).toBe("Joe");
+  
+  expect(joe.name).toBe("Joe");
 });
