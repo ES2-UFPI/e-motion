@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { FlatList } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Group, Text } from './styles';
 import Input from '../../../../../components/Input';
 import { SectionTtile } from '../../../styles';
 
-const CheckBoxGroup = (props: any) => {
+const CheckBoxGroup = forwardRef((props: any, ref: any) => {
 
     const { sentimentos } = props;
 
     const [values, setValues] = useState<boolean[]>(new Array(sentimentos.length).fill(false));
     const [outroValue, setOutroValue] = useState<boolean>(false);
+
+    const makeArrayOfTrueValues = (): string => {
+
+        const arr: string[] = [];
+
+        values.map((value, index) => {
+            if(value) arr.push(sentimentos[index].name);
+        })
+
+        return arr.join(',');
+    }
+
+    useImperativeHandle(ref, () => ({
+        getValues: () => makeArrayOfTrueValues(),
+    }))
 
     const onChangeCheckBoxValue = (newValue: boolean, index: number) => {
         const listValues = values.map((value, i) => {
@@ -75,6 +90,6 @@ const CheckBoxGroup = (props: any) => {
             }
         />
     )
-}
+})
 
 export default CheckBoxGroup;

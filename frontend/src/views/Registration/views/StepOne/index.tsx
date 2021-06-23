@@ -33,8 +33,19 @@ const RegistrationStepZero = (props: any) => {
 
     const [formInput, setFormInput] = useState<Form>();
 
+    const checkboxGroupRef = useRef<any>();
+
+    const getEmotions = (): string => {
+        return checkboxGroupRef?.current?.getValues() || '';
+    }
+
     const handleConfirmation = () => {
-        api.post(`reactions/update/${id}`, formInput) 
+
+        const emotions = getEmotions();
+
+        const data = {...formInput, emotions};
+
+        api.post(`reactions/update/${id}`, data) 
             .then((res: AxiosResponse) => {console.log(res.data.message); navigateToNextStep()})
             .catch((err: AxiosError) => console.log(err.message));
     }
@@ -67,7 +78,7 @@ const RegistrationStepZero = (props: any) => {
                     <SectionTtile>
                         O que você sentiu?
                     </SectionTtile>
-                    <CheckBoxGroup sentimentos={sentimentos} />
+                    <CheckBoxGroup ref={checkboxGroupRef} sentimentos={sentimentos} />
                     <SectionTtile>
                         O que você pensou?
                     </SectionTtile>
