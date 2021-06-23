@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import EditProfile from './views/editProfile';
 import Registration from './views/Registration';
+import Acompanhamento from './views/acompanhamento';
 import BottomNavigation from './components/BottomNavigation';
 import ProfessionalAssociationCode from './views/ProfessionalAssociationCode';
 import GerenciarProfessional from './views/GerenciarProfessional';
@@ -22,6 +23,7 @@ export default function Routes() {
         <Stack.Screen name='GenerateAssociationCode' component={ProfessionalAssociationCode} />
         <Stack.Screen name='GerenciarProfessional' component={GerenciarProfessional} />
         <Stack.Screen name='Registration' component={Registration} />
+        <Stack.Screen name='Acompanhamento' component={Acompanhamento} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -33,4 +35,5 @@ type RootStackParamList = {
   GenerateAssociationCode: undefined
   GerenciarProfessional:undefined
   Registration: undefined
+  Acompanhamento: undefined
 };
