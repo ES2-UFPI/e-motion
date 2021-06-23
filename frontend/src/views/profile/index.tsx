@@ -7,14 +7,14 @@ import {
     Switch
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Avatar from '../../components/avatar';
+import Avatar from '../../components/Avatar/avatar';
 import { Dimensions } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#91919F';
 const iconSize = SCREEN_WIDTH * 0.075;
 
-export default function Profile() {
+export default function Profile({ navigation }: any) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -36,24 +36,38 @@ export default function Profile() {
             <View style={styles.settingsContainer}>
                 <View style={styles.accountSettingsContainer}>
                     <Text style={styles.accountSettingsText}>Configurações da conta</Text>
-                    <TouchableOpacity style={styles.optionContainer}>
-                        <Text style={styles.optionText}>Editar perfil</Text>
-                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.optionContainer}>
-                        <Text style={styles.optionText}>Gerenciar profissional</Text>
-                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                    </TouchableOpacity>
-                    <View style={styles.optionContainer}>
-                        <Text style={styles.optionText}>Notificações</Text>
-                        <Switch
-                            trackColor={{ false: "#91919F", true: "#E1948B" }}
-                            thumbColor={'#F1F1FA'}
-                            ios_backgroundColor="#91919F"
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
-                        />
-                    </View>
+                    {!isProfissional ?
+                        <View>
+                            <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { isProfissional: isProfissional })} >
+                                <Text style={styles.optionText}>Editar perfil</Text>
+                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionContainer}>
+                                <Text style={styles.optionText}>Gerenciar profissional</Text>
+                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                            </TouchableOpacity>
+                            <View style={styles.optionContainer}>
+                                <Text style={styles.optionText}>Notificações</Text>
+                                <Switch
+                                    trackColor={{ false: "#91919F", true: "#E1948B" }}
+                                    thumbColor={'#F1F1FA'}
+                                    ios_backgroundColor="#91919F"
+                                    onValueChange={toggleSwitch}
+                                    value={isEnabled}
+                                />
+                            </View>
+                        </View> :
+                        <View>
+                            <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { isProfissional: isProfissional })}>
+                                <Text style={styles.optionText}>Editar perfil</Text>
+                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.optionContainer}>
+                                <Text style={styles.optionText}>Código de vinculação</Text>
+                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                            </TouchableOpacity>
+                        </View>
+                    }
                 </View>
                 <View style={styles.accountSettingsContainer}>
                     <Text style={styles.accountSettingsText}>Suporte</Text>
@@ -71,7 +85,7 @@ export default function Profile() {
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </View >
     );
 }
 
