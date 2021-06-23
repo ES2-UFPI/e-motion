@@ -24,5 +24,5 @@ export const ContainerMain = styled.View`
 `
 
 export const Item = styled.View`
-     margin-bottom: ${height/6};
+     margin-bottom: ${height/6}px;
 `

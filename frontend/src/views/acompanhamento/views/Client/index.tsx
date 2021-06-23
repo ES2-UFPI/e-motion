@@ -1,15 +1,20 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Text } from 'react-native';
 import { 
     BackGroundPage, 
     RegistersContainer, 
-    Row, 
+    Row,
+    Column,
     RegistersBaseText, 
     GoBackText, 
     HeaderContainer,
-    GoBackContainer 
+    SettingsContainer,
+    ContactContainer,
+    HeaderBaseText
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import BackIcon from 'react-native-vector-icons/FontAwesome';
+import SettingsIcon from 'react-native-vector-icons/Feather';
 
 const Client = () => {
 
@@ -18,14 +23,29 @@ const Client = () => {
     return (
         <BackGroundPage>
             <HeaderContainer>
-                <GoBackContainer>
-                    <Icon name="chevron-left" style={{color: '#FCFCFF'}} onPress={() => navigation.goBack()}/><GoBackText onPress={() => navigation.goBack()}>Voltar</GoBackText>
-                </GoBackContainer>
+                <GoBackText onPress={() => navigation.goBack()}><BackIcon name="chevron-left"/>   Voltar</GoBackText>
+                <SettingsContainer>
+                        <Column>
+                            <HeaderBaseText style={{fontSize: 16, lineHeight: 21}}>Júlia Silva</HeaderBaseText>
+                            <HeaderBaseText style={{fontSize: 12, lineHeight: 16}}>lulu</HeaderBaseText>
+                        </Column>
+                        <SettingsIcon name="settings" style={{color: '#FCFCFF', fontSize: 24}}/>
+                </SettingsContainer>
+                <ContactContainer>
+                    <Column>
+                        <HeaderBaseText style={{fontSize: 12, lineHeight: 11, margin: 2}}>julia@gmail.com</HeaderBaseText>
+                        <HeaderBaseText style={{fontSize: 12, lineHeight: 11, margin: 2}}>(86) 99524-3467</HeaderBaseText>
+                    </Column>
+                    <Column>
+                        <HeaderBaseText style={{fontSize: 12, lineHeight: 18, margin: 2}}>Consultório Virtual</HeaderBaseText>
+                        <HeaderBaseText style={{fontSize: 10, lineHeight: 11, margin: 2}}>Ter/Qui 14:30h</HeaderBaseText>
+                    </Column>
+                </ContactContainer>
             </HeaderContainer>
             <RegistersContainer>
                 <Row>
-                    <RegistersBaseText style={{fontSize: 14, lineHeight: 18, color: '#292B2D'}}>Registros</RegistersBaseText>
-                    <RegistersBaseText style={{fontSize: 12, lineHeight: 14, color: '#91919F'}}>Total 10</RegistersBaseText>
+                    <RegistersBaseText style={{fontSize: 14, lineHeight: 18, fontWeight:'normal',  color: '#292B2D'}}>Registros</RegistersBaseText>
+                    <RegistersBaseText style={{fontSize: 11, lineHeight: 14, fontWeight:'bold', color: '#91919F'}}>Total 10</RegistersBaseText>
                 </Row>
             </RegistersContainer>
         </BackGroundPage>

@@ -9,12 +9,12 @@ export const BackGroundPage = styled.View`
     flex: 1;
 `
 
-export const GoBackContainer = styled.View`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+export const HeaderContainer = styled.View`
+    margin-top: ${Constants.statusBarHeight + 20}px;
+    height: ${height * 0.30}px;
+
+    flex-direction: column;
     align-items: center;
-    margin-left: ${width*0.10}px;
 `
 
 export const GoBackText = styled.Text`
@@ -22,13 +22,35 @@ export const GoBackText = styled.Text`
     font-weight: normal;
     font-size: 14px;
     line-height: 18px;
-    margin-left: ${width*0.04}px;
+    margin-right: ${width*0.80}px;
     color: #FCFCFF;
 `
 
-export const HeaderContainer = styled.View`
-    margin-top: ${Constants.statusBarHeight + 20}px;
+export const AvatarContainer = styled.View`
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    background-color: #000000;
+`
+
+export const SettingsContainer = styled.View`
+    height: ${height * 0.15}px;
+    width: ${width * 0.85}px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-width: 1px;
+    border-color: #FCFCFF;
+`
+
+export const ContactContainer = styled.View`
+    height: ${height * 0.15}px;
+    width: ${width * 0.85}px;
+
+    display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
 `
@@ -38,7 +60,6 @@ export const RegistersContainer = styled.View`
     border-top-left-radius: 30px;
     background: #FCFCFF;
     flex: 1;
-    margin-top: ${Constants.statusBarHeight + 190}px;
     padding-bottom: ${height * 0.1}px;
 
     flex-direction: column;
@@ -48,14 +69,24 @@ export const RegistersContainer = styled.View`
 
 export const Row = styled.View`
     display: flex;
-    width: ${width};
+    width: ${width}px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 `
 
+export const Column = styled.View`
+    display: flex;
+    flex-direction: column;
+`
+
 export const RegistersBaseText = styled.Text`
     font-style: normal;
-    font-weight: normal;
     margin: ${height * 0.04}px;
+`
+
+export const HeaderBaseText = styled.Text`
+    font-weight: normal;
+    font-style: normal;
+    color: #FCFCFF;
 `
