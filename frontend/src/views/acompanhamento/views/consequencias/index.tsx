@@ -13,24 +13,27 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconSize = SCREEN_WIDTH * 0.075;
 
-export default function AcompanharComportamento({ navigation }: any) {
+export default function AcompanharAntecedentes({ navigation }: any) {
 
-    const [questao1, onChangeQuestao1] = useState("Felicidade, alívio.");
-    const [questao2, onChangeQuestao2] = useState("Pensei em quanto esperei por este momento e ele finalmente aconteceu.");
-    const [questao3, onChangeQuestao3] = useState("Liguei para a minha mãe para dar a notícia.");
+    const [questao1, onChangeQuestao1] = useState("Fui para casa.");
+    const [questao2, onChangeQuestao2] = useState("Comemorei.");
+    const [questao3, onChangeQuestao3] = useState("Ficaram felizes por mim.");
+    const [questao4, onChangeQuestao4] = useState("Me sinto mais seguro.");
+    const [questao5, onChangeQuestao5] = useState("Tranquilidade");
+    const [questao6, onChangeQuestao6] = useState("Fui para casa.");
 
     return (
         <View style={styles.generalView}>
-            <TouchableOpacity style={styles.goBack} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={styles.goBack} onPress={() => navigation.navigate('Profile')}>
                 <MaterialCommunityIcons style={styles.goBackIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
             <ScrollView style={styles.container}>
                 <View style={styles.titleContainer} >
-                    <Text style={styles.titleText}>Comportamento</Text>
+                    <Text style={styles.titleText}>Consequências</Text>
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.questionText}>O que o cliente sentiu.</Text>
+                    <Text style={styles.questionText}>O que aconteceu depois disso.</Text>
                     <TextInput style={styles.input}
                         onChangeText={onChangeQuestao1}
                         value={questao1}
@@ -39,7 +42,7 @@ export default function AcompanharComportamento({ navigation }: any) {
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.questionText}>O que o cliente pensou.</Text>
+                    <Text style={styles.questionText}>O que você fez quando isso ocorreu.</Text>
                     <TextInput style={styles.input}
                         onChangeText={onChangeQuestao2}
                         value={questao2}
@@ -48,7 +51,7 @@ export default function AcompanharComportamento({ navigation }: any) {
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.questionText}>O que o cliente fez.</Text>
+                    <Text style={styles.questionText}>O que as outras pessoas fizeram quando isso ocorreu.</Text>
                     <TextInput style={styles.input}
                         onChangeText={onChangeQuestao3}
                         value={questao3}
@@ -56,15 +59,44 @@ export default function AcompanharComportamento({ navigation }: any) {
                         multiline={true}
                     />
                 </View>
-                <View style={styles.navigationButton}>
-                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('AcompanharAntecedentes')}>
-                        <Text style={styles.continueText}>Continuar</Text>
-                        <MaterialCommunityIcons style={styles.continueIcon} name="chevron-right" color={'#FCFCFF'} size={iconSize} />
+                <View style={styles.inputContainer}>
+                    <Text style={styles.questionText}>O que mudou depois que isso aconteceu.</Text>
+                    <TextInput style={styles.input}
+                        onChangeText={onChangeQuestao4}
+                        value={questao4}
+                        editable={false}
+                        multiline={true}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.questionText}>O que você obteve depois que isso aconteceu.</Text>
+                    <TextInput style={styles.input}
+                        onChangeText={onChangeQuestao5}
+                        value={questao5}
+                        editable={false}
+                        multiline={true}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.questionText}>O que fez ou evitou depois que isso aconteceu.</Text>
+                    <TextInput style={styles.input}
+                        onChangeText={onChangeQuestao6}
+                        value={questao6}
+                        editable={false}
+                        multiline={true}
+                    />
+                </View>
+                <View style={styles.navigationButtons}>
+                    <TouchableOpacity style={styles.previousContainer} onPress={() => navigation.goBack()}>
+                        <MaterialCommunityIcons style={styles.previousIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
+                        <Text style={styles.previousText}>Anterior</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('Profile')}>
+                        <Text style={styles.continueText}>Fim</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView >
         </View>
-
     );
 }
 
@@ -151,21 +183,38 @@ const styles = StyleSheet.create({
         color: '#FCFCFF',
         fontSize: 16,
         alignSelf: 'center',
-        paddingLeft: 10,
+        paddingHorizontal: SCREEN_WIDTH * 0.11,
     },
     continueContainer: {
-        alignSelf: 'flex-end',
         padding: 5,
         backgroundColor: '#61C08C',
         borderRadius: 10,
-        marginTop: SCREEN_WIDTH * 0.05,
+        marginTop: SCREEN_WIDTH * 0.15,
         flexDirection: 'row',
     },
     continueIcon: {
         textAlign: 'center',
     },
-    navigationButton: {
-        justifyContent: 'flex-end',
+    previousText: {
         color: '#FCFCFF',
+        fontSize: 16,
+        alignSelf: 'center',
+        paddingLeft: 10,
+    },
+    previousContainer: {
+        padding: 5,
+        backgroundColor: '#E1948B',
+        borderRadius: 10,
+        marginTop: SCREEN_WIDTH * 0.15,
+        flexDirection: 'row',
+        paddingRight: SCREEN_WIDTH * 0.05,
+    },
+    previousIcon: {
+        textAlign: 'center',
+    },
+    navigationButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingBottom: SCREEN_WIDTH * 0.05
     }
 });
