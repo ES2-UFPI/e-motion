@@ -11,9 +11,11 @@ const clientController = new ClientController();
 
 
 routes.post("/professionals",professionalController.create);
+routes.post("/professionals/update",professionalController.update);
 
 
 routes.post("/clients",clientController.create);
+routes.post("/clients/update",clientController.update);
 
 
 routes.get("/reactions/:client_id",emotionalReactionController.index);
