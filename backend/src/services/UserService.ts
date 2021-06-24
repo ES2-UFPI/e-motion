@@ -15,6 +15,14 @@ interface UserInterface{
     speciality?:string;
 }
 
+interface UpdateUserInterface{
+    email?:string;
+    password?:string;
+    id:string;
+}
+
+
+
 class UserService {
     private userRepository: Repository<User>;
     private clientService:ClientService;
@@ -29,7 +37,7 @@ class UserService {
     }
 
     async createUser({name,email,password,type,phone,crm_crp,speciality}:UserInterface) {
-        console.log(name)
+
         const userRegistered = await this.userRepository.findOne({ where: { email } });
 
         if(userRegistered){
@@ -55,6 +63,24 @@ class UserService {
                 throw new Error(err.message);
             }
         }
+    }
+
+
+    async updateUser({id,...values}:UpdateUserInterface){
+
+        const userRegistered = await this.userRepository.findOne({ where: { id } });
+
+        if(userRegistered){
+
+            await this.userRepository.save({
+                ...userRegistered,
+                ...values
+            })
+        }
+        else{
+            throw new Error("Usuário não encontrado!")
+        }
+        
     }
 
 }

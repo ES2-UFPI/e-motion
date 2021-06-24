@@ -18,7 +18,7 @@ import { EmotionalReaction } from './EmotionalReaction';
     @Column()
     user_id:string;
 
-    @Column()
+    @Column({nullable:true})
     professional_id:string;
 
     @JoinColumn({name:"user_id"})
