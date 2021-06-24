@@ -40,9 +40,20 @@ class UserService {
         await this.userRepository.save(newUser);
 
         if(type === 0){
-            await this.clientService.createClient({name,phone,user_id:newUser.id})
+            try{
+                await this.clientService.createClient({name,phone,user_id:newUser.id})
+            }catch(err){
+                await this.userRepository.delete(newUser);
+                throw new Error(err.message);
+            }
+            
         }else{
-            await this.professionalService.createProfessional({name,crm_crp,speciality,user_id:newUser.id,association_code:""}); 
+            try{
+                await this.professionalService.createProfessional({name,crm_crp,speciality,user_id:newUser.id,association_code:""}); 
+            }catch(err){
+                await this.userRepository.delete(newUser);
+                throw new Error(err.message);
+            }
         }
     }
 
