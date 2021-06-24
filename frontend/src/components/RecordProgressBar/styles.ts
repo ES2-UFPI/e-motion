@@ -6,7 +6,7 @@ const { width, height } = Dimensions.get('window');
 export const Container = styled.View`
     margin-top:10px;
     width: 100%;
-    height: ${height/30}px;
+    height: ${height/40}px;
     backgroundColor: #F1F1FA;
     borderRadius: 50px;
     margin-bottom:10px;

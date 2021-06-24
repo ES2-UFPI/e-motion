@@ -97,7 +97,6 @@ export const RegistersContainer = styled.View`
     border-top-left-radius: 30px;
     background: #FCFCFF;
     flex: 1;
-    padding-bottom: ${height * 0.1}px;
 
     flex-direction: column;
     align-items: center;
