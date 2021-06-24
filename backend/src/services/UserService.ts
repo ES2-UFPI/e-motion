@@ -29,7 +29,7 @@ class UserService {
     }
 
     async createUser({name,email,password,type,phone,crm_crp,speciality}:UserInterface) {
-
+        console.log(name)
         const userRegistered = await this.userRepository.findOne({ where: { email } });
 
         if(userRegistered){
