@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { ProfessionalService } from '../services/ProfessionalService';
 import { UserService } from '../services/UserService';
 
 class ProfessionalController {
@@ -13,8 +14,24 @@ class ProfessionalController {
 
             return response.status(200).json({ message:"Profissional criado com sucesso!"});
         } catch (error) {
-            return response.status(400).json({ error: 'Um erro inesperado ocorreu. Tente novamente!',error_dev:error.message });
+            return response.status(400).json({message:error.message });
         }
+    }
+
+    async update(request: Request, response: Response){
+        try{
+            const {name,email,password,crm_crp,speciality,id,association_code} = request.body;
+
+            const professionalService = new ProfessionalService();
+
+            await professionalService.update({name,crm_crp,speciality,email,password,association_code,id})
+
+            return response.status(200).json({ message:"Profissional atualizado com sucesso!"});
+
+        }catch(error){
+            return response.status(400).json({ message:error.message });
+        }
+
     }
 
 }

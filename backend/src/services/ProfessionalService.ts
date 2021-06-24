@@ -1,5 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 import { Professional } from "../entities/Professional";
+import { UserService } from './UserService';
 
 interface ProfessionalInterface{
     name:string;
@@ -7,6 +8,16 @@ interface ProfessionalInterface{
     speciality:string;
     association_code?:string;
     user_id:string;
+}
+
+interface UpdateClientInterface{
+    name?:string;
+    crm_crp?:string;
+    speciality?:string;
+    association_code?:string;
+    email?:string;
+    password?:string;
+    id:string;
 }
 
 class ProfessionalService {
@@ -26,6 +37,28 @@ class ProfessionalService {
         const newProfessional =  this.professionalRepository.create({name,crm_crp,speciality,user_id,association_code}); 
         await this.professionalRepository.save(newProfessional);
             
+    }
+
+    async update({name,crm_crp,speciality,association_code,email,password,id}:UpdateClientInterface){
+
+        const professional =  await this.professionalRepository.findOne({where:[{id}],relations:['user']})
+        const professional_new_values = {name,crm_crp,speciality,association_code}
+        
+        if(professional){
+            await this.professionalRepository.save({
+                ...professional
+                ,...professional_new_values});
+
+            const userService = new UserService();
+            
+            await userService.updateUser({
+                id:professional.user_id,
+                email,
+                password
+            })
+        }else
+            throw new Error(`Profissional não encontrado`)
+
     }
 }
 
