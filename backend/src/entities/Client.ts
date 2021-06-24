@@ -18,11 +18,14 @@ import { EmotionalReaction } from './EmotionalReaction';
     @Column()
     user_id:string;
 
+    @Column()
+    professional_id:string;
+
     @JoinColumn({name:"user_id"})
     @OneToOne(()=> User)
     user:User;
 
-    @JoinColumn()
+    @JoinColumn({name:"professional_id"})
     @ManyToOne(()=> Professional)
     professional:Professional;
 

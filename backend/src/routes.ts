@@ -1,9 +1,19 @@
 import {Router} from 'express';
+import { ClientController } from './controllers/ClientController';
 import { EmotionalReactionController } from './controllers/EmotionalRecordController';
+import { ProfessionalController } from './controllers/ProfessionalController';
 
 const routes = Router(); 
 
 const emotionalReactionController = new EmotionalReactionController();
+const professionalController = new ProfessionalController();
+const clientController = new ClientController();
+
+
+routes.post("/professionals",professionalController.create);
+
+
+routes.post("/clients",clientController.create);
 
 routes.get("/reactions/:client_id",emotionalReactionController.index);
 
