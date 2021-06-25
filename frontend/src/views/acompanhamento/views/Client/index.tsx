@@ -19,8 +19,12 @@ import {
 import Record_card from '../../../../components/Record_card';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { RouteProp } from '@react-navigation/native';
+import { useState } from 'react';
 
-const Client = () => {
+const Client = (props: any) => {
+
+    const { id } = props.route.params;
 
     const navigation = useNavigation();
     const profilePicture = require('../../../../assets/profile.png');
@@ -63,7 +67,7 @@ const Client = () => {
                         <Row>
                             <Avatar source={profilePicture}></Avatar>
                             <Column>
-                                <HeaderBaseText style={{fontSize: 18, lineHeight: 21, marginLeft: 10}}>Júlia Silva</HeaderBaseText>
+                                <HeaderBaseText style={{fontSize: 18, lineHeight: 21, marginLeft: 10}}>${id}</HeaderBaseText>
                                 <HeaderBaseText style={{fontSize: 12, lineHeight: 16, marginLeft: 14}}>lulu</HeaderBaseText>
                             </Column>
                         </Row>
