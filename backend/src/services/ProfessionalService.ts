@@ -1,5 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 import { Professional } from "../entities/Professional";
+import { Client } from '../entities/Client';
 import { UserService } from './UserService';
 
 interface ProfessionalInterface{
@@ -22,9 +23,17 @@ interface UpdateClientInterface{
 
 class ProfessionalService {
     private professionalRepository: Repository<Professional>;
+    private clientRepository: Repository<Client>;
 
     constructor() {
         this.professionalRepository = getRepository(Professional);
+        this.clientRepository = getRepository(Client);
+    }
+
+    async getClients(){
+        const clients = await this.clientRepository.find({relations:['user']});
+
+        return clients;
     }
 
     async createProfessional({name,crm_crp,speciality,user_id,association_code}:ProfessionalInterface) {

@@ -4,6 +4,18 @@ import { UserService } from '../services/UserService';
 
 class ProfessionalController {
 
+    async getClients(request: Request, response: Response) {
+        try {
+            const professionalService = new ProfessionalService();
+
+            const clients = await professionalService.getClients();
+
+            return response.status(200).json({clients});
+        } catch(error) {
+            return response.status(400).json({message: error.message});
+        }
+    }
+
     async create(request: Request, response: Response): Promise<Response> {
         try {
             const {name,crm_crp,speciality,email,password} = request.body;

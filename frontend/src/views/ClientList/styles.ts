@@ -26,3 +26,16 @@ export const ContainerMain = styled.View`
 export const Item = styled.View`
      margin-bottom: ${height/6}px;
 `
+
+export const NothingFound = styled.View`
+    width:100%;
+    alignItems: center;
+    justifyContent: center;
+     font-size: ${width/16}px;
+    flex: 1;
+`
+
+export const TextNothingFound = styled.Text`
+     font-size: ${width/21}px;
+
+`

@@ -76,7 +76,7 @@ const Client = (props: any) => {
                     <Row>
                         <IconContainer><FeatherIcon name="file-text" style={{color: '#FCFCFF', fontSize: 24}}/></IconContainer>
                         <Column>
-                            <HeaderBaseText style={{fontSize: 14, lineHeight: 14, margin: 2}}>{params.email}</HeaderBaseText>
+                            <HeaderBaseText style={{fontSize: 14, lineHeight: 14, margin: 2}}>{params.user.email}</HeaderBaseText>
                             <HeaderBaseText style={{fontSize: 12, lineHeight: 11, margin: 2}}>{params.phone}</HeaderBaseText>
                         </Column>
                     </Row>
