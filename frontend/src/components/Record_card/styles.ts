@@ -13,6 +13,7 @@ export const Container = styled.TouchableOpacity`
     elevation:3;
     border-radius: 15px;
     margin-top:15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `
 
 export const DataContainer = styled.View`

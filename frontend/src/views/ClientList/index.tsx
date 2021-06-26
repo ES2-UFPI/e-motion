@@ -53,7 +53,7 @@ const ClientList = (props: any) => {
     ]
 
     function onPressClientCard(id:string){
-        navigation.navigate('Acompanhamento');
+        navigation.navigate('Acompanhamento', staticClients.filter(user => user.id === id)[0]);
     }
 
     return (
