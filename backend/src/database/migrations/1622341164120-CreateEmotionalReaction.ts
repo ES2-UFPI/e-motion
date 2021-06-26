@@ -61,16 +61,16 @@ export class CreateEmotionalReaction1622341164120 implements MigrationInterface 
                 {name:"client_id", type: "varchar"}
                
             ],
-            // foreignKeys:[
-            //     {
-            //         name:"FKClient",
-            //         referencedTableName:"clients",
-            //         referencedColumnNames:["id"],
-            //         columnNames:["client_id"],
-            //         onDelete:"CASCADE",
-            //         onUpdate:"CASCADE"
-            //     }
-            // ]
+            foreignKeys:[
+                {
+                    name:"FKClient",
+                    referencedTableName:"clients",
+                    referencedColumnNames:["id"],
+                    columnNames:["client_id"],
+                    onDelete:"CASCADE",
+                    onUpdate:"CASCADE"
+                }
+            ]
            
         }))
 

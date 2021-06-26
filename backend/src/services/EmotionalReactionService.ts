@@ -1,4 +1,5 @@
 import { getRepository, Repository, getConnection } from 'typeorm';
+import { Client } from '../entities/Client';
 import { EmotionalReaction } from '../entities/EmotionalReaction';
 
 class EmotionalReactionService {
@@ -22,10 +23,14 @@ class EmotionalReactionService {
     }
 
     async create(client_id: string): Promise<string> {
+        const client = await getRepository(Client).findOne(client_id);
+
+        if (!client) throw new Error('Usuário não encontrado.');
+
         try {
-            return (await this.emotionalReactionRepository.insert({ client_id })).generatedMaps[0].id
+            return (await this.emotionalReactionRepository.insert({ client_id })).generatedMaps[0].id;
         } catch (err) {
-            console.log(err)
+            // handle error
         }
     }
 
