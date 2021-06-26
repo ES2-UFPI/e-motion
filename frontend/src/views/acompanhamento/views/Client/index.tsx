@@ -19,13 +19,10 @@ import {
 import Record_card from '../../../../components/Record_card';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import { RouteProp } from '@react-navigation/native';
-import { useState } from 'react';
 
 const Client = (props: any) => {
 
-    const { id } = props.route.params;
-
+    const params = props.route.params;
     const navigation = useNavigation();
     const profilePicture = require('../../../../assets/profile.png');
 
@@ -67,8 +64,8 @@ const Client = (props: any) => {
                         <Row>
                             <Avatar source={profilePicture}></Avatar>
                             <Column>
-                                <HeaderBaseText style={{fontSize: 18, lineHeight: 21, marginLeft: 10}}>${id}</HeaderBaseText>
-                                <HeaderBaseText style={{fontSize: 12, lineHeight: 16, marginLeft: 14}}>lulu</HeaderBaseText>
+                                <HeaderBaseText style={{fontSize: 18, lineHeight: 21, marginLeft: 10}}>{params.name}</HeaderBaseText>
+                                <HeaderBaseText style={{fontSize: 12, lineHeight: 16, marginLeft: 14}}>{params.nickname}</HeaderBaseText>
                             </Column>
                         </Row>
                         <FeatherIcon name="settings" style={{color: '#FCFCFF', fontSize: 24}}/>
@@ -77,8 +74,8 @@ const Client = (props: any) => {
                     <Row>
                         <IconContainer><FeatherIcon name="file-text" style={{color: '#FCFCFF', fontSize: 24}}/></IconContainer>
                         <Column>
-                            <HeaderBaseText style={{fontSize: 14, lineHeight: 14, margin: 2}}>julia@gmail.com</HeaderBaseText>
-                            <HeaderBaseText style={{fontSize: 12, lineHeight: 11, margin: 2}}>(86) 99524-3467</HeaderBaseText>
+                            <HeaderBaseText style={{fontSize: 14, lineHeight: 14, margin: 2}}>{params.email}</HeaderBaseText>
+                            <HeaderBaseText style={{fontSize: 12, lineHeight: 11, margin: 2}}>{params.phone}</HeaderBaseText>
                         </Column>
                     </Row>
                     <Row>
