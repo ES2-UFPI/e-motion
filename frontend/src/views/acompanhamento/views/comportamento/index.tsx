@@ -21,7 +21,7 @@ export default function AcompanharComportamento({ navigation }: any) {
 
     return (
         <View style={styles.generalView}>
-            <TouchableOpacity style={styles.goBack} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={styles.goBack} onPress={() => navigation.navigate('Client')}>
                 <MaterialCommunityIcons style={styles.goBackIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
