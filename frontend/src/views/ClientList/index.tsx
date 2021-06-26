@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { FlatList, ActivityIndicator } from 'react-native';
 import { Dimensions } from 'react-native';
-import { BackGroundPage, ContainerMain, Item } from './styles';
+import { useNavigation } from '@react-navigation/native';
+import api from '../../services/api';
 import SearchBarComponent from '../../components/SearchBar';
 import ClientCardComponent from '../../components/ClientCard';
-import { useNavigation } from '@react-navigation/native';
+import { BackGroundPage, ContainerMain, Item, NothingFound, TextNothingFound } from './styles';
 
 const ClientList = (props: any) => {
-    const { clients } = props;
+    const [clients, setClients] = useState<[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     const dimensions = Dimensions.get('window');
 
     const navigation = useNavigation();
+
+    async function getClients() {
+        try {
+            setLoading(true);
+
+            const response = await api.get('/professionals/clients');
+            setClients(response.data.clients);
+
+            setLoading(false);
+        } catch(error) {
+            console.log(error);
+
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        getClients();
+    }, []);
 
     const staticClients = [
         {
@@ -53,7 +74,7 @@ const ClientList = (props: any) => {
     ]
 
     function onPressClientCard(id:string){
-        navigation.navigate('Acompanhamento', staticClients.filter(user => user.id === id)[0]);
+        navigation.navigate('Acompanhamento', clients.filter(user => user['id'] === id)[0]);
     }
 
     return (
@@ -61,17 +82,24 @@ const ClientList = (props: any) => {
         <BackGroundPage>
             <ContainerMain>
                 <SearchBarComponent placeholder={'Busque pelo paciente'} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
-                <FlatList
-                    data={staticClients}
-                    keyExtractor={(item) => item.id}
+                {
+                    loading ?
+                    <NothingFound>
+                        <ActivityIndicator size={80} color="#fad2d2" />  
+                    </NothingFound>
+                    :
+                    clients && clients.length > 0 ?
+                    <FlatList
+                    data={clients}
+                    keyExtractor={(item) => item['id']}
                     renderItem={({ item }) => 
                     <Item>
                         <ClientCardComponent 
-                            id={item.id} 
-                            name={item.name} 
-                            nickname={item.nickname} 
-                            email={item.email} 
-                            phone={item.phone} 
+                            id={item['id']} 
+                            name={item['name']} 
+                            nickname={item['name']} 
+                            email={item['user']['email']} 
+                            phone={item['phone']} 
                             onPress={onPressClientCard}
                         />
                     </Item>
@@ -84,7 +112,14 @@ const ClientList = (props: any) => {
                         marginTop: dimensions.height/10,
                         width: dimensions.width,
                     }}
-                />
+                    />
+                    :
+                    <NothingFound>
+                        <TextNothingFound>
+                            Nenhum cliente foi encontrado :(
+                        </TextNothingFound>  
+                    </NothingFound>
+                }
             </ContainerMain>
         </BackGroundPage>
         </>

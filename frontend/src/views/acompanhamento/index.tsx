@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Client from './views/Client';
+import Client from './views/cliente';
 import AcompanharAntecedentes from './views/antecedentes';
 import AcompanharComportamento from './views/comportamento';
 import AcompanharConsequencias from './views/consequencias';
