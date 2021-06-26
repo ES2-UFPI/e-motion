@@ -1,5 +1,6 @@
 import { createConnection, getConnection, getRepository } from "typeorm";
 import { Client } from "../src/entities/Client";
+import { EmotionalReaction } from "../src/entities/EmotionalReaction";
 import { Professional } from "../src/entities/Professional";
 import { User } from "../src/entities/User";
 import { ClientService } from "../src/services/ClientService";
@@ -11,7 +12,7 @@ beforeEach(() => {
       type: "sqlite",
       database: ":memory:",
       dropSchema: true,
-      entities: [Professional,Client,User],
+      entities: [Professional,Client,User,EmotionalReaction],
       synchronize: true,
       logging: false
   });
