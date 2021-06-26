@@ -24,7 +24,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
 
     return (
         <View style={styles.generalView}>
-            <TouchableOpacity style={styles.goBack} onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity style={styles.goBack} onPress={() => navigation.navigate('Client')}>
                 <MaterialCommunityIcons style={styles.goBackIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>

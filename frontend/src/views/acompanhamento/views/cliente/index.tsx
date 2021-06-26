@@ -27,7 +27,9 @@ const Client = (props: any) => {
     const profilePicture = require('../../../../assets/profile.png');
 
     function onPressDelete(id:string){}
-    function onPressCard(){}
+    function onPressCard(){
+        navigation.navigate('AcompanharComportamento');
+    }
 
     const staticRegisters = [
         {

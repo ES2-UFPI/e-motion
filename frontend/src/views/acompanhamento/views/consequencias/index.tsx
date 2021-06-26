@@ -13,7 +13,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconSize = SCREEN_WIDTH * 0.075;
 
-export default function AcompanharAntecedentes({ navigation }: any) {
+export default function AcompanharConsequencias({ navigation }: any) {
 
     const [questao1, onChangeQuestao1] = useState("Fui para casa.");
     const [questao2, onChangeQuestao2] = useState("Comemorei.");
@@ -24,7 +24,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
 
     return (
         <View style={styles.generalView}>
-            <TouchableOpacity style={styles.goBack} onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity style={styles.goBack} onPress={() => navigation.navigate('Client')}>
                 <MaterialCommunityIcons style={styles.goBackIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
@@ -91,7 +91,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                         <MaterialCommunityIcons style={styles.previousIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
                         <Text style={styles.previousText}>Anterior</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('Profile')}>
+                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('Client')}>
                         <Text style={styles.continueText}>Fim</Text>
                     </TouchableOpacity>
                 </View>
