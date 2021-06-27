@@ -12,7 +12,7 @@ const clientController = new ClientController();
 
 routes.post("/professionals",professionalController.create);
 routes.post("/professionals/update",professionalController.update);
-routes.get("/professionals/clients", professionalController.getClients);
+routes.get("/professionals/clients/:professional_id", professionalController.getClients);
 
 
 routes.post("/clients",clientController.create);

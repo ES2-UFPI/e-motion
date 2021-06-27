@@ -8,6 +8,7 @@ import ClientCardComponent from '../../components/ClientCard';
 import { BackGroundPage, ContainerMain, Item, NothingFound, TextNothingFound } from './styles';
 
 const ClientList = (props: any) => {
+    const professional_id = "0"
     const [clients, setClients] = useState<[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -20,7 +21,7 @@ const ClientList = (props: any) => {
         try {
             setLoading(true);
 
-            const response = await api.get('/professionals/clients');
+            const response = await api.get(`/professionals/clients/${professional_id}`);
             setClients(response.data.clients);
 
             setLoading(false);
