@@ -57,7 +57,7 @@ const Avatar = (props: any) => {
                     style={styles.profilePicture}
                     source={props.profilePicture}
                 />
-                {props.isProfissional ? <View style={styles.label}>
+                {props.isProfessional ? <View style={styles.label}>
                     <Text style={styles.labelText}>PROFISSIONAL</Text>
                 </View> : <></>}
             </View>
