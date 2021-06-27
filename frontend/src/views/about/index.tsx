@@ -13,34 +13,49 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#212325';
 const iconSize = SCREEN_WIDTH * 0.075;
 
+var firstParagraph = "O e-motion é um aplicativo criado para facilitar o acompanhamento e interação entre psicólogos e clientes. Nele é possível fazer registros emocionais de situações vividas pelo cliente: quais os sentimentos envolvidos, contextos, causas e consequências. Todos os registros podem ser acessados pelo psicólogo responsável pelo cliente.";
+var secondParagraph = "O psicólogo pode ter acesso a todos os registros emocionais de seus pacientes e, consequentemente, fazer um acompanhamento mais próximo. O e-motion não tem a intenção de substituir sessões de terapia, pelo contrário, é uma ferramenta que visa auxiliar o psicólogo no acompanhamento de seu cliente durante o período entre cada sessão.";
+
 export default function About({ navigation, route }: any) {
 
     return (
-        <View style={styles.container}>
+        <View style={styles.generalView}>
             <TouchableOpacity style={styles.goBack} onPress={() => navigation.goBack()}>
-                <MaterialCommunityIcons style={styles.goBackIcon} name="chevron-left" color={iconColor} size={iconSize} />
+                <MaterialCommunityIcons style={styles.goBackIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
-            <View style={styles.titleContainer} >
-                <Text style={styles.text}>Sobre o e-motion</Text>
-            </View>
-            <View style={styles.textContainer}>
-                <Paragraph style={styles.paragraph}>
-                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
-                </Paragraph>
-                <Paragraph style={styles.paragraph}>
-                    Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                </Paragraph>
-            </View>
-        </View >
+            <View style={styles.container}>
+                {/* <TouchableOpacity style={styles.goBack} onPress={() => navigation.goBack()}>
+                <MaterialCommunityIcons style={styles.goBackIcon} name="chevron-left" color={iconColor} size={iconSize} />
+                <Text style={styles.goBackText}>Voltar</Text>
+            </TouchableOpacity> */}
+                <View style={styles.titleContainer} >
+                    <Text style={styles.text}>Sobre o e-motion</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Paragraph style={styles.paragraph}>
+                        {firstParagraph}
+                    </Paragraph>
+                    <Paragraph style={styles.paragraph}>
+                        {secondParagraph}
+                    </Paragraph>
+                </View>
+            </View >
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    generalView: {
+        flex: 1,
+        backgroundColor: '#E1948B'
+    },
     container: {
         flex: 1,
         backgroundColor: '#FCFCFF',
         paddingHorizontal: SCREEN_WIDTH * 0.06,
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
     },
     titleContainer: {
         alignItems: 'center'
@@ -57,21 +72,23 @@ const styles = StyleSheet.create({
 
     },
     goBackText: {
-        color: '#000000',
+        color: '#FCFCFF',
         fontSize: 16,
         alignSelf: 'center',
         paddingLeft: 10,
     },
     goBack: {
-        marginTop: SCREEN_WIDTH * 0.15,
+        marginTop: SCREEN_WIDTH * 0.125,
+        marginBottom: SCREEN_WIDTH * 0.035,
+        marginHorizontal: SCREEN_WIDTH * 0.025,
         flexDirection: 'row',
+        backgroundColor: '#E1948B'
     },
     goBackIcon: {
         textAlign: 'center',
-
     },
     paragraph: {
-        fontSize: 16,
+        fontSize: 14,
         marginBottom: SCREEN_WIDTH * 0.05,
     }
 });
