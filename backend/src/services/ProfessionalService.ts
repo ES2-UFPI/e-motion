@@ -30,8 +30,9 @@ class ProfessionalService {
         this.clientRepository = getRepository(Client);
     }
 
-    async getClients(){
-        const clients = await this.clientRepository.find({relations:['user']});
+    async getClients(professional_id: string): Promise<Client[]>{
+
+        const clients = await this.clientRepository.find({where: { professional_id: professional_id }, relations:['user']});
 
         return clients;
     }
