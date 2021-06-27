@@ -122,7 +122,23 @@ export default function Profile({ navigation }: any) {
                         </View>
                     </View>
                 </View>
-            }
+
+                <View style={styles.accountSettingsContainer}>
+                    <Text style={styles.accountSettingsText}>Suporte</Text>
+                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('About')}>
+                        <Text style={styles.optionText}>Sobre o e-motion</Text>
+                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('FAQ')}>
+                        <Text style={styles.optionText}>FAQ</Text>
+                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionContainer}>
+                        <Text style={styles.optionText}>Compartilhar </Text>
+                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View >
     );
 }
