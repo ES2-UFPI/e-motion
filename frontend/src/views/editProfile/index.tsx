@@ -15,11 +15,11 @@ const iconSize = SCREEN_WIDTH * 0.075;
 
 export default function EditProfile({ navigation, route }: any) {
 
-    const { isProfissional } = route.params;
+    const { user } = route.params;
 
-    const [nome, onChangeNome] = useState("");
-    const [telefone, onChangeTelefone] = useState("");
-    const [email, onChangeEmail] = useState("");
+    const [nome, onChangeNome] = useState(user.isProfessional ? user.professional.name : user.client.name);
+    const [telefone, onChangeTelefone] = useState(user.isProfessional ? user.professional.phone : user.client.phone);
+    const [email, onChangeEmail] = useState(user.email);
     const [endereco, onChangeEndereco] = useState("");
 
     return (
@@ -29,7 +29,7 @@ export default function EditProfile({ navigation, route }: any) {
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
             <View style={styles.titleContainer} >
-                <Text style={styles.text}>{isProfissional ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
+                <Text style={styles.text}>{user.isProfessional ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
             </View>
             <View style={styles.inputsContainer}>
                 <View style={styles.inputContainer}>
@@ -52,9 +52,10 @@ export default function EditProfile({ navigation, route }: any) {
                         onChangeText={onChangeEmail}
                         value={email}
                         placeholder='Email'
+                        editable={false}
                     />
                 </View>
-                {isProfissional ? <View style={styles.inputContainer}>
+                {user.isProfessional ? <View style={styles.inputContainer}>
                     <TextInput style={styles.input}
                         onChangeText={onChangeEndereco}
                         value={endereco}

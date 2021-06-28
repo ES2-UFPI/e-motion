@@ -3,62 +3,60 @@ import { User } from '../entities/User';
 import { ProfessionalService } from './ProfessionalService';
 import { ClientService } from './ClientService';
 
-interface UserInterface{
-    name:string;
-    email:string;
-    password:string;
-    type:number;
+interface UserInterface {
+    name: string;
+    email: string;
+    password: string;
+    type: number;
 
-    phone?:string
+    phone?: string
 
-    crm_crp?:string;
-    speciality?:string;
+    crm_crp?: string;
+    speciality?: string;
 }
 
-interface UpdateUserInterface{
-    email?:string;
-    password?:string;
-    id:string;
+interface UpdateUserInterface {
+    email?: string;
+    password?: string;
+    id: string;
 }
-
-
 
 class UserService {
     private userRepository: Repository<User>;
-    private clientService:ClientService;
-    private professionalService:ProfessionalService;
+    private clientService: ClientService;
+    private professionalService: ProfessionalService;
 
     constructor() {
         this.userRepository = getRepository(User);
-        
-        this.clientService =  new ClientService();
+
+        this.clientService = new ClientService();
 
         this.professionalService = new ProfessionalService();
     }
 
-    async createUser({name,email,password,type,phone,crm_crp,speciality}:UserInterface) {
+    async createUser({ name, email, password, type, phone, crm_crp, speciality }: UserInterface) {
 
         const userRegistered = await this.userRepository.findOne({ where: { email } });
 
-        if(userRegistered){
+        if (userRegistered) {
             throw new Error("Email já cadastrado!")
         }
 
-        const newUser =  this.userRepository.create({email,password,type});      
+        const newUser = this.userRepository.create({ email, password, type });
         await this.userRepository.save(newUser);
 
-        if(type === 0){
-            try{
-                await this.clientService.createClient({name,phone,user_id:newUser.id})
-            }catch(err){
+        if (type === 0) {
+            try {
+                await this.clientService.createClient({ name, phone, user_id: newUser.id })
+            } catch (err) {
                 await this.userRepository.delete(newUser);
                 throw new Error(err.message);
             }
-            
-        }else{
-            try{
-                await this.professionalService.createProfessional({name,crm_crp,speciality,user_id:newUser.id,association_code:""}); 
-            }catch(err){
+
+        } else {
+            try {
+                await this.professionalService.createProfessional({ name, crm_crp, speciality, user_id: newUser.id, association_code: "" });
+            } catch (err) {
                 await this.userRepository.delete(newUser);
                 throw new Error(err.message);
             }
@@ -66,21 +64,49 @@ class UserService {
     }
 
 
-    async updateUser({id,...values}:UpdateUserInterface){
+    async updateUser({ id, ...values }: UpdateUserInterface) {
 
         const userRegistered = await this.userRepository.findOne({ where: { id } });
 
-        if(userRegistered){
+        if (userRegistered) {
 
             await this.userRepository.save({
                 ...userRegistered,
                 ...values
             })
         }
-        else{
+        else {
             throw new Error("Usuário não encontrado!")
         }
-        
+
+    }
+
+    async getUser(id) {
+        const userRegistered = await this.userRepository.findOne({ where: { id } });
+
+        if (userRegistered) {
+            if (userRegistered.type == 0) {
+                const clientRegistered = await this.clientService.getClient(id);
+                if (clientRegistered) {
+                    return { id: userRegistered.id, email: userRegistered.email, type: userRegistered.type, client: clientRegistered };
+                }
+                else {
+                    throw new Error("Cliente não encontrado!")
+                }
+            }
+            else {
+                const professionalRegistered = await this.professionalService.getProfessional(id);
+                if (professionalRegistered) {
+                    return { id: userRegistered.id, email: userRegistered.email, type: userRegistered.type, professional: professionalRegistered };
+                }
+                else {
+                    throw new Error("Profissional não encontrado!")
+                }
+            }
+        }
+        else {
+            throw new Error("Usuário não encontrado!")
+        }
     }
 
 }

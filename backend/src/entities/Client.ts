@@ -29,11 +29,11 @@ import { EmotionalReaction } from './EmotionalReaction';
     @ManyToOne(()=> Professional)
     professional:Professional;
 
-    // @OneToMany(()=> EmotionalReaction, emotion => emotion.client,{
-    //   cascade:['insert','update','remove']
-    // })
-    // @JoinColumn({name:"client_id"})
-    // emotional_reactions!:EmotionalReaction[];
+    @OneToMany(()=> EmotionalReaction, emotion => emotion.client,{
+      cascade:['insert','update','remove']
+    })
+    @JoinColumn({name:"client_id"})
+    emotional_reactions!:EmotionalReaction[];
 
   } 
 

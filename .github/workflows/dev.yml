@@ -1,0 +1,32 @@
+name: Build & Deploy - DEV
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+     matrix:
+      node-version: [10.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+       node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      working-directory: ./backend
+      run: npm i
+    - name: Tests
+      working-directory: ./backend
+      run: npm run test
+    - uses: actions/checkout@v2
+    - uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+        heroku_email: "giselesousar@gmail.com"
+        appDir: "backend"
