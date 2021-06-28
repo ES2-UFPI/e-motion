@@ -1,7 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn,OneToOne,JoinColumn,ManyToOne, OneToMany} from 'typeorm';
 import { User } from './User';
 import { Professional } from './Professional';
-import { Emotional_reaction } from './EmotionalReaction';
+import { EmotionalReaction } from './EmotionalReaction';
 
   @Entity("clients") //nome da tabela
   class Client {
@@ -15,19 +15,25 @@ import { Emotional_reaction } from './EmotionalReaction';
     @Column()
     phone:string;
 
-    @JoinColumn()
+    @Column()
+    user_id:string;
+
+    @Column({nullable:true})
+    professional_id:string;
+
+    @JoinColumn({name:"user_id"})
     @OneToOne(()=> User)
     user:User;
 
-    @JoinColumn()
+    @JoinColumn({name:"professional_id"})
     @ManyToOne(()=> Professional)
     professional:Professional;
 
-    @OneToMany(()=> Emotional_reaction, emotion => emotion.client,{
+    @OneToMany(()=> EmotionalReaction, emotion => emotion.client,{
       cascade:['insert','update','remove']
     })
     @JoinColumn({name:"client_id"})
-    emotional_reactions!:Emotional_reaction[];
+    emotional_reactions!:EmotionalReaction[];
 
   } 
 

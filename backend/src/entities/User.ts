@@ -7,7 +7,7 @@ import {Entity, Column, PrimaryGeneratedColumn,} from 'typeorm';
       @PrimaryGeneratedColumn('uuid', { name: 'id' })
       id:string;
 
-      @Column()
+      @Column({unique:true})
       email:string;
 
       @Column()

@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn,} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn,OneToOne} from 'typeorm';
 import { Client } from './Client';
+import { User } from './User';
 
   @Entity("professionals") //nome da tabela
   class Professional {
@@ -11,9 +12,6 @@ import { Client } from './Client';
       name:string;
 
       @Column()
-      email:string;
-
-      @Column()
       speciality:string;
 
       @Column()
@@ -21,6 +19,13 @@ import { Client } from './Client';
 
       @Column()
       crm_crp:string;
+
+      @Column()
+      user_id:string;
+
+      @JoinColumn({name:"user_id"})
+      @OneToOne(()=> User)
+      user:User;
 
       @OneToMany(()=> Client, client => client.professional,{
         cascade:['insert','update','remove']
