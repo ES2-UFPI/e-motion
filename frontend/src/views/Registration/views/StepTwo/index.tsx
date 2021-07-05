@@ -17,21 +17,13 @@ import Input from '../../../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import api from '../../../../services/api';
 import { AxiosResponse, AxiosError } from 'axios';
-
-interface Form {
-    when_does_tb_usually_occur?: string
-    where_does_tb_occur?: string
-    who_is_present_when_tb_occurs?: string
-    which_activitie_precede_tb?: string
-    wd_other_people_sod_before_tb?: string
-    do_you_engage_other_behavior_before_tb_occurs?: string
-}
+import { EmotionalReaction } from '../../../../models/emotionalReaction';
 
 const RegistrationStepTwo = (props: any) => {
 
     const { id } = props.route.params;
 
-    const [formInput, setFormInput] = useState<Form>();
+    const [formInput, setFormInput] = useState<EmotionalReaction>();
 
     const handleConfirmation = () => {
         api.post(`reactions/update/${id}`, formInput) 

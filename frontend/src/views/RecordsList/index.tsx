@@ -14,6 +14,7 @@ interface Record{
 }
 
 export default function RecordsList() {
+    
     const navigation = useNavigation();
     const client_id = "1avb";
     const [idCurrent, setIdCurrent] = useState<string>("");
@@ -32,6 +33,7 @@ export default function RecordsList() {
 
            if(data.length < 1){
                setRecords(undefined)
+               setLoading(false);
                 return
            }
 
@@ -39,7 +41,7 @@ export default function RecordsList() {
 
                 const fields = Object.entries(record);
 
-                const fields_cont = fields.filter( field => ( (field[1] != null) && (field[1] != "") && (String(field[1]).length > 1) )).length;
+                const fields_cont = fields.filter( field => ( (field[1] !== null) && (field[1] !== "") && (String(field[1]).length > 1) )).length;
 
                 const fields_completed = Math.round(fields_cont / fields.length * 100);
 

@@ -19,19 +19,16 @@ import { sentimentos } from './mock';
 import { useNavigation } from '@react-navigation/native';
 import api from '../../../../services/api';
 import { AxiosError, AxiosResponse } from 'axios';
-
-interface Form {
-    title?: string
-    emotions?: string
-    what_did_you_do?: string
-    what_did_you_think?: string
-}
+import { EmotionalReaction } from '../../../../models/emotionalReaction';
+import { shallowEqual, useSelector } from 'react-redux';
 
 const RegistrationStepZero = (props: any) => {
 
     const { id } = props.route.params;
 
-    const [formInput, setFormInput] = useState<Form>();
+    const [formInput, setFormInput] = useState<EmotionalReaction>();
+
+    const emotionalReactionFromRedux = useSelector((state: any) => state.emotionalReaction, shallowEqual);
 
     const checkboxGroupRef = useRef<any>();
 
@@ -43,10 +40,10 @@ const RegistrationStepZero = (props: any) => {
 
         const emotions = getEmotions();
 
-        const data = {...formInput, emotions};
+        const data = { ...formInput, emotions };
 
-        api.post(`reactions/update/${id}`, data) 
-            .then((res: AxiosResponse) => {console.log(res.data.message); navigateToNextStep()})
+        api.post(`reactions/update/${id}`, data)
+            .then((res: AxiosResponse) => { console.log(res.data.message); navigateToNextStep() })
             .catch((err: AxiosError) => console.log(err.message));
     }
 
@@ -57,13 +54,13 @@ const RegistrationStepZero = (props: any) => {
     const navigateToNextStep = () => {
         navigation.navigate('StepTwo', { id });
     }
-    
+
     return (
         <Container>
             <Header>
                 Novo registro
             </Header>
-                <Flux selected={1} />
+            <Flux selected={1} />
             <ScrollView>
                 <ContentContainer>
                     <SectionTtile>
@@ -73,7 +70,7 @@ const RegistrationStepZero = (props: any) => {
                         placeholder="Digite aqui seus pensamentos"
                         selectionColor="#91919F"
                         value={formInput?.title}
-                        onChangeText={(text) => setFormInput({...formInput, title: text})}
+                        onChangeText={(text) => setFormInput({ ...formInput, title: text })}
                     />
                     <SectionTtile>
                         O que você sentiu?
@@ -88,7 +85,7 @@ const RegistrationStepZero = (props: any) => {
                         multiline={true}
                         numberOfLines={4}
                         value={formInput?.what_did_you_think}
-                        onChangeText={(text) => setFormInput({...formInput, what_did_you_think: text})}
+                        onChangeText={(text) => setFormInput({ ...formInput, what_did_you_think: text })}
                     />
                     <SectionTtile>
                         O que você fez?
@@ -98,7 +95,7 @@ const RegistrationStepZero = (props: any) => {
                         selectionColor="#91919F"
                         multiline={true}
                         value={formInput?.what_did_you_do}
-                        onChangeText={(text) => setFormInput({...formInput, what_did_you_do: text})}
+                        onChangeText={(text) => setFormInput({ ...formInput, what_did_you_do: text })}
                     />
 
                     <ContainerButton>

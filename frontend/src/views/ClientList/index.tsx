@@ -8,7 +8,7 @@ import ClientCardComponent from '../../components/ClientCard';
 import { BackGroundPage, ContainerMain, Item, NothingFound, TextNothingFound } from './styles';
 
 const ClientList = (props: any) => {
-    const professional_id = "0"
+    const professional_id = "2"
     const [clients, setClients] = useState<[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -22,7 +22,7 @@ const ClientList = (props: any) => {
             setLoading(true);
 
             const response = await api.get(`/professionals/clients/${professional_id}`);
-            setClients(response.data.clients);
+            setClients(staticClients);
 
             setLoading(false);
         } catch(error) {
@@ -91,16 +91,16 @@ const ClientList = (props: any) => {
                     :
                     clients && clients.length > 0 ?
                     <FlatList
-                    data={clients}
+                    data={staticClients}
                     keyExtractor={(item) => item['id']}
                     renderItem={({ item }) => 
                     <Item>
                         <ClientCardComponent 
-                            id={item['id']} 
-                            name={item['name']} 
-                            nickname={item['name']} 
-                            email={item['user']['email']} 
-                            phone={item['phone']} 
+                            id={item.id} 
+                            name={item.name} 
+                            nickname={item.name} 
+                            email={item.email} 
+                            phone={item.phone} 
                             onPress={onPressClientCard}
                         />
                     </Item>

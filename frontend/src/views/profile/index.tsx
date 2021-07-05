@@ -55,6 +55,7 @@ export default function Profile({ navigation }: any) {
 
     useEffect(() => {
         getUserInformation();
+        setUser({...user, isProfessional: false})
     }, [])
 
     return (
@@ -65,80 +66,70 @@ export default function Profile({ navigation }: any) {
                 </TouchableOpacity>
             </View>
             {
-                loading ? <ActivityIndicator size={80} color="#fad2d2" /> : <View style={styles.container}>
-                    <View style={styles.avatarContainer}>
-                        <Avatar profilePicture={profilePicture} name={user.isProfessional ? user.professional.name : user.client.name} email={user.email} isProfessional={user.isProfessional} />
-                    </View>
-                    <View style={styles.settingsContainer}>
-                        <View style={styles.accountSettingsContainer}>
-                            <Text style={styles.accountSettingsText}>Configurações da conta</Text>
-                            {!user.isProfessional ?
-                                <View>
-                                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { user: user })} >
-                                        <Text style={styles.optionText}>Editar perfil</Text>
+                loading ?
+                    <ActivityIndicator size={80} color="#fad2d2" /> :
+                    <>
+                        <View style={styles.container}>
+                            <View style={styles.avatarContainer}>
+                                <Avatar profilePicture={profilePicture} name={user.isProfessional ? user.professional.name : user.client.name} email={user.email} isProfessional={user.isProfessional} />
+                            </View>
+                            <View style={styles.settingsContainer}>
+                                <View style={styles.accountSettingsContainer}>
+                                    <Text style={styles.accountSettingsText}>Configurações da conta</Text>
+                                    {!user.isProfessional ?
+                                        <View>
+                                            <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { user: user })} >
+                                                <Text style={styles.optionText}>Editar perfil</Text>
+                                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.optionContainer} onPress={navigateToAssociateCode}>
+                                                <Text style={styles.optionText}>Gerenciar profissional</Text>
+                                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                                            </TouchableOpacity>
+                                            <View style={styles.optionContainer}>
+                                                <Text style={styles.optionText}>Notificações</Text>
+                                                <Switch
+                                                    trackColor={{ false: "#91919F", true: "#E1948B" }}
+                                                    thumbColor={'#F1F1FA'}
+                                                    ios_backgroundColor="#91919F"
+                                                    onValueChange={toggleSwitch}
+                                                    value={isEnabled}
+                                                />
+                                            </View>
+                                        </View> :
+                                        <View>
+                                            <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { user: user })}>
+                                                <Text style={styles.optionText}>Editar perfil</Text>
+                                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.optionContainer} onPress={navigateToGenerateCode}>
+                                                <Text style={styles.optionText}>Código de vinculação</Text>
+                                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    }
+                                </View>
+                                <View style={styles.accountSettingsContainer}>
+                                    <Text style={styles.accountSettingsText}>Suporte</Text>
+                                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('About')}>
+                                        <Text style={styles.optionText}>Sobre o e-motion</Text>
                                         <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.optionContainer} onPress={navigateToAssociateCode}>
-                                        <Text style={styles.optionText}>Gerenciar profissional</Text>
+                                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('FAQ')}>
+                                        <Text style={styles.optionText}>FAQ</Text>
                                         <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                                     </TouchableOpacity>
-                                    <View style={styles.optionContainer}>
-                                        <Text style={styles.optionText}>Notificações</Text>
-                                        <Switch
-                                            trackColor={{ false: "#91919F", true: "#E1948B" }}
-                                            thumbColor={'#F1F1FA'}
-                                            ios_backgroundColor="#91919F"
-                                            onValueChange={toggleSwitch}
-                                            value={isEnabled}
-                                        />
-                                    </View>
-                                </View> :
-                                <View>
-                                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { user: user })}>
-                                        <Text style={styles.optionText}>Editar perfil</Text>
-                                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.optionContainer} onPress={navigateToGenerateCode}>
-                                        <Text style={styles.optionText}>Código de vinculação</Text>
+                                    <TouchableOpacity style={styles.optionContainer}>
+                                        <Text style={styles.optionText}>Compartilhar </Text>
                                         <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                                     </TouchableOpacity>
                                 </View>
-                            }
+                            </View>
                         </View>
-                        <View style={styles.accountSettingsContainer}>
-                            <Text style={styles.accountSettingsText}>Suporte</Text>
-                            <TouchableOpacity style={styles.optionContainer}>
-                                <Text style={styles.optionText}>Sobre o e-motion</Text>
-                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.optionContainer}>
-                                <Text style={styles.optionText}>FAQ</Text>
-                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.optionContainer}>
-                                <Text style={styles.optionText}>Compartilhar </Text>
-                                <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
 
-                <View style={styles.accountSettingsContainer}>
-                    <Text style={styles.accountSettingsText}>Suporte</Text>
-                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('About')}>
-                        <Text style={styles.optionText}>Sobre o e-motion</Text>
-                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('FAQ')}>
-                        <Text style={styles.optionText}>FAQ</Text>
-                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.optionContainer}>
-                        <Text style={styles.optionText}>Compartilhar </Text>
-                        <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
-                    </TouchableOpacity>
-                </View>
-            </View>
+
+                    </>
+            }
         </View >
     );
 }
