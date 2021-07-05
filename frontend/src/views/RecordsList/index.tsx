@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList,ActivityIndicator} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
 import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
@@ -13,7 +14,7 @@ interface Record{
 }
 
 export default function RecordsList() {
-
+    const navigation = useNavigation();
     const client_id = "1avb";
     const [idCurrent, setIdCurrent] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
@@ -38,7 +39,7 @@ export default function RecordsList() {
 
                 const fields = Object.entries(record);
 
-                const fields_cont = fields.filter( field => field[1] != null).length;
+                const fields_cont = fields.filter( field => ( (field[1] != null) && (field[1] != "") && (String(field[1]).length > 1) )).length;
 
                 const fields_completed = Math.round(fields_cont / fields.length * 100);
 
@@ -84,7 +85,7 @@ export default function RecordsList() {
     }
 
     function onPressCard(){
-
+        navigation.navigate('AcompanharComportamento');
     }
 
     return (
