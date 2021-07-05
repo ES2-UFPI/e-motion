@@ -12,6 +12,9 @@ import { User } from './User';
       name:string;
 
       @Column()
+      nickname:string;
+
+      @Column()
       speciality:string;
 
       @Column()

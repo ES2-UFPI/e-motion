@@ -13,6 +13,9 @@ import { EmotionalReaction } from './EmotionalReaction';
     name:string;
 
     @Column()
+    nickname:string;
+
+    @Column()
     phone:string;
 
     @Column()
