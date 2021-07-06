@@ -87,7 +87,7 @@ export default function RecordsList() {
     }
 
     function onPressCard(){
-        navigation.navigate('AcompanharComportamento');
+        navigation.navigate('Registration');
     }
 
     return (
