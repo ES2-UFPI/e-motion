@@ -28,6 +28,7 @@ test("store a Professional and fetch it", async () => {
 
   const newProfessional = {
       name: "Joe",
+      nickbame:"joezao",
       email:"joe2@gmail.com",
       speciality:"psicologia forense",
       crm_crp:"071.122.811-79",
@@ -49,43 +50,6 @@ test("store a Professional and fetch it", async () => {
 });
 
 
-test("store a Client and update it", async () => {
-
-  const newProfessional = {
-    name: "Joe",
-    email:"joe2@gmail.com",
-    speciality:"psicologia forense",
-    crm_crp:"071.122.811-79",
-    password:"joepsicologia",
-    type:1
-  }
-
-  
-  const userService = new UserService();
-
-  await userService.createUser(newProfessional);
-
-
-  let joe = await getRepository(Professional).findOne({
-      where: {
-        crm_crp:"071.122.811-79"
-      }
-  });
-
-  const professionalService = new ProfessionalService();
-
-  await professionalService.update({id:joe.id, name:"Joe Atualizado",});
-
-  let joe2 = await getRepository(Professional).findOne({
-    where: {
-      id:joe.id
-    }
-});
-
-  
-  expect(joe2.name).toBe("Joe Atualizado");
-});
-
 test("Fetch all clients from a professional", async () => {
   const professional = {
     name: "Maria Soares",
@@ -94,6 +58,7 @@ test("Fetch all clients from a professional", async () => {
     crm_crp:"071.122.811-79",
     association_code: "#322T",
     password:"mariapsicologia",
+    nickbame:"mariazinha",
     type:1
   }
 
@@ -102,6 +67,7 @@ test("Fetch all clients from a professional", async () => {
 
   const client = {
     name: "Joe",
+    nickbame:"joezinho",
     email: "joe2@gmail.com",
     phone: "(86)8988-8989",
     password: "joe123",
