@@ -12,7 +12,7 @@ import { EmotionalReaction } from './EmotionalReaction';
     @Column()
     name:string;
 
-    @Column()
+    @Column({default:""})
     nickname:string;
 
     @Column()

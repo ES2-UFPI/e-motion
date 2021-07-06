@@ -11,7 +11,7 @@ import { User } from './User';
       @Column()
       name:string;
 
-      @Column()
+      @Column({default:""})
       nickname:string;
 
       @Column()
