@@ -29,4 +29,6 @@ routes.post("/reactions/update/:reaction_id", emotionalReactionController.update
 
 routes.get("/users/:user_id", userController.getUserById);
 
+routes.get("/user/login", userController.login);
+
 export { routes }
