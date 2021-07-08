@@ -4,18 +4,47 @@ import Snackbar from '../../components/Snackbar';
 export const GlobalContext = createContext({})
 export const GlobalConsumer = GlobalContext.Consumer;
 
-export function GlobalSnackbar (props: any) {
+export function GlobalSnackbar(props: any) {
+
     const [visible, setVisible] = useState(false);
-    const [message, setMessage] = useState('');
-    const [type, setType] = useState(null);
+    const [message, setMessage] = useState<string>('');
+    const [type, setType] = useState<string>('ERROR');
 
     const showSnackbar = () => setVisible(true);
     const hideSnackbar = () => setVisible(false);
 
-    return(
-        <GlobalContext.Provider value={{showSnackbar, hideSnackbar, setMessage, setType}}>
+    const handleDuration = (duration: number | undefined) => {
+        setTimeout(() => {
+            setVisible(false);
+        }, duration ?? 3000);
+    }
+
+    const showError = (message: string, duration?: number) => {
+        setType('ERROR');
+        setMessage(message);
+        showSnackbar();
+        handleDuration(duration);
+    }
+
+    const showSuccess = (message: string, duration?: number) => {
+        setType('SUCCESS');
+        setMessage(message);
+        showSnackbar();
+        handleDuration(duration);
+    }
+
+    return (
+        <GlobalContext.Provider value={{ showSuccess, showError }}>
             {props.children}
-            <Snackbar />
+            {
+                visible ?
+                    <Snackbar
+                        type={type}
+                        message={message}
+                    />
+                    : <></>
+            }
+
         </GlobalContext.Provider>
     )
 }
