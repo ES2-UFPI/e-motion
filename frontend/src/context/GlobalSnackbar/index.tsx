@@ -15,7 +15,7 @@ export function GlobalSnackbar(props: any) {
 
     const handleDuration = (duration: number | undefined) => {
         setTimeout(() => {
-            setVisible(false);
+            hideSnackbar();
         }, duration ?? 3000);
     }
 

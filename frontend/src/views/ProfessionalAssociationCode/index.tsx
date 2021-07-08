@@ -33,7 +33,7 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
 
     function copyCOodeToClipboard() {
 
-        // Clipboard.setString("Este é o meu código de profissional no e-motion: "+code.join("") + "." + "\n\nUse ele para se associar a mim e permitir que lhe acompanhe pelo app.");
+        Clipboard.setString("Este é o meu código de profissional no e-motion: "+code.join("") + "." + "\n\nUse ele para se associar a mim e permitir que lhe acompanhe pelo app.");
         showSuccess('Seu código foi copiado para a área de transferência.');
     }
 
