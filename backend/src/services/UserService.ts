@@ -13,6 +13,7 @@ interface UserInterface {
     email: string;
     password: string;
     type: number;
+    avatar: number;
 
     phone?: string
 
@@ -39,7 +40,7 @@ class UserService {
         this.professionalService = new ProfessionalService();
     }
 
-    async createUser({ name, email, password, type, phone, crm_crp, speciality }: UserInterface) {
+    async createUser({ name, email, password, type, avatar, phone, crm_crp, speciality }: UserInterface) {
 
         const userRegistered = await this.userRepository.findOne({ where: { email } });
 
@@ -47,7 +48,7 @@ class UserService {
             throw new Error("Email já cadastrado!")
         }
 
-        const newUser = this.userRepository.create({ email, password, type });
+        const newUser = this.userRepository.create({ email, password, type, avatar });
         await this.userRepository.save(newUser);
 
         if (type === 0) {
@@ -93,7 +94,7 @@ class UserService {
             if (userRegistered.type == 0) {
                 const clientRegistered = await this.clientService.getClient(id);
                 if (clientRegistered) {
-                    return { id: userRegistered.id, email: userRegistered.email, type: userRegistered.type, client: clientRegistered };
+                    return { id: userRegistered.id, email: userRegistered.email, type: userRegistered.type, avatar: userRegistered.avatar, client: clientRegistered };
                 }
                 else {
                     throw new Error("Cliente não encontrado!")
@@ -102,7 +103,7 @@ class UserService {
             else {
                 const professionalRegistered = await this.professionalService.getProfessional(id);
                 if (professionalRegistered) {
-                    return { id: userRegistered.id, email: userRegistered.email, type: userRegistered.type, professional: professionalRegistered };
+                    return { id: userRegistered.id, email: userRegistered.email, type: userRegistered.type, avatar: userRegistered.avatar, professional: professionalRegistered };
                 }
                 else {
                     throw new Error("Profissional não encontrado!")

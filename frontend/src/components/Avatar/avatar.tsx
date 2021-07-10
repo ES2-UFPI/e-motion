@@ -49,13 +49,34 @@ const styles = StyleSheet.create({
     }
 });
 
+function getProfilePicture(profilePicture: any) {
+    if (profilePicture == 1) {
+        return require('../../assets/profilePictures/1.png');
+    }
+    else if (profilePicture == 2) {
+        return require('../../assets/profilePictures/2.png');
+    }
+    else if (profilePicture == 3) {
+        return require('../../assets/profilePictures/3.png');
+    }
+    else if (profilePicture == 4) {
+        return require('../../assets/profilePictures/4.png');
+    }
+    else if (profilePicture == 5) {
+        return require('../../assets/profilePictures/5.png');
+    }
+    else if (profilePicture == 6) {
+        return require('../../assets/profilePictures/6.png');
+    }
+}
+
 const Avatar = (props: any) => {
     return (
         <View style={styles.componentContainer}>
             <View style={styles.profilePictureAndLabelContainer}>
                 <Image
                     style={styles.profilePicture}
-                    source={props.profilePicture}
+                    source={getProfilePicture(props.profilePicture)}
                 />
                 {props.isProfessional ? <View style={styles.label}>
                     <Text style={styles.labelText}>PROFISSIONAL</Text>

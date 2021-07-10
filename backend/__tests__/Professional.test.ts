@@ -32,7 +32,8 @@ test("store a Professional and fetch it", async () => {
       speciality:"psicologia forense",
       crm_crp:"071.122.811-79",
       password:"joepsicologia",
-      type:1
+      type:1,
+      avatar: 1
   }
 
   const userService = new UserService();
@@ -57,7 +58,8 @@ test("store a Client and update it", async () => {
     speciality:"psicologia forense",
     crm_crp:"071.122.811-79",
     password:"joepsicologia",
-    type:1
+    type:1,
+    avatar: 1
   }
 
   
@@ -94,7 +96,8 @@ test("Fetch all clients from a professional", async () => {
     crm_crp:"071.122.811-79",
     association_code: "#322T",
     password:"mariapsicologia",
-    type:1
+    type:1,
+    avatar: 1
   }
 
   const userp_id = (await getRepository(User).insert(professional)).generatedMaps[0].id;
@@ -105,7 +108,8 @@ test("Fetch all clients from a professional", async () => {
     email: "joe2@gmail.com",
     phone: "(86)8988-8989",
     password: "joe123",
-    type: 0
+    type: 0,
+    avatar: 1
 }
 
   const userc_id = (await getRepository(User).insert(client)).generatedMaps[0].id;
