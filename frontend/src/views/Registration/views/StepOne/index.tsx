@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
     Container,
     ScrollView,
@@ -32,6 +32,21 @@ const RegistrationStepZero = (props: any) => {
 
     const checkboxGroupRef = useRef<any>();
 
+    const loadEmotionalReaction = async () => {
+        try {
+            const response = await api.get(`reactions/${id}`);
+            const emotionalReaction: EmotionalReaction  = response?.data['emotionalReaction'];
+            setFormInput({ ...formInput, ...emotionalReaction });
+            checkboxGroupRef.current.setValues(emotionalReaction.emotions);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        loadEmotionalReaction();
+    }, []);
+
     const getEmotions = (): string => {
         return checkboxGroupRef?.current?.getValues() || '';
     }
@@ -40,10 +55,14 @@ const RegistrationStepZero = (props: any) => {
 
         const emotions = getEmotions();
 
-        const data = { ...formInput, emotions };
+        let data: EmotionalReaction = { ...formInput, emotions };
 
-        api.post(`reactions/update/${id}`, data)
-            .then((res: AxiosResponse) => { console.log(res.data.message); navigateToNextStep() })
+        if(formInput?.title?.length === 0) {
+            data = {...formInput, title: '(Sem nome)'};
+        }
+
+        api.put(`reactions/${id}`, data)
+            .then((res: AxiosResponse) => navigateToNextStep() )
             .catch((err: AxiosError) => console.log(err.message));
     }
 
