@@ -32,7 +32,8 @@ test("store a User and recognize him/her as a Client or a Professional", async (
         crm_crp: "071.122.811-79",
         association_code: "#322T",
         password: "mariapsicologia",
-        type: 1
+        type: 1,
+        avatar: 1
     }
 
     const userp_id = (await getRepository(User).insert(professional)).generatedMaps[0].id;
@@ -43,7 +44,8 @@ test("store a User and recognize him/her as a Client or a Professional", async (
         email: "joe2@gmail.com",
         phone: "(86)8988-8989",
         password: "joe123",
-        type: 0
+        type: 0,
+        avatar: 1
     }
 
     const userc_id = (await getRepository(User).insert(client)).generatedMaps[0].id;
@@ -55,6 +57,7 @@ test("store a User and recognize him/her as a Client or a Professional", async (
     expect(professionalUser).not.toBeUndefined();
     expect(professionalUser.email).toBe(professional.email);
     expect(professionalUser.type).toBe(professional.type);
+    expect(professionalUser.avatar).toBe(professional.avatar);
     expect(professionalUser.professional.name).toBe(professional.name);
     expect(professionalUser.professional.speciality).toBe(professional.speciality);
     expect(professionalUser.professional.crm_crp).toBe(professional.crm_crp);
@@ -64,6 +67,7 @@ test("store a User and recognize him/her as a Client or a Professional", async (
     expect(clientUser).not.toBeUndefined();
     expect(clientUser.email).toBe(client.email);
     expect(clientUser.type).toBe(client.type);
+    expect(clientUser.avatar).toBe(client.avatar);
     expect(clientUser.client.name).toBe(client.name);
     expect(clientUser.client.phone).toBe(client.phone);
 
