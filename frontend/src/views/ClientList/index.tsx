@@ -21,7 +21,7 @@ const ClientList = (props: any) => {
         try {
             setLoading(true);
 
-            const response = await api.get(`/professionals/clients/${professional_id}`);
+            const response = await api.get(`/professionals/${professional_id}/clients`);
             setClients(staticClients);
 
             setLoading(false);

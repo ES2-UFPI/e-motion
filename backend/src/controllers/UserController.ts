@@ -5,10 +5,10 @@ class UserController {
 
     async getUserById(request: Request, response: Response) {
         try {
-            const { user_id } = request.params;
+            const { id } = request.params;
             const userService = new UserService();
 
-            const user = await userService.getUser(user_id);
+            const user = await userService.getUser(id);
 
             return response.status(200).json({ user });
         } catch (error) {

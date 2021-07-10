@@ -6,11 +6,11 @@ class ProfessionalController {
 
     async getClients(request: Request, response: Response) {
         try {
-            const { professional_id } = request.params;
+            const { id } = request.params;
 
             const professionalService = new ProfessionalService();
 
-            const clients = await professionalService.getClients(professional_id);
+            const clients = await professionalService.getClients(id);
 
             return response.status(200).json({clients});
         } catch(error) {

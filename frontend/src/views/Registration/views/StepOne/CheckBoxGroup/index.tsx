@@ -23,8 +23,26 @@ const CheckBoxGroup = forwardRef((props: any, ref: any) => {
         return arr.join(',');
     }
 
+    const setReceivedValues = (values: string) => {
+        const arr = values.split(',');
+        const newArr: boolean[] = new Array(sentimentos.length).fill(false);
+
+        arr.map((value: string) => {
+            for (const sentimento of sentimentos) {
+                if(value === sentimento.name) {
+                    newArr[sentimento.id] = true;
+                    break;
+                }
+            }
+        })
+
+        setValues(newArr);
+
+    }
+
     useImperativeHandle(ref, () => ({
         getValues: () => makeArrayOfTrueValues(),
+        setValues: (values: string) => setReceivedValues(values)
     }))
 
     const onChangeCheckBoxValue = (newValue: boolean, index: number) => {

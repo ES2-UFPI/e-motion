@@ -55,7 +55,7 @@ export default function Profile({ navigation }: any) {
 
     useEffect(() => {
         getUserInformation();
-        setUser({...user, isProfessional: false})
+        setUser({...user, isProfessional: true})
     }, [])
 
     return (

@@ -6,11 +6,11 @@ class EmotionalReactionController {
 
     async index(request: Request, response: Response): Promise<Response> {
         try {
-            const { client_id } = request.params;
+            const { id } = request.params;
 
             const emotionalReactionService = new EmotionalReactionService();
 
-            const emotionalReactions = await emotionalReactionService.listByUser(client_id);
+            const emotionalReactions = await emotionalReactionService.listByUser(id);
 
             return response.json(emotionalReactions)
 
@@ -20,14 +20,28 @@ class EmotionalReactionController {
 
     }
 
-
-    async destroy(request: Request, response: Response): Promise<Response> {
+    async getById(request: Request, response: Response): Promise<Response> {
         try {
-            const { client_id, emotional_reaction_id } = request.params;
+            const { id } = request.params;
 
             const emotionalReactionService = new EmotionalReactionService();
 
-            await emotionalReactionService.delete(client_id, emotional_reaction_id);
+            const emotionalReaction = await emotionalReactionService.getById(id);
+
+            return response.status(200).json({ emotionalReaction });
+        } catch (err) {
+            return response.status(400).json({ erro: err })
+        }
+    }
+
+
+    async destroy(request: Request, response: Response): Promise<Response> {
+        try {
+            const { id } = request.params;
+
+            const emotionalReactionService = new EmotionalReactionService();
+
+            await emotionalReactionService.delete(id);
 
             return response.json({ message: "Deletada com sucesso!" })
 
@@ -39,7 +53,7 @@ class EmotionalReactionController {
 
     async create(request: Request, response: Response): Promise<Response> {
         try {
-            const client_id = request.params['client_id'];
+            const client_id = request.params['id'];
             
             const emotionalReactionService = new EmotionalReactionService();
 
@@ -53,7 +67,7 @@ class EmotionalReactionController {
 
     async update(request: Request, response: Response): Promise<Response> {
         try {
-            const reaction_id = request.params['reaction_id'];
+            const reaction_id = request.params['id'];
 
             const body: EmotionalReaction = request.body;
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
     Container,
     ScrollView,
@@ -25,9 +25,23 @@ const RegistrationStepThree = (props: any) => {
 
     const [formInput, setFormInput] = useState<EmotionalReaction>();
 
+    const loadEmotionalReaction = async () => {
+        try {
+            const response = await api.get(`reactions/${id}`);
+            const emotionalReaction: EmotionalReaction  = response?.data['emotionalReaction'];
+            setFormInput({ ...formInput, ...emotionalReaction });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        loadEmotionalReaction();
+    }, []);
+
     const handleConfirmation = () => {
-        api.post(`reactions/update/${id}`, formInput) 
-            .then((res: AxiosResponse) => {console.log(res.data.message); navigateToHome()})
+        api.put(`reactions/${id}`, formInput) 
+            .then((res: AxiosResponse) => navigateToHome())
             .catch((err: AxiosError) => console.log(err.message));
     }
 
