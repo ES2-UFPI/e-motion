@@ -10,6 +10,7 @@ export const Container = styled.TouchableOpacity`
     height: ${height*0.14}px;
 
     background: #FFFFFF;
+    elevation: 20;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
 `

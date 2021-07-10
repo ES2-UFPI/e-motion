@@ -2,6 +2,11 @@ import { getRepository, Repository } from 'typeorm';
 import { User } from '../entities/User';
 import { ProfessionalService } from './ProfessionalService';
 import { ClientService } from './ClientService';
+import * as bcrypt from 'bcrypt';
+import { Client } from '../entities/Client';
+import { Professional } from '../entities/Professional';
+import * as jsonwebtoken from 'jsonwebtoken';
+require('dotenv/config');
 
 interface UserInterface {
     name: string;
@@ -108,6 +113,39 @@ class UserService {
         else {
             throw new Error("Usuário não encontrado!")
         }
+    }
+
+    async login(email: string, password: string, type: number) {
+
+        const userRepository = await getRepository(User);
+
+        const user = await userRepository.findOneOrFail({ where: { email, type } })
+            .catch(() => { 
+                throw new Error("Usuário não encontrado.") 
+            })
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) throw new Error("Senha incorreta.");
+
+        let specificUser: Client | Professional = null;
+
+        if (type == 0) {
+            const clientRepository = getRepository(Client);
+            specificUser = await clientRepository.findOne({ user_id: user.id });
+        } else {
+            const professionalRepository = getRepository(Professional);
+            specificUser = await professionalRepository.findOne({ user_id: user.id });
+        }
+
+        const accessToken = await jsonwebtoken.sign( { id: specificUser.id }, process.env.JWT_SECRET || 'secret' );
+
+        return {
+            accessToken,
+            email: user.email,
+            name: specificUser.name
+        }
+
     }
 
 }
