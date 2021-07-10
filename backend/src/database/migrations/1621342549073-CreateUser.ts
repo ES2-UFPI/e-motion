@@ -30,6 +30,12 @@ export class CreateUser1621342549073 implements MigrationInterface {
                     
                     
                 },
+                {
+                    name:"avatar",
+                    type:"INTEGER",
+                    
+                    
+                },
             
             
             ]
