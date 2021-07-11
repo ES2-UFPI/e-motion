@@ -1,6 +1,5 @@
 const INITIAL_STATE = {
-    accessToken: '',
-    refreshToken: ''
+    accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE2MjU5NTY5OTJ9.1y3VR6CCAYNLoCIoKb_JOxWi7TaPON4o7bDqYUMGem0'
 };
 
 const auth = (state = INITIAL_STATE, action: any) => {
@@ -10,7 +9,6 @@ const auth = (state = INITIAL_STATE, action: any) => {
             return {
                 ...state,
                 accessToken: action.payload.auth.accessToken || "",
-                refreshToken: action.payload.auth.refreshToken || ""
             };
         default:
             return state;

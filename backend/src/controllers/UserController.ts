@@ -5,10 +5,13 @@ class UserController {
 
     async getUserById(request: Request, response: Response) {
         try {
-            const { id } = request.params;
+            const userCtx = request.app.get('user');
+
+            if(!userCtx?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
+
             const userService = new UserService();
 
-            const user = await userService.getUser(id);
+            const user = await userService.getUser(userCtx?.id);
 
             return response.status(200).json({ user });
         } catch (error) {
