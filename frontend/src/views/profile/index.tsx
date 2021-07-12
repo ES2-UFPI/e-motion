@@ -43,7 +43,7 @@ export default function Profile({ navigation }: any) {
             setLoading(true);
 
             
-            const response = await api.get('/users/' + store.getState().user.id); //Busca dados no back com o id do usuário recuperado do redux
+            const response = await api.get('users'); //Busca dados no back com o id do usuário recuperado do redux
             const responseUser = response.data.user;
             setUser({ ...responseUser, ...{ isProfessional: (responseUser.type == 1) } });
 

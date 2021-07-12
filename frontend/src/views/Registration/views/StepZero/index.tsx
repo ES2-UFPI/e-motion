@@ -30,7 +30,7 @@ const RegistrationStepZero = (props: any) => {
 
     const createEmotionalReaction = (): void => {
         setLoading(true);
-        api.post(`clients/${'1'}/reactions`)
+        api.post(`clients/reactions`)
             .then((res: AxiosResponse) => {
                 const id = res.data['id'];
 

@@ -9,18 +9,18 @@ interface ClientInterface{
     password?:string;
     phone?:string;
     professional_id?:string;
-    id:string;
+    avatar?: number;
 }
 
 class ClientController {
 
     async create(request: Request, response: Response): Promise<Response> {
         try {
-            const {name,phone,email,password} = request.body;
+            const {name,phone,email,password, avatar} = request.body;
             
             const clientService = new UserService();
 
-            await clientService.createUser({name,phone,type:0,email,password})
+            await clientService.createUser({name,phone,type:0,email,password, avatar})
 
             return response.status(200).json({ message:"Cliente criado com sucesso!"});
         } catch (error) {
@@ -30,11 +30,15 @@ class ClientController {
 
     async update(request: Request, response: Response){
         try{
-            const {name,phone,email,password,professional_id,id} = request.body as ClientInterface;
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
+
+            const {name,phone,email,password,professional_id} = request.body as ClientInterface;
 
             const clientService = new ClientService();
 
-            await clientService.update({name,phone,email,password,professional_id,id})
+            await clientService.update({name,phone,email,password,professional_id,id: user.id})
 
             return response.status(200).json({ message:"Cliente atualizado com sucesso!"});
 

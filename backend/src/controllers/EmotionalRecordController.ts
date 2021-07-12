@@ -6,11 +6,13 @@ class EmotionalReactionController {
 
     async index(request: Request, response: Response): Promise<Response> {
         try {
-            const { id } = request.params;
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
 
             const emotionalReactionService = new EmotionalReactionService();
 
-            const emotionalReactions = await emotionalReactionService.listByUser(id);
+            const emotionalReactions = await emotionalReactionService.listByUser(user?.id);
 
             return response.json(emotionalReactions)
 
@@ -22,6 +24,11 @@ class EmotionalReactionController {
 
     async getById(request: Request, response: Response): Promise<Response> {
         try {
+
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
+
             const { id } = request.params;
 
             const emotionalReactionService = new EmotionalReactionService();
@@ -37,6 +44,11 @@ class EmotionalReactionController {
 
     async destroy(request: Request, response: Response): Promise<Response> {
         try {
+
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
+
             const { id } = request.params;
 
             const emotionalReactionService = new EmotionalReactionService();
@@ -53,11 +65,14 @@ class EmotionalReactionController {
 
     async create(request: Request, response: Response): Promise<Response> {
         try {
-            const client_id = request.params['id'];
+
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
             
             const emotionalReactionService = new EmotionalReactionService();
 
-            const id = await emotionalReactionService.create(client_id);
+            const id = await emotionalReactionService.create(user?.id);
 
             return response.status(200).json({ id })
         } catch (error) {
@@ -67,6 +82,10 @@ class EmotionalReactionController {
 
     async update(request: Request, response: Response): Promise<Response> {
         try {
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
+            
             const reaction_id = request.params['id'];
 
             const body: EmotionalReaction = request.body;

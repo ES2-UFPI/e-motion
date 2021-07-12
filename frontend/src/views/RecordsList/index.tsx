@@ -26,7 +26,7 @@ export default function RecordsList() {
 
         try {
             setLoading(true)
-            const reaponse = await api.get(`/clients/${client_id}/reactions`);
+            const reaponse = await api.get(`clients/reactions`);
 
            const data = reaponse.data as [any];
 
@@ -70,7 +70,7 @@ export default function RecordsList() {
 
     async function handleDelete(){
 
-        await api.delete(`/reactions/${idCurrent}`)
+        await api.delete(`reactions/${idCurrent}`)
         .then(()=>{
             const filteredRecord = records?.filter((record) => record.id != idCurrent );
             setRecords(filteredRecord);
