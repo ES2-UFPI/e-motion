@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container,
     ContainerMain,
@@ -16,15 +16,21 @@ import { ActivityIndicator } from 'react-native'
 
 const img = require('../../../../assets/alone-woman.png');
 
-const RegistrationStepZero = () => {
+const RegistrationStepZero = (props: any) => {
+
+    const params = props.route.params;
 
     const navigation = useNavigation();
 
     const [loading, setLoading] = useState<boolean>(false);
 
+    useEffect(() => {
+        if (params?.id) updateEmotionalReaction();
+    }, [])
+
     const createEmotionalReaction = (): void => {
         setLoading(true);
-        api.post(`reactions/create/${'1'}`)
+        api.post(`clients/reactions`)
             .then((res: AxiosResponse) => {
                 const id = res.data['id'];
 
@@ -32,6 +38,10 @@ const RegistrationStepZero = () => {
                 navigateToRegistration(id);
             })
             .catch((err: AxiosError) => { setLoading(false); console.log(err.message) });
+    }
+
+    const updateEmotionalReaction = () => {
+        navigateToRegistration(params?.id);
     }
 
     const navigateToRegistration = (id: string): void => {
@@ -53,7 +63,7 @@ const RegistrationStepZero = () => {
                 </Content>
                 <Button onPress={createEmotionalReaction}>
                     <TextButton>
-                        { loading ? <ActivityIndicator size="large" color="#FCFCFF" /> : "Vamos lá" }
+                        {loading ? <ActivityIndicator size="large" color="#FCFCFF" /> : "Vamos lá"}
                     </TextButton>
                 </Button>
             </ContainerMain>

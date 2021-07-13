@@ -16,10 +16,16 @@ class EmotionalReactionService {
         return emotionalReactions;
     }
 
+    async getById(id: string): Promise<EmotionalReaction> {
+        const emotionalReaction = await this.emotionalReactionRepository.findOne(id);
 
-    async delete(client_id: string, emotional_reaction_id: string) {
+        return emotionalReaction;
+    }
 
-        await this.emotionalReactionRepository.delete({ client_id, id: emotional_reaction_id });
+
+    async delete(emotional_reaction_id: string) {
+
+        await this.emotionalReactionRepository.delete({ id: emotional_reaction_id });
     }
 
     async create(client_id: string): Promise<string> {

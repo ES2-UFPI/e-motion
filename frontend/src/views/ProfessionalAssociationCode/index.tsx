@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { 
     Container,
     GoBackContainer,
@@ -16,6 +16,8 @@ import {
 import { Dimensions,ActivityIndicator } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Clipboard from 'expo-clipboard';
+import { GlobalContext } from '../../context/GlobalSnackbar';
+
 
 import api from '../../services/api'
 
@@ -27,10 +29,12 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
     const [code, setCode] = useState<string[]|[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
+    const {showSuccess} = useContext<any>(GlobalContext);
+
     function copyCOodeToClipboard() {
 
         Clipboard.setString("Este é o meu código de profissional no e-motion: "+code.join("") + "." + "\n\nUse ele para se associar a mim e permitir que lhe acompanhe pelo app.");
-
+        showSuccess('Seu código foi copiado para a área de transferência.');
     }
 
     function goBack( ){

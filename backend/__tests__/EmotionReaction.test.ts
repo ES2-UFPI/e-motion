@@ -30,7 +30,8 @@ test("Creating a new emotional reaction register", async () => {
         email: "joe2@gmail.com",
         phone: "(86)8988-8989",
         password: "doidinho123",
-        type: 0
+        type: 0,
+        avatar: 1
     }
 
     const user_id = (await getRepository(User).insert(client)).generatedMaps[0].id;

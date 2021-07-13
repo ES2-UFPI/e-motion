@@ -5,6 +5,7 @@ import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
 import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
 import api from '../../services/api'
+import { useNavigation } from '@react-navigation/native';
 
 interface Record{
     id:string;
@@ -27,7 +28,7 @@ export default function RecordsList() {
 
         try {
             setLoading(true)
-            const reaponse = await api.get(`/reactions/${client_id}`);
+            const reaponse = await api.get(`clients/reactions`);
 
            const data = reaponse.data as [any];
 
@@ -71,7 +72,7 @@ export default function RecordsList() {
 
     async function handleDelete(){
 
-        await api.delete(`/reactions/${client_id}/${idCurrent}`)
+        await api.delete(`reactions/${idCurrent}`)
         .then(()=>{
             const filteredRecord = records?.filter((record) => record.id != idCurrent );
             setRecords(filteredRecord);
@@ -81,13 +82,15 @@ export default function RecordsList() {
 
     }
 
+    const navigate = useNavigation();
+
     function onPressDelete(id:string){
         setIdCurrent(id);
         setModalIsVisible(true);
     }
 
-    function onPressCard(){
-        navigation.navigate('Registration');
+    function onPressCard(id: string){
+        navigate.navigate('Registration', { id })
     }
 
     return (
@@ -114,7 +117,7 @@ export default function RecordsList() {
                     date={item.date} 
                     completed={item.completed} 
                     onPressDelete={onPressDelete} 
-                    onPress={onPressCard}
+                    onPress={() => onPressCard(item.id)}
                 />}
              horizontal={false}
              contentContainerStyle={{

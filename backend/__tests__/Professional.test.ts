@@ -33,7 +33,8 @@ test("store a Professional and fetch it", async () => {
       speciality:"psicologia forense",
       crm_crp:"071.122.811-79",
       password:"joepsicologia",
-      type:1
+      type:1,
+      avatar: 1
   }
 
   const userService = new UserService();
@@ -50,6 +51,44 @@ test("store a Professional and fetch it", async () => {
 });
 
 
+test("store a Client and update it", async () => {
+
+  const newProfessional = {
+    name: "Joe",
+    email:"joe2@gmail.com",
+    speciality:"psicologia forense",
+    crm_crp:"071.122.811-79",
+    password:"joepsicologia",
+    type:1,
+    avatar: 1
+  }
+
+  
+  const userService = new UserService();
+
+  await userService.createUser(newProfessional);
+
+
+  let joe = await getRepository(Professional).findOne({
+      where: {
+        crm_crp:"071.122.811-79"
+      }
+  });
+
+  const professionalService = new ProfessionalService();
+
+  await professionalService.update({id:joe.id, name:"Joe Atualizado",});
+
+  let joe2 = await getRepository(Professional).findOne({
+    where: {
+      id:joe.id
+    }
+});
+
+  
+  expect(joe2.name).toBe("Joe Atualizado");
+});
+
 test("Fetch all clients from a professional", async () => {
   const professional = {
     name: "Maria Soares",
@@ -58,8 +97,8 @@ test("Fetch all clients from a professional", async () => {
     crm_crp:"071.122.811-79",
     association_code: "#322T",
     password:"mariapsicologia",
-    nickbame:"mariazinha",
-    type:1
+    type:1,
+    avatar: 1
   }
 
   const userp_id = (await getRepository(User).insert(professional)).generatedMaps[0].id;
@@ -71,7 +110,8 @@ test("Fetch all clients from a professional", async () => {
     email: "joe2@gmail.com",
     phone: "(86)8988-8989",
     password: "joe123",
-    type: 0
+    type: 0,
+    avatar: 1
 }
 
   const userc_id = (await getRepository(User).insert(client)).generatedMaps[0].id;
