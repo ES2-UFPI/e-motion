@@ -12,6 +12,9 @@ import { EmotionalReaction } from './EmotionalReaction';
     @Column()
     name:string;
 
+    @Column({default:""})
+    nickname:string;
+
     @Column()
     phone:string;
 

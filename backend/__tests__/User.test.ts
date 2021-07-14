@@ -29,6 +29,7 @@ test("store a User and recognize him/her as a Client or a Professional", async (
         name: "Maria Soares",
         email: "maria_soares@gmail.com",
         speciality: "psicologia forense",
+        nickbame:"joezinho",
         crm_crp: "071.122.811-79",
         association_code: "#322T",
         password: "mariapsicologia",
@@ -42,6 +43,7 @@ test("store a User and recognize him/her as a Client or a Professional", async (
     const client = {
         name: "Joe",
         email: "joe2@gmail.com",
+        nickbame:"joezinho",
         phone: "(86)8988-8989",
         password: "joe123",
         type: 0,
