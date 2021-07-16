@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList,ActivityIndicator} from 'react-native';
+import { FlatList,ActivityIndicator, RefreshControl} from 'react-native';
 import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
 import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
@@ -13,16 +13,29 @@ interface Record{
     completed:number;
 }
 
-export default function RecordsList() {
+export default function RecordsList({navigation}:any) {
 
     const client_id = "1";
+    const [refresh, setRefresh] = useState<boolean>(false);
+    const [isUpdated, setIsUpdated] = useState<boolean>(false);
     const [idCurrent, setIdCurrent] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
 
-    async function getRecordsFromUser(client_id:string) {
+    useEffect(() => {
+        navigation.addListener('tabPress', () => {
+            setRefresh(!refresh);    
+        });
+
+        navigation.addListener('focus', () => {
+                setRefresh(!refresh);           
+        });
+
+    }, [navigation]);
+
+    async function getRecordsFromUser() {
 
         try {
             setLoading(true)
@@ -63,9 +76,10 @@ export default function RecordsList() {
 
     useEffect(() => {
         if(client_id){
-            getRecordsFromUser(client_id)
+            getRecordsFromUser()
+            setIsUpdated(false)
         }
-    }, [])
+    }, [refresh])
 
 
     async function handleDelete(){
@@ -90,6 +104,7 @@ export default function RecordsList() {
     function onPressCard(id: string){
         navigate.navigate('Registration', { id })
     }
+
 
     return (
        <ContainerAll>
@@ -122,6 +137,9 @@ export default function RecordsList() {
                 paddingHorizontal:4,
                 paddingVertical:5
               }}
+              refreshControl={
+                <RefreshControl colors={['#fad2d2']} refreshing={refresh} onRefresh={()=> setRefresh(!refresh)} />
+            }
            />
            :
             <NothingFound>
