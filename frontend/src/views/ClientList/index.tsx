@@ -23,7 +23,7 @@ const ClientList = (props: any) => {
 
             const response = await api.get(`professionals/clients`);
             setClients(response.data.clients);
-            console.log(response)
+            //console.log(response.data)
             setLoading(false);
         } catch(error) {
             console.log(error);
