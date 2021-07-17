@@ -51,7 +51,6 @@ export default function RecordsList({navigation}:any) {
 
                 const fields_completed = Math.round(fields_cont / (fields.length-3) * 100);
 
-                console.log(fields.length-3,fields_cont)
                return {
                 id:record.id.toString(),
                 title:record.title,
