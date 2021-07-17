@@ -122,6 +122,7 @@ export default function RecordsList({navigation}:any) {
                     title={item.title} 
                     date={item.date} 
                     completed={item.completed} 
+                    hasDeleteIcon={true}
                     onPressDelete={onPressDelete} 
                     onPress={() => onPressCard(item.id)}
                 />}
