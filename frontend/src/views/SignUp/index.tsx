@@ -18,7 +18,7 @@ import {
 
 import api from '../../services/api'
 
-import Logo from '../../assets/logo.png';
+const Logo = require('../../assets/logo.png');
 
 interface RadioButtons{
     name:string;
