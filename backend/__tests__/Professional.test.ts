@@ -28,6 +28,7 @@ test("store a Professional and fetch it", async () => {
 
   const newProfessional = {
       name: "Joe",
+      nickbame:"joezao",
       email:"joe2@gmail.com",
       speciality:"psicologia forense",
       crm_crp:"071.122.811-79",
@@ -105,6 +106,7 @@ test("Fetch all clients from a professional", async () => {
 
   const client = {
     name: "Joe",
+    nickbame:"joezinho",
     email: "joe2@gmail.com",
     phone: "(86)8988-8989",
     password: "joe123",

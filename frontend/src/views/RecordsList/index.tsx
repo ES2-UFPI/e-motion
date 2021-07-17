@@ -15,7 +15,6 @@ interface Record{
 
 export default function RecordsList({navigation}:any) {
 
-    const client_id = "1";
     const [refresh, setRefresh] = useState<boolean>(false);
     const [isUpdated, setIsUpdated] = useState<boolean>(false);
     const [idCurrent, setIdCurrent] = useState<string>("");
@@ -53,7 +52,7 @@ export default function RecordsList({navigation}:any) {
 
                 const fields = Object.entries(record);
 
-                const fields_cont = fields.filter( field => field[1] !== '').length;
+                const fields_cont = fields.filter( field => ( (field[1] !== null) && (field[1] !== "") && (String(field[1]).length > 1) )).length;
 
                 const fields_completed = Math.round(fields_cont / fields.length * 100);
 
@@ -75,10 +74,8 @@ export default function RecordsList({navigation}:any) {
 
 
     useEffect(() => {
-        if(client_id){
-            getRecordsFromUser()
-            setIsUpdated(false)
-        }
+        getRecordsFromUser()
+        setIsUpdated(false)
     }, [refresh])
 
 
