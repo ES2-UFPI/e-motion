@@ -15,13 +15,18 @@ import {
     SignUpButton,
     SignUpText
 } from './styles';
-import background from '../../assets/background.png';
-import logo from '../../assets/logo-with-name.png';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Dimensions, ScrollView } from 'react-native';
+import { Dimensions, ScrollView, Alert } from 'react-native';
 import { useState } from 'react';
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
+import { setUser, setToken } from '../../store/actions';
+import { useDispatch } from 'react-redux';
+import { ActivityIndicator } from 'react-native-paper';
+import { AxiosError } from 'axios';
+
+const background = require('../../assets/background.png');
+const logo = require('../../assets/logo-with-name.png');
 
 const iconSize = Dimensions.get('window').width / 16;
 
@@ -30,19 +35,33 @@ const Authentication = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const navigation = useNavigation();
 
+    const dispatch = useDispatch();
+
     const nagigateToSignup = () => {
-        navigation.navigate('BottomNavigation');
+        navigation.navigate('SignUp');
     }
 
     const handleAuthentication = () => {
+        setIsLoading(true);
         api.post('users/authentication', {
             email,
             password
         })
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+            .then(res => {
+                dispatch(setToken({ accessToken: res.data.userInformations.accessToken }));
+                dispatch(setUser({
+                    name: res.data.userInformations.name,
+                    email: res.data.userInformations.email,
+                    phone: res.data.userInformations.phone,
+                    type: res.data.userInformations.type
+                }));
+                setIsLoading(false);
+            })
+            .catch((err: AxiosError) => { Alert.alert(err.response?.data.message); setIsLoading(false) });
     }
     return (
         <Container source={background} resizeMode="contain">
@@ -80,10 +99,16 @@ const Authentication = () => {
                             />
                         </InputBox>
                     </InputsBox>
-                    <Button>
-                        <TextButton onPress={handleAuthentication}>
-                            Entrar
-                        </TextButton>
+                    <Button disabled={true}>
+                        {
+                            isLoading ? 
+                                <ActivityIndicator color="#FCFCFF" />
+                            :
+                                <TextButton onPress={handleAuthentication}>
+                                    Entrar
+                                </TextButton>
+                        }
+
                     </Button>
                     <SignUpButton onPress={nagigateToSignup}>
                         <SignUpText>

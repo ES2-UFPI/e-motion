@@ -17,8 +17,8 @@ export default function EditProfile({ navigation, route }: any) {
 
     const { user } = route.params;
 
-    const [nome, onChangeNome] = useState(user.isProfessional ? user.professional.name : user.client.name);
-    const [telefone, onChangeTelefone] = useState(user.isProfessional ? user.professional.phone : user.client.phone);
+    const [nome, onChangeNome] = useState(user.name);
+    const [telefone, onChangeTelefone] = useState(user.phone);
     const [email, onChangeEmail] = useState(user.email);
     const [endereco, onChangeEndereco] = useState("");
 
@@ -29,7 +29,7 @@ export default function EditProfile({ navigation, route }: any) {
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
             <View style={styles.titleContainer} >
-                <Text style={styles.text}>{user.isProfessional ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
+                <Text style={styles.text}>{user.type === 1 ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
             </View>
             <View style={styles.inputsContainer}>
                 <View style={styles.inputContainer}>
@@ -55,7 +55,7 @@ export default function EditProfile({ navigation, route }: any) {
                         editable={false}
                     />
                 </View>
-                {user.isProfessional ? <View style={styles.inputContainer}>
+                {user.type === 1 ? <View style={styles.inputContainer}>
                     <TextInput style={styles.input}
                         onChangeText={onChangeEndereco}
                         value={endereco}

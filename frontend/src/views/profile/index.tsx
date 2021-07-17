@@ -13,6 +13,8 @@ import { Dimensions } from 'react-native';
 
 import { store } from '../../store'; //Variaveis do redux
 import api from '../../services/api';
+import { clearToken, clearUser } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#91919F';
@@ -20,14 +22,12 @@ const iconSize = SCREEN_WIDTH * 0.075;
 
 export default function Profile({ navigation }: any) {
     const [isEnabled, setIsEnabled] = useState(false);
-    const [loading, setLoading] = useState(true);
-
-    //Dados da tela e valores padrão]
-    const [user, setUser] = useState({ avatar: 3, email: 'julia_silva@mail.com', isProfessional: false, professional: { name: 'Lulu' }, client: { name: 'Lulu' } })
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const dispatch = useDispatch();
 
+    const user = useSelector((state: any) => state.user)
 
     function navigateToGenerateCode() {
         navigation.navigate('GenerateAssociationCode')
@@ -37,43 +37,27 @@ export default function Profile({ navigation }: any) {
         navigation.navigate('GerenciarProfessional')
     }
 
-    //Função que conecta do backend e recupera os dados
-    async function getUserInformation() {
-        try {
-            setLoading(true);
-
-            
-            const response = await api.get('users'); //Busca dados no back com o id do usuário recuperado do redux
-            const responseUser = response.data.user;
-            setUser({ ...responseUser, ...{ isProfessional: (responseUser.type == 1) } });
-
-            setLoading(false);
-        } catch (error) {
-            console.log(error);
-            setLoading(false);
-        }
+    function handleLogout() {
+        dispatch(clearToken());
+        dispatch(clearUser());
     }
-
-    useEffect(() => {
-        getUserInformation();
-    }, [])
 
     return (
         <View style={styles.container}>
             <View style={styles.leaveContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleLogout}>
                     <Text style={styles.leaveText}>Sair</Text>
                 </TouchableOpacity>
             </View>
             {
-                loading ? <ActivityIndicator size={80} color="#fad2d2" /> : <View style={styles.container}>
+                 <View style={styles.container}>
                     <View style={styles.avatarContainer}>
-                        <Avatar profilePicture={user.avatar} name={user.isProfessional ? user.professional.name : user.client.name} email={user.email} isProfessional={user.isProfessional} />
+                        <Avatar profilePicture={user.avatar} name={user.name} email={user.email} isProfessional={user.type === 1} />
                     </View>
                     <View style={styles.settingsContainer}>
                         <View style={styles.accountSettingsContainer}>
                             <Text style={styles.accountSettingsText}>Configurações da conta</Text>
-                            {!user.isProfessional ?
+                            {!(user.type === 1) ?
                                 <View>
                                     <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { user: user })} >
                                         <Text style={styles.optionText}>Editar perfil</Text>
@@ -95,7 +79,7 @@ export default function Profile({ navigation }: any) {
                                     </View>
                                 </View> :
                                 <View>
-                                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { user: user })}>
+                                    <TouchableOpacity style={styles.optionContainer} onPress={() => navigation.navigate('EditProfile', { user })}>
                                         <Text style={styles.optionText}>Editar perfil</Text>
                                         <MaterialCommunityIcons style={styles.optionIcon} name="chevron-right" color={iconColor} size={iconSize} />
                                     </TouchableOpacity>

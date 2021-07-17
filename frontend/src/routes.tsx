@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import EditProfile from './views/editProfile';
 import Registration from './views/Registration';
 import Acompanhamento from './views/acompanhamento';
@@ -10,12 +11,14 @@ import GerenciarProfessional from './views/GerenciarProfessional';
 import About from './views/about';
 import FAQ from './views/faq';
 import Authentication from './views/authentication';
+import SignUp from './views/SignUp';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const isLogged = false;
-
 export default function Routes() {
+
+  const auth = useSelector((state: any) => state.auth);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -24,8 +27,11 @@ export default function Routes() {
         }}
       >
         {
-          !isLogged ?
-            <Stack.Screen name='Authentication' component={Authentication} />
+          !auth.accessToken ?
+            <>
+              <Stack.Screen name='Authentication' component={Authentication} />
+              <Stack.Screen name='SignUp' component={SignUp} />
+            </>
             :
             <>
               <Stack.Screen name='BottomNavigation' component={BottomNavigation} />
@@ -36,7 +42,6 @@ export default function Routes() {
               <Stack.Screen name='Acompanhamento' component={Acompanhamento} />
               <Stack.Screen name='About' component={About} />
               <Stack.Screen name='FAQ' component={FAQ} />
-
             </>
         }
 
@@ -55,4 +60,5 @@ type RootStackParamList = {
   About: undefined
   FAQ: undefined
   Authentication: undefined
+  SignUp: undefined;
 };

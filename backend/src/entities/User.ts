@@ -16,7 +16,7 @@ import {Entity, Column, PrimaryGeneratedColumn,} from 'typeorm';
       @Column()
       type:number;
 
-      @Column()
+      @Column({default:0})
       avatar:number
 
 
