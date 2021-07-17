@@ -17,6 +17,7 @@ import {
 } from './styles';
 
 import api from '../../services/api'
+import { Dimensions } from 'react-native';
 
 const Logo = require('../../assets/logo.png');
 
@@ -44,6 +45,8 @@ interface InputUserForm{
 
 
 export default function SignUp() {
+
+    const SCREEN_WIDTH = Dimensions.get("window").width;
 
     const alertRef = useRef<any>();
     const [allFieldsFilled, setAllFieldsFilled] = useState<boolean>(true);
@@ -256,14 +259,18 @@ export default function SignUp() {
 
     }
 
-    async function navigateTologin() {}
-    async function navigateToNextStep() {}
+    async function navigateTologin() {
+        //adicionar navegação pro login
+    }
+    async function navigateToNextStep() {
+        //adicionar navegação pro passo depois do cadastro
+    }
 
     return (
         <ContainerAll>
           
             <ContainerLogo>
-                <Image source={Logo} />
+                <Image source={Logo} style={{ width: SCREEN_WIDTH*0.4, height: SCREEN_WIDTH*0.25,}} resizeMode='contain'  />
             </ContainerLogo>
 
             <Container >
