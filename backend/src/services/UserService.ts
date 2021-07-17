@@ -138,7 +138,7 @@ class UserService {
             specificUser = await professionalRepository.findOne({ user_id: user.id });
         }
 
-        const accessToken = await jsonwebtoken.sign( { id: specificUser.id }, process.env.JWT_SECRET || '' );
+        const accessToken = await jsonwebtoken.sign( { id: specificUser.id }, process.env.JWT_SECRET || 'secret' );
 
         return {
             accessToken,
