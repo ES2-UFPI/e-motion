@@ -9,7 +9,7 @@ interface Props {
     date: string;
     completed:number;
     hasDeleteIcon?:boolean;
-    onPressDelete(id:string): void ;
+    onPressDelete?:(id:string)=>void;
     onPress(): void ;
 }
 
@@ -22,7 +22,7 @@ export default function Record_card({id,title,date,completed,hasDeleteIcon,onPre
                     <Date> {date} </Date>
                 </DataContainer>
 
-            {hasDeleteIcon && <DeleteButton onPress={(e) => onPressDelete(id)}>
+            {hasDeleteIcon && <DeleteButton onPress={(e) => onPressDelete != undefined && onPressDelete(id)}>
                 <MaterialCommunityIcons name="trash-can-outline" color="#E1948B" size={20} />
             </DeleteButton>}
 
