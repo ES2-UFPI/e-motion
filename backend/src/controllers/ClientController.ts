@@ -47,6 +47,26 @@ class ClientController {
         }
 
     }
+
+    async unbindFromProfessional(request: Request, response: Response){
+        try{
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ message: 'Usuário não autenticado' });
+
+            const client_id = request.params['id'];
+
+            const clientService = new ClientService();
+
+            await clientService.update({professional_id: null, id: client_id});
+
+            return response.status(200).json({ message:"Cliente desvinculado com sucesso!"});
+
+        }
+        catch(error){
+            return response.status(400).json({ message:error.message });
+        }
+    }
 }
 
 export { ClientController }

@@ -17,6 +17,7 @@ routes.get("/professionals/clients", professionalController.getClients);
 
 routes.post("/clients", clientController.create);
 routes.put("/clients", clientController.update);
+routes.put("/clients/unbind/:id", clientController.unbindFromProfessional);
 routes.get("/clients/reactions", emotionalReactionController.index);
 routes.post("/clients/reactions", emotionalReactionController.create);
 
