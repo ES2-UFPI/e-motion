@@ -1,5 +1,8 @@
 const INITIAL_STATE = {
-    name: ""
+    name: "",
+    email: "",
+    phone: "",
+    type: null
 };
 
 const user = (state = INITIAL_STATE, action: any) => {
@@ -7,6 +10,7 @@ const user = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
 
         case `${baseAction}SET_USER`:
+            // console.log(action.payload);
             return {
                 ...state, ...action.payload.user
             }

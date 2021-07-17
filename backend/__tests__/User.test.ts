@@ -93,7 +93,7 @@ test('Login with existing client', async () => {
 
     const userService = new UserService();
 
-    const user:any = await userService.login(client.email, 'joe123', 0);
+    const user:any = await userService.login(client.email, 'joe123');
     
     expect(user).not.toBeUndefined();
     expect(user.email).toBe(client.email);
@@ -120,7 +120,7 @@ test('Login with existing professional', async () => {
 
     const userService = new UserService();
 
-    const user:any = await userService.login(professional.email, "mariapsicologia", 1);
+    const user:any = await userService.login(professional.email, "mariapsicologia");
     
     expect(user).not.toBeUndefined();
     expect(user.email).toBe(professional.email);

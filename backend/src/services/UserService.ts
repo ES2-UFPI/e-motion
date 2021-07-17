@@ -115,35 +115,41 @@ class UserService {
         }
     }
 
-    async login(email: string, password: string, type: number) {
+    async login(email: string, password: string) {
 
         const userRepository = await getRepository(User);
 
-        const user = await userRepository.findOneOrFail({ where: { email, type } })
-            .catch(() => { 
-                throw new Error("Usuário não encontrado.") 
+        const user = await userRepository.findOneOrFail({ email })
+            .catch(() => {
+                throw new Error("Usuário não encontrado.")
             })
+
+        console.log('user: ', user);
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) throw new Error("Senha incorreta.");
 
-        let specificUser: Client | Professional = null;
+        let specificUser: any = null;
 
-        if (type == 0) {
+        if (user.type == 0) {
             const clientRepository = getRepository(Client);
-            specificUser = await clientRepository.findOne({ user_id: user.id });
+            specificUser = await clientRepository.findOne({ where: { user_id: user.id } });
         } else {
             const professionalRepository = getRepository(Professional);
-            specificUser = await professionalRepository.findOne({ user_id: user.id });
+            specificUser = await professionalRepository.findOne({ where: { user_id: user.id } });
         }
 
-        const accessToken = await jsonwebtoken.sign( { id: specificUser.id }, process.env.JWT_SECRET || 'secret' );
+        console.log('specific: ', specificUser)
+
+        const accessToken = await jsonwebtoken.sign({ id: specificUser.id }, process.env.JWT_SECRET || 'secret');
 
         return {
             accessToken,
             email: user.email,
-            name: specificUser.name
+            name: specificUser.name,
+            phone: specificUser.phone,
+            type: user.type
         }
 
     }

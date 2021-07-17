@@ -23,8 +23,8 @@ export default function EditProfile({ navigation, route }: any) {
     const [loading, setLoading] = useState(false);
 
     //Todo usuário tem
-    const [name, onChangeNome] = useState(user.isProfessional ? user.professional.name : user.client.name);
-    const [nickname, onChangeNickname] = useState(user.isProfessional ? user.professional.nickname : user.client.nickname);
+    const [name, onChangeNome] = useState(user.name);
+    const [nickname, onChangeNickname] = useState(user.nickname);
     const [email, onChangeEmail] = useState(user.email);
 
     //Apenas cliente tem
@@ -62,7 +62,7 @@ export default function EditProfile({ navigation, route }: any) {
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
             <View style={styles.titleContainer} >
-                <Text style={styles.text}>{user.isProfessional ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
+                <Text style={styles.text}>{user.type === 1 ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
             </View>
             <View style={styles.inputsContainer}>
                 <View style={styles.inputContainer}>
@@ -87,7 +87,7 @@ export default function EditProfile({ navigation, route }: any) {
                         placeholder='Apelido'
                     />
                 </View>
-                {user.isProfessional ?
+                {user.type === 1 ?
                     <View>
                         <View style={styles.inputContainer}>
                             <TextInput style={styles.input}

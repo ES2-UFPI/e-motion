@@ -19,7 +19,8 @@ import {
 import api from '../../services/api'
 import { Dimensions } from 'react-native';
 
-const Logo = require('../../assets/logo.png');
+const background = require('../../assets/background.png');
+const Logo = require('../../assets/logo-with-name.png');
 
 interface RadioButtons{
     name:string;
@@ -47,6 +48,7 @@ interface InputUserForm{
 export default function SignUp() {
 
     const SCREEN_WIDTH = Dimensions.get("window").width;
+    const SCREEN_HEIGHT = Dimensions.get("window").height;
 
     const alertRef = useRef<any>();
     const [allFieldsFilled, setAllFieldsFilled] = useState<boolean>(true);
@@ -260,17 +262,17 @@ export default function SignUp() {
     }
 
     async function navigateTologin() {
-        //adicionar navegação pro login
+       navigate.navigate("Authentication")
     }
     async function navigateToNextStep() {
         //adicionar navegação pro passo depois do cadastro
     }
 
     return (
-        <ContainerAll>
+        <ContainerAll source={background}>
           
             <ContainerLogo>
-                <Image source={Logo} style={{ width: SCREEN_WIDTH*0.4, height: SCREEN_WIDTH*0.25,}} resizeMode='contain'  />
+                <Image source={Logo} style={{ width: SCREEN_WIDTH*0.4, height: SCREEN_HEIGHT*0.16,}} resizeMode='contain'  />
             </ContainerLogo>
 
             <Container >
@@ -282,9 +284,7 @@ export default function SignUp() {
                     onConfirm={()=>alertRef.current.close()}
                 />
 
-                <Title>Eu sou </Title>
-
-                <RadioButtonsComponent radioButtons={typeOfUser} />
+                
 
                 <ScrollView 
                     style={{
@@ -294,10 +294,14 @@ export default function SignUp() {
                         alignItems:"center", 
                         justifyContent: 'center',
                         paddingHorizontal:0,
-                        width:"100%"                        
+                        width:"100%",
+                        padding: SCREEN_HEIGHT*0.08                 
                      }}
                      showsVerticalScrollIndicator={false}
                 >
+                    <Title>Eu sou </Title>
+
+                    <RadioButtonsComponent radioButtons={typeOfUser} />
                     {
                         inputUserForm[type].map((input,index)=>(
                             <InputValidator 

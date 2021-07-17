@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 
 const { width, height } = Dimensions.get('window');
 
-export const ContainerAll = styled.View`
+export const ContainerAll = styled.ImageBackground`
     height: 100%;
     background: #E1948B;
     flex: 1;
@@ -17,6 +17,7 @@ export const ContainerLogo = styled.View`
     width:100%;
     alignItems: center;
     justifyContent:center;
+    padding-top: 30px;
 `
 
 export const Container = styled.View`
@@ -29,7 +30,7 @@ export const Container = styled.View`
     paddingHorizontal:10px;
     borderTopLeftRadius:30px;
     borderTopRightRadius:30px;
-    padding-bottom:${height*0.1}px;
+    padding-bottom:${height*0.01}px;
 `
 
 export const Title = styled.Text`

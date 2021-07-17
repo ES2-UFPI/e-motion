@@ -1,10 +1,16 @@
 interface Tokens {
-    accessToken: string
+  accessToken: string
 }
 
-export const SetTokens = (tokens: Tokens) => {
-    return {
-      type: '@auth/SET_TOKEN',
-      payload: { tokens }
-    }
+export const setToken = (tokens: Tokens) => {
+  return {
+    type: '@auth/SET_TOKEN',
+    payload: { tokens }
+  }
+}
+
+export const clearToken = () => {
+  return {
+    type: '@auth/CLEAR_TOKEN'
+  }
 }
