@@ -52,7 +52,7 @@ export default function Profile({ navigation }: any) {
             {
                  <View style={styles.container}>
                     <View style={styles.avatarContainer}>
-                        <Avatar profilePicture={user.avatar} name={user.name} email={user.email} isProfessional={user.type === 1} />
+                        <Avatar profilePicture={user.avatar} nickname={user.nickname} email={user.email} isProfessional={user.isProfessional} />
                     </View>
                     <View style={styles.settingsContainer}>
                         <View style={styles.accountSettingsContainer}>
