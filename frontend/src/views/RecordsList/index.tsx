@@ -16,7 +16,6 @@ interface Record{
 export default function RecordsList({navigation}:any) {
 
     const [refresh, setRefresh] = useState<boolean>(false);
-    const [isUpdated, setIsUpdated] = useState<boolean>(false);
     const [idCurrent, setIdCurrent] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
@@ -24,10 +23,6 @@ export default function RecordsList({navigation}:any) {
     const [records, setRecords] = useState<Record[]|undefined>([]);
 
     useEffect(() => {
-        navigation.addListener('tabPress', () => {
-            setRefresh(!refresh);    
-        });
-
         navigation.addListener('focus', () => {
                 setRefresh(!refresh);           
         });
@@ -52,10 +47,11 @@ export default function RecordsList({navigation}:any) {
 
                 const fields = Object.entries(record);
 
-                const fields_cont = fields.filter( field => ( (field[1] !== null) && (field[1] !== "") && (String(field[1]).length > 1) )).length;
+                const fields_cont = fields.filter( field => (field[1] !== "")).length -3;
 
-                const fields_completed = Math.round(fields_cont / fields.length * 100);
+                const fields_completed = Math.round(fields_cont / (fields.length-3) * 100);
 
+                console.log(fields.length-3,fields_cont)
                return {
                 id:record.id.toString(),
                 title:record.title,
@@ -75,7 +71,7 @@ export default function RecordsList({navigation}:any) {
 
     useEffect(() => {
         getRecordsFromUser()
-        setIsUpdated(false)
+        console.log(refresh)
     }, [refresh])
 
 
@@ -135,7 +131,7 @@ export default function RecordsList({navigation}:any) {
                 paddingVertical:5
               }}
               refreshControl={
-                <RefreshControl colors={['#fad2d2']} refreshing={refresh} onRefresh={()=> setRefresh(!refresh)} />
+                <RefreshControl colors={['#fad2d2']} refreshing={loading} onRefresh={()=> setRefresh(!refresh)} />
             }
            />
            :
