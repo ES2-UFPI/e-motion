@@ -33,7 +33,7 @@ const ClientList = (props: any) => {
             setLoading(true);
 
             if(searchQuery === "") {
-                const response = await api.get(`professionals/clients`, {headers: {authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE2MjY1MzEyNTR9.EORwoXB5Xvt77nRLhSVL5S67d_FP_n_uMROyFJaMa4A'}});
+                const response = await api.get(`professionals/clients`);
                 setClients(response.data.clients);
                 
             } else {

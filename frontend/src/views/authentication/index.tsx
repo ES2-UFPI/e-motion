@@ -55,6 +55,9 @@ const Authentication = () => {
                 dispatch(setToken({ accessToken: res.data.userInformations.accessToken }));
                 dispatch(setUser({
                     name: res.data.userInformations.name,
+                    nickname: res.data.userInformations.nickname,
+                    speciality: res.data.userInformations.speciality,
+                    crm_crp: res.data.userInformations.crm_crp,
                     email: res.data.userInformations.email,
                     phone: res.data.userInformations.phone,
                     type: res.data.userInformations.type

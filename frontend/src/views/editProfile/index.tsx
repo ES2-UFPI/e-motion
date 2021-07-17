@@ -10,6 +10,8 @@ import {
 import { Dimensions } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../store/actions';
 import api from '../../services/api';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -28,11 +30,13 @@ export default function EditProfile({ navigation, route }: any) {
     const [email, onChangeEmail] = useState(user.email);
 
     //Apenas cliente tem
-    const [telefone, onChangeTelefone] = useState(!user.isProfessional ? user.client.phone : "");
+    const [telefone, onChangeTelefone] = useState(!(user.type === 1) ? user.phone : "");
 
     //Apenas profissional tem speciality crm_crp
-    const [speciality, onChangeSpeciality] = useState(user.isProfessional ? user.professional.speciality : "");
-    const [crm_crp, onChangeCrm_crp] = useState(user.isProfessional ? user.professional.crm_crp : "");
+    const [speciality, onChangeSpeciality] = useState(user.type === 1 ? user.speciality : "");
+    const [crm_crp, onChangeCrm_crp] = useState(user.type === 1 ? user.crm_crp : "");
+
+    const dispatch = useDispatch();
 
     async function updateUserInformation() {
         try {
@@ -44,7 +48,15 @@ export default function EditProfile({ navigation, route }: any) {
                 speciality: speciality,
             }
             api.put('professionals', data)
-                .then((res: AxiosResponse) => navigation.goBack())
+                .then((res: AxiosResponse) => {
+                    dispatch(updateUser({
+                         name: data.name,
+                         nickname: data.nickname,
+                         speciality: data.speciality,
+                         crm_crp: data.crm_crp,
+                     }));
+                    navigation.goBack()
+                })
                 .catch((err: AxiosError) => console.log(err.message));
 
             setLoading(false);
