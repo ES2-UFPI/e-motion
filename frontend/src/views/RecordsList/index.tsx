@@ -4,7 +4,7 @@ import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
 import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
 import api from '../../services/api'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useIsFocused } from '@react-navigation/native';
 
 interface Record{
     id:string;
@@ -14,7 +14,7 @@ interface Record{
 }
 
 export default function RecordsList({navigation}:any) {
-
+    const isFocused = useIsFocused();
     const [refresh, setRefresh] = useState<boolean>(false);
     const [idCurrent, setIdCurrent] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
@@ -72,7 +72,7 @@ export default function RecordsList({navigation}:any) {
     useEffect(() => {
         getRecordsFromUser()
         console.log(refresh)
-    }, [refresh])
+    }, [refresh,isFocused])
 
 
     async function handleDelete(){
