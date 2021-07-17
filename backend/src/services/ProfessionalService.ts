@@ -31,11 +31,23 @@ class ProfessionalService {
     }
 
 
-    async getClients(professional_id: string): Promise<Client[]>{
+    async getClients(user_id: string): Promise<Client[]>{
 
-        const clients = await this.clientRepository.find({where: { professional_id: professional_id }, relations:['user']});
-
-        return clients;
+        const clients = await this.clientRepository.find({
+            join: { alias: 'clients', innerJoin: { professional: 'clients.professional' } },
+            where: qb => {
+              qb.where('professional.user_id = :user_id', { user_id });
+            },
+            relations:['user']
+        });
+     
+        return clients.map((client)=>{ return {
+            ...client,
+            user:{
+                ...client.user,
+                password:""
+            }
+        }});
     }
 
     async createProfessional({ name, crm_crp, speciality, user_id, association_code }: ProfessionalInterface) {
@@ -52,7 +64,14 @@ class ProfessionalService {
 
     async update({ name, crm_crp, speciality, association_code, email, password, id }: UpdateClientInterface) {
 
-        const professional = await this.professionalRepository.findOne({ where: [{ id }], relations: ['user'] })
+        const professional = await this.professionalRepository.findOne({ 
+            join: { alias: 'professionals', innerJoin: { user: 'professionals.user' } },
+            where: qb => {
+              qb.where('user.id = :user_id', { user_id:id });
+            },
+            relations: ['user'] 
+        })
+
         const professional_new_values = { name, crm_crp, speciality, association_code }
 
         if (professional) {
