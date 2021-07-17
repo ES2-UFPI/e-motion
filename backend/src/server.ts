@@ -34,6 +34,6 @@ app.use(async (req, res, next) => {
 
 app.use(routes);
 
-console.log(jsonwebtoken.sign({ id: '1' }, process.env.JWT_SECRET || ''))
+console.log(jsonwebtoken.sign({ id: 'f625692e-3aeb-4fa9-a489-7f0e40fa5270' }, process.env.JWT_SECRET || ''));
 
-app.listen(3333, () => console.log("Server Started!"));
+app.listen(process.env.PORT, () => console.log("Server Started!"));
