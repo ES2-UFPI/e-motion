@@ -7,6 +7,7 @@ module.exports = {
     "username": process.env.BD_USERNAME,
     "password": process.env.BD_PASSWORD,
     "database": "emotion",
+    "synchronize": true,
     "migrations":["./src/database/migrations/**.ts"],
     "cli":{
         "migrationsDir":"./src/database/migrations"

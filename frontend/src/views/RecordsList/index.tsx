@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList,ActivityIndicator} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { FlatList,ActivityIndicator, RefreshControl} from 'react-native';
 import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
 import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
 import api from '../../services/api'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useIsFocused } from '@react-navigation/native';
 
 interface Record{
     id:string;
@@ -14,17 +13,23 @@ interface Record{
     completed:number;
 }
 
-export default function RecordsList() {
-    
-    const navigation = useNavigation();
-    const client_id = "1avb";
+export default function RecordsList({navigation}:any) {
+    const isFocused = useIsFocused();
+    const [refresh, setRefresh] = useState<boolean>(false);
     const [idCurrent, setIdCurrent] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
 
-    async function getRecordsFromUser(client_id:string) {
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+                setRefresh(!refresh);           
+        });
+
+    }, [navigation]);
+
+    async function getRecordsFromUser() {
 
         try {
             setLoading(true)
@@ -42,10 +47,11 @@ export default function RecordsList() {
 
                 const fields = Object.entries(record);
 
-                const fields_cont = fields.filter( field => ( (field[1] !== null) && (field[1] !== "") && (String(field[1]).length > 1) )).length;
+                const fields_cont = fields.filter( field => (field[1] !== "")).length -3;
 
-                const fields_completed = Math.round(fields_cont / fields.length * 100);
+                const fields_completed = Math.round(fields_cont / (fields.length-3) * 100);
 
+                console.log(fields.length-3,fields_cont)
                return {
                 id:record.id.toString(),
                 title:record.title,
@@ -64,10 +70,9 @@ export default function RecordsList() {
 
 
     useEffect(() => {
-        if(client_id){
-            getRecordsFromUser(client_id)
-        }
-    }, [])
+        getRecordsFromUser()
+        console.log(refresh)
+    }, [refresh,isFocused])
 
 
     async function handleDelete(){
@@ -92,6 +97,7 @@ export default function RecordsList() {
     function onPressCard(id: string){
         navigate.navigate('Registration', { id })
     }
+
 
     return (
        <ContainerAll>
@@ -124,6 +130,9 @@ export default function RecordsList() {
                 paddingHorizontal:4,
                 paddingVertical:5
               }}
+              refreshControl={
+                <RefreshControl colors={['#fad2d2']} refreshing={loading} onRefresh={()=> setRefresh(!refresh)} />
+            }
            />
            :
             <NothingFound>

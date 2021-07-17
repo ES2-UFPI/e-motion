@@ -9,6 +9,8 @@ import ProfessionalAssociationCode from './views/ProfessionalAssociationCode';
 import GerenciarProfessional from './views/GerenciarProfessional';
 import About from './views/about';
 import FAQ from './views/faq';
+import SignUp from './views/SignUp';
+
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,6 +30,7 @@ export default function Routes() {
         <Stack.Screen name='Acompanhamento' component={Acompanhamento} />
         <Stack.Screen name='About' component={About} />
         <Stack.Screen name='FAQ' component={FAQ} />
+        <Stack.Screen name='SignUp' component={SignUp} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -42,4 +45,5 @@ type RootStackParamList = {
   Acompanhamento: undefined
   About: undefined
   FAQ: undefined
+  SignUp:undefined;
 };
