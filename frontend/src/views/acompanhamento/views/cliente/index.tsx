@@ -42,7 +42,7 @@ const Client = (props: any) => {
 
     function handleUnbind() {
         try {
-            api.put("clients/unbind/" + params.id).
+            api.put("clients/unbind", {id: params.id}).
                 then((response: AxiosResponse) => { Alert.alert(response.data.message); navigation.goBack() }).
                 catch((error: AxiosError) => Alert.alert(error.message));
         }
