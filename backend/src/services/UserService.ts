@@ -148,6 +148,9 @@ class UserService {
             accessToken,
             email: user.email,
             name: specificUser.name,
+            nickname: specificUser.nickname,
+            speciality: specificUser.speciality,
+            crm_crp: specificUser.crm_crp,
             phone: specificUser.phone,
             type: user.type
         }
