@@ -115,11 +115,11 @@ class UserService {
         }
     }
 
-    async login(email: string, password: string, type: number) {
+    async login(email: string, password: string) {
 
         const userRepository = await getRepository(User);
-
-        const user = await userRepository.findOneOrFail({ where: { email, type } })
+        
+        const user = await userRepository.findOneOrFail({ email })
             .catch(() => { 
                 throw new Error("Usuário não encontrado.") 
             })
@@ -130,7 +130,7 @@ class UserService {
 
         let specificUser: Client | Professional = null;
 
-        if (type == 0) {
+        if (user.type == 0) {
             const clientRepository = getRepository(Client);
             specificUser = await clientRepository.findOne({ user_id: user.id });
         } else {
