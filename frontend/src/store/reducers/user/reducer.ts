@@ -1,5 +1,8 @@
 const INITIAL_STATE = {
     name: "",
+    nickname: "",
+    speciality: "",
+    crm_crp: "",
     email: "",
     phone: "",
     type: null
@@ -17,6 +20,10 @@ const user = (state = INITIAL_STATE, action: any) => {
         case `${baseAction}CLEAR_USER`:
             return {
                 ...state, ...INITIAL_STATE
+            }
+        case `${baseAction}UPDATE_USER`:
+            return {
+                ...state, ...action.payload.user
             }
         default:
             return state;

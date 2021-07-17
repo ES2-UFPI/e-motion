@@ -10,3 +10,10 @@ export function clearUser() {
         type: '@user/CLEAR_USER'
     };
 }
+
+export function updateUser(user: any) {
+    return {
+        type: '@user/UPDATE_USER',
+        payload: { user },
+    };
+}
