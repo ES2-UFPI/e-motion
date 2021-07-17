@@ -5,14 +5,16 @@ import { UserService } from './UserService';
 
 interface ProfessionalInterface {
     name: string;
+    nickname?: string;
     crm_crp: string;
     speciality: string;
     association_code?: string;
     user_id: string;
 }
 
-interface UpdateClientInterface {
+interface UpdateProfessionalInterface {
     name?: string;
+    nickname?: string;
     crm_crp?: string;
     speciality?: string;
     association_code?: string;
@@ -50,10 +52,10 @@ class ProfessionalService {
 
     }
 
-    async update({ name, crm_crp, speciality, association_code, email, password, id }: UpdateClientInterface) {
+    async update({ name, nickname, crm_crp, speciality, association_code, email, password, id }: UpdateProfessionalInterface) {
 
         const professional = await this.professionalRepository.findOne({ where: [{ id }], relations: ['user'] })
-        const professional_new_values = { name, crm_crp, speciality, association_code }
+        const professional_new_values = { name, nickname, crm_crp, speciality, association_code }
 
         if (professional) {
             await this.professionalRepository.save({

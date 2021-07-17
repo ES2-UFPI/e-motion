@@ -23,7 +23,7 @@ export default function Profile({ navigation }: any) {
     const [loading, setLoading] = useState(true);
 
     //Dados da tela e valores padrão]
-    const [user, setUser] = useState({ avatar: 3, email: 'julia_silva@mail.com', isProfessional: false, professional: { name: 'Lulu' }, client: { name: 'Lulu' } })
+    const [user, setUser] = useState({ avatar: 2, email: 'julia_silva@mail.com', isProfessional: true, professional: { name: 'Júlia Silva', nickname: 'Lulu', speciality: 'Psicologia', crm_crp: '123456' }, client: { name: 'Júlia Silva', nickname: 'Lulu', phone: '8632222222' } })
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -42,8 +42,7 @@ export default function Profile({ navigation }: any) {
         try {
             setLoading(true);
 
-            
-            const response = await api.get('users'); //Busca dados no back com o id do usuário recuperado do redux
+            const response = await api.get('/users'); //Busca dados no back com o id do usuário recuperado do redux
             const responseUser = response.data.user;
             setUser({ ...responseUser, ...{ isProfessional: (responseUser.type == 1) } });
 
@@ -68,7 +67,7 @@ export default function Profile({ navigation }: any) {
             {
                 loading ? <ActivityIndicator size={80} color="#fad2d2" /> : <View style={styles.container}>
                     <View style={styles.avatarContainer}>
-                        <Avatar profilePicture={user.avatar} name={user.isProfessional ? user.professional.name : user.client.name} email={user.email} isProfessional={user.isProfessional} />
+                        <Avatar profilePicture={user.avatar} nickname={user.isProfessional ? user.professional.nickname : user.client.nickname} email={user.email} isProfessional={user.isProfessional} />
                     </View>
                     <View style={styles.settingsContainer}>
                         <View style={styles.accountSettingsContainer}>
