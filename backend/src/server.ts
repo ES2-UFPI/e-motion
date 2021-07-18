@@ -29,7 +29,7 @@ app.use(async (req, res, next) => {
             app.set('user', user);
         }
     } catch (err) {
-        // res.status(500).json({ error: 'Token de acesso inválido' })
+         res.status(500).json({ error: 'Token de acesso inválido' })
     }
     next();
 })
@@ -42,4 +42,4 @@ async function print() {
 }
 print();
 
-app.listen(process.env.PORT, () => console.log("Server Started!"));
+app.listen(process.env.PORT || 3333, () => console.log("Server Started!"));

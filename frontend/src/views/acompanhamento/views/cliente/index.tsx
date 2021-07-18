@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Alert, FlatList, TouchableOpacity, View  } from 'react-native';
+import { Alert, FlatList, TouchableOpacity, View, ActivityIndicator  } from 'react-native';
 import { AxiosError, AxiosResponse } from 'axios';
 import {
     BackGroundPage, 
@@ -14,6 +14,8 @@ import {
     ContactContainer,
     HeaderBaseText,
     IconContainer,
+    NothingFound,
+    TextNothingFound,
     Info,
     Avatar
 } from './styles';
@@ -26,6 +28,7 @@ import LineChartComponent from '../../../../components/LineChartComponent';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Dimensions } from 'react-native';
 import RadioButtonsComponent from '../../../../components/RadioButtonsComponent';
+import { ThemeConsumer } from 'styled-components/native';
 
 
 interface RadioButtons{
@@ -60,12 +63,71 @@ const Client = (props: any) => {
     const navigation = useNavigation();
     const profilePicture = require('../../../../assets/profile.png');
 
+    const [records, setRecords] = useState<Record[]|undefined>([]);
+    const [loading, setLoading] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
+    const [clientRegisters, setClientRegisters] = useState();
+    const [clientRegistersFiltered, setClientRegistersFiltered] = useState();
 
-    function onPressDelete(id: string) { }
+    async function getEmotionalReactions() {
 
-    function onPressCard() {
-        navigation.navigate('AcompanharComportamento');
+        try {
+            setLoading(true)
+            const reaponse = await api.get(`/professionals/client-reactions/${params.id}`);
+
+           const data = reaponse.data as [any];
+
+           if(data.length < 1){
+               setRecords(undefined)
+               setLoading(false);
+                return
+           }
+           
+           const records_from_user = data.map(record => {
+
+                const fields = Object.entries(record);
+
+                const fields_cont = fields.filter( field => (field[1] !== "")).length -3;
+
+                const fields_completed = Math.round(fields_cont / (fields.length-3) * 100);
+
+               return {
+                id:record.id.toString(),
+                title:record.title,
+                date:record.date,
+                completed:fields_completed,
+                what_the_client_felt: record.what_did_you_feel,
+                what_the_client_thought: record.what_did_you_think,
+                what_the_client_did: record.what_did_you_do,
+                when_this_usually_occurs: record.when_does_tb_usually_occur,
+                where_this_occurs: record.where_does_tb_occur,
+                who_is_present_when_this_occurs: record.who_is_present_when_tb_occurs,
+                what_happened_before_that: record.which_activitie_precede_tb,
+                what_other_people_say_or_do_before_that_happens: record.wd_other_people_sod_before_tb,
+                does_the_client_engage_in_any_other_behavior_before_this_happens: record.do_you_engage_other_behavior_before_tb_occurs,
+                what_happened_after_that: record.what_happens_after_tb,
+                what_the_client_did_when_this_occurred: record.wdyd_when_tb_occurs,
+                what_other_people_did_when_this_occurred: record.wd_other_people_do_when_tb_occurs,
+                what_changed_after_that_happened: record.what_changes_after_tb_occurs,
+                what_the_customer_got_after_it_happened: record.wd_you_get_after_tb, 
+                what_the_customer_did_or_avoided_after_it_happened: record.wdyd_or_avoid_after_tb
+               }
+           });
+
+           setRecords(records_from_user);
+           setLoading(false)
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        getEmotionalReactions();
+    }, []);
+
+    function onPressCard(id_record: string) {
+        navigation.navigate('AcompanharComportamento', records?.filter(record => record['id'] === id_record)[0]);
     }
 
     function unbindClient() {
@@ -82,10 +144,6 @@ const Client = (props: any) => {
             console.log(error);
         }
     }
-
-    const [loading, setLoading] = useState<boolean>(true);
-    const [clientRegisters, setClientRegisters] = useState();
-    const [clientRegistersFiltered, setClientRegistersFiltered] = useState();
 
     const [filter, setFilter] = useState<RadioButtons[]>([
         {
@@ -112,40 +170,6 @@ const Client = (props: any) => {
         }       
     ]);
 
-    
-    const staticRegisters = [
-        {
-            id: "0",
-            title: "Vi uma bela cena",
-            date: "24/05/2021 às 14:30",
-            completed: 50
-        },
-        {
-            id: "1",
-            title: "Me senti sozinho na faculdade",
-            date: "31/04/2021 às 08:00",
-            completed: 80
-        },
-        {
-            id: "2",
-            title: "Feliz com os amigos",
-            date: "12/05/2021 às 20:00",
-            completed: 100
-        },
-        {
-            id: "3",
-            title: "Chateado com fome",
-            date: "23/06/2021 às 14:00",
-            completed: 20
-        },
-        {
-            id: "32",
-            title: "ffff com fome",
-            date: "23/06/2021 às 14:00",
-            completed: 20
-        }
-    ]
-
     return (
         <BackGroundPage>
             <HeaderContainer>
@@ -166,7 +190,7 @@ const Client = (props: any) => {
                     <Row>
                         <IconContainer><FeatherIcon name="file-text" style={{ color: '#FCFCFF', fontSize: 24 }} /></IconContainer>
                         <Column>
-                            <HeaderBaseText style={{ fontSize: 14, lineHeight: 14, margin: 2 }}>{params.email}</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize: 14, lineHeight: 14, margin: 2 }}>{params.user.email}</HeaderBaseText>
                             <HeaderBaseText style={{ fontSize: 12, lineHeight: 11, margin: 2 }}>{params.phone}</HeaderBaseText>
                         </Column>
                     </Row>
@@ -186,8 +210,15 @@ const Client = (props: any) => {
                 </Info>
                 
 
+                { 
+                loading ?
+                <NothingFound>
+                    <ActivityIndicator size={80} color="#fad2d2" />  
+                </NothingFound>
+                :
+                records && records.length > 0 ?
                 <FlatList
-                    data={staticRegisters}
+                    data={records}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) =>
                     <Record_card 
@@ -195,7 +226,7 @@ const Client = (props: any) => {
                         title={item.title} 
                         date={item.date} 
                         completed={item.completed} 
-                        onPress={onPressCard}
+                        onPress={() => onPressCard(item.id)}
                     />
                     }
                     horizontal={false}
@@ -256,6 +287,13 @@ const Client = (props: any) => {
                         </View>
                     }
                 />
+                :
+                <NothingFound>
+                    <TextNothingFound>
+                        Nenhum registo foi encontrado :(
+                    </TextNothingFound>
+                </NothingFound>
+                }
             </RegistersContainer>
             <Alert2Options
                 visible={modalIsVisible}
