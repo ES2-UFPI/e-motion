@@ -48,6 +48,8 @@ class UserService {
             throw new Error("Email já cadastrado!")
         }
 
+        password = await bcrypt.hash(password,10);
+
         const newUser = this.userRepository.create({ email, password, type, avatar });
         await this.userRepository.save(newUser);
 

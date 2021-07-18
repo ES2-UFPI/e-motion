@@ -106,4 +106,5 @@ export const RegistersContainer = styled.View`
 export const RegistersBaseText = styled.Text`
     font-style: normal;
     margin: ${height * 0.04}px;
+    margin-bottom: ${height * 0.01}px;
 `
