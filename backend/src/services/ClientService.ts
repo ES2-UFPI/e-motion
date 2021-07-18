@@ -35,9 +35,9 @@ class ClientService {
     async update({ id, email, password, name, professional_id, phone }: UpdateClientInterface) {
 
         const client = await this.clientRepository.findOne({ 
-            join: { alias: 'clients', innerJoin: { professional: 'clients.professional' } },
+            join: { alias: 'clients', innerJoin: { user: 'clients.user' } },
             where: qb => {
-              qb.where('professional.user_id = :user_id', { user_id:id });
+              qb.where('user.id = :user_id', { user_id:id });
             },relations: ['user'] })
             
         const client_new_values = { name, professional_id, phone }
