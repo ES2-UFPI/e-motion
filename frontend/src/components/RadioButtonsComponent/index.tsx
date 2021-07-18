@@ -16,27 +16,27 @@ interface RadioButtonsComponentProps{
 }
 
 const Button = styled.TouchableOpacity`
-    flex: 1;
     flexDirection:row; 
-    alignItems: center;
-    justifyContent: center;
+    margin-horizontal:6px;
+    margin-vertical:${width/24}px;
 `
 const RadioButtonText = styled.Text`
     color: #161719;
     font-size: ${width/24}px;
-    margin-left: 5px;
+    margin-left: 0px;
 `
 
 const RadioButtonContainer = styled.View`
-    height:15%;
+    alignItems: center;
     flexDirection:row; 
-
+    flex-wrap: wrap;
+    justifyContent: space-between;
 `
 
 const RadioButtonsComponent = (props: RadioButtonsComponentProps) => {
     
     return(
-        <RadioButtonContainer>
+        <RadioButtonContainer key='dsadasd'> 
             {props.radioButtons.map((option) =>{
                 return (
                     <Button 
@@ -44,7 +44,7 @@ const RadioButtonsComponent = (props: RadioButtonsComponentProps) => {
                         onPress={e => {e.preventDefault(); option.onSelect()}} 
                         disabled={option.isSelected}
                     > 
-                        <RadioButton selected={option.isSelected} />
+                        <RadioButton  selected={option.isSelected} />
                         <RadioButtonText> {option.name} </RadioButtonText>
                     </Button>
                 )

@@ -11,8 +11,9 @@ interface Props{
     index:number;
     pattern?:string
     error_message?:string
-    force_error?:boolean;
+    isConfirmPassword?:boolean;
     isPassword?:boolean;
+    password:string;
 }
 
 const Input = styled.TextInput`
@@ -44,14 +45,15 @@ export const ErrorText = styled.Text`
     margin-bottom:2px;
 `
 
-    function InputValidator({placeholder,onChangeText,index,pattern,error_message,force_error,isPassword,value,}:Props) {
+    function InputValidator({placeholder,onChangeText,index,pattern,error_message,isConfirmPassword,isPassword,value,password}:Props) {
     
     const [isValid, setIsValid] = useState<boolean>(true);
 
-    function handleValidation(value:string) {
-        
-        if (force_error) return false;
-        
+    function handleValidation(value:string) {        
+       return password === value && value.length > 0;
+    }
+
+    function handleValidation2(value:string) {        
         if (!pattern || value.length < 5 ) return true;
 
         const condition = new RegExp(pattern, 'g');
@@ -59,16 +61,15 @@ export const ErrorText = styled.Text`
         return condition.test(value);
     }
 
-    function onChange(e: NativeSyntheticEvent<TextInputChangeEventData>) {
-        e.preventDefault();
-        const isValid = handleValidation( e.nativeEvent.text);
-        onChangeText(e.nativeEvent.text,index,isValid)
+    function onChange(value:string) {
+        const isValid = isConfirmPassword ? handleValidation( value):handleValidation2( value);
+        onChangeText(value,index,isValid)
         isValid ? setIsValid(true) : setIsValid(false);
     }
 
     return(
         <InputContainer>
-            <Input placeholder={placeholder} onChange={onChange} secureTextEntry={isPassword} value={value} />
+            <Input placeholder={placeholder} onChangeText={onChange} secureTextEntry={isPassword} value={value} />
             {!isValid && 
             <ErrorText >
                {error_message}

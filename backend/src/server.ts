@@ -41,4 +41,5 @@ async function print() {
     console.log(await bcrypt.hash('senha', 10));
 }
 print();
-app.listen(3333, () => console.log("Server Started!"));
+
+app.listen(process.env.PORT, () => console.log("Server Started!"));
