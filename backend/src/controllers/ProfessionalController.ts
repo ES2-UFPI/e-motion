@@ -29,7 +29,9 @@ class ProfessionalController {
 
             await professionalService.createUser({name,crm_crp,speciality,type:1,email,password, avatar})
 
-            return response.status(200).json({ message:"Profissional criado com sucesso!"});
+            const userInformations = await professionalService.login(email, password);
+
+            return response.status(200).json({ accessToken: userInformations.accessToken});
         } catch (error) {
             return response.status(400).json({message:error.message });
         }
