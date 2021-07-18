@@ -119,14 +119,14 @@ class UserService {
 
     async login(email: string, password: string) {
 
+        if(email === "" || password === "") throw new Error("Dados Vazios!");
+
         const userRepository = await getRepository(User);
 
         const user = await userRepository.findOneOrFail({ email })
             .catch(() => {
                 throw new Error("Usuário não encontrado.")
             })
-
-        console.log('user: ', user);
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
