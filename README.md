@@ -1,7 +1,7 @@
 # e-motion
 
 <h1 align="center">
-    <img alt="NextLevelWeek" title="#NextLevelWeek" src="https://user-images.githubusercontent.com/63355595/126072764-96b18aca-a6fb-4dc2-8e56-7ae733003d9f.jpeg" />
+    <img alt="NextLevelWeek" title="#NextLevelWeek" src="https://user-images.githubusercontent.com/63355595/126077115-dc4f91b1-01e1-43ae-abfc-0bffa278ef4a.png" width="200"/>
 </h1>
 
 <p align="center">
@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="#-projeto">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-design-do-projeto">Design do Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <a href="#-desenvolvedores">Desenvolvedores</a>
@@ -32,6 +32,10 @@
 </p>
 
 ## 📝 Design do Projeto
+
+<h1 align="center">
+    <img alt="NextLevelWeek" title="#NextLevelWeek" src="https://user-images.githubusercontent.com/63355595/126077180-eee36013-3030-4fc0-b987-f57357db5aa3.png"/>
+</h1>
 
 <p align="justify">
     O design do projeto foi desenvolvido na ferramenta Figma. O design pode ser acessado no link a seguir:
