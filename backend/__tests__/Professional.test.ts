@@ -63,11 +63,9 @@ test("store a Client and update it", async () => {
     avatar: 1
   }
 
-  
   const userService = new UserService();
 
   await userService.createUser(newProfessional);
-
 
   let joe = await getRepository(Professional).findOne({
       where: {
@@ -77,7 +75,7 @@ test("store a Client and update it", async () => {
 
   const professionalService = new ProfessionalService();
 
-  await professionalService.update({id:joe.id, name:"Joe Atualizado",});
+  await professionalService.update({id:joe.user_id, name:"Joe Atualizado",});
 
   let joe2 = await getRepository(Professional).findOne({
     where: {
@@ -119,12 +117,11 @@ test("Fetch all clients from a professional", async () => {
 
   const professionalService = new ProfessionalService();
 
-  const clients = await professionalService.getClients(professional_id);
+  const clients = await professionalService.getClients(userp_id);
   expect(clients).not.toBeUndefined();
   expect(clients[0].name).toBe(client.name);
   expect(clients[0].user.email).toBe(client.email);
   expect(clients[0].phone).toBe(client.phone);
-  expect(clients[0].user.password).toBe(client.password);
   expect(clients[0].professional_id).toBe(professional_id);
 
 });

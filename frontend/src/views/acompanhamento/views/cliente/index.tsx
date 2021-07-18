@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { FlatList } from 'react-native';
-import { 
+import { Alert, FlatList, TouchableOpacity, View  } from 'react-native';
+import { AxiosError, AxiosResponse } from 'axios';
+import {
     BackGroundPage, 
     RegistersContainer, 
     Row,
     Column,
-    RegistersBaseText, 
-    GoBackText, 
+    RegistersBaseText,
+    GoBackText,
     HeaderContainer,
     SettingsContainer,
     ContactContainer,
@@ -19,6 +20,39 @@ import {
 import Record_card from '../../../../components/Record_card';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import Alert2Options from '../../../../components/Alert2Options';
+import api from '../../../../services/api';
+import LineChartComponent from '../../../../components/LineChartComponent';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Dimensions } from 'react-native';
+import RadioButtonsComponent from '../../../../components/RadioButtonsComponent';
+
+
+interface RadioButtons{
+    name:string;
+    isSelected:boolean;
+    onSelect:()=>void;
+}
+
+interface Record{
+    id:string;
+    title:string;
+    date:string;
+    completed:number;
+}
+
+interface RecordGraph{
+    data:string;
+    value:number;
+
+}
+
+interface UserRecordList{
+    records:Record[];
+    graphData:any;
+}
+
+
 
 const Client = (props: any) => {
 
@@ -26,11 +60,59 @@ const Client = (props: any) => {
     const navigation = useNavigation();
     const profilePicture = require('../../../../assets/profile.png');
 
-    function onPressDelete(id:string){}
-    function onPressCard(){
+    const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
+
+    function onPressDelete(id: string) { }
+
+    function onPressCard() {
         navigation.navigate('AcompanharComportamento');
     }
 
+    function unbindClient() {
+        setModalIsVisible(true);
+    }
+
+    function handleUnbind() {
+        try {
+            api.put("clients/unbind", {id: params.id}).
+                then((response: AxiosResponse) => { Alert.alert(response.data.message); navigation.goBack() }).
+                catch((error: AxiosError) => Alert.alert(error.message));
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const [loading, setLoading] = useState<boolean>(true);
+    const [clientRegisters, setClientRegisters] = useState();
+    const [clientRegistersFiltered, setClientRegistersFiltered] = useState();
+
+    const [filter, setFilter] = useState<RadioButtons[]>([
+        {
+            name:"Dia",
+            isSelected:true,
+            onSelect:() =>{}
+        },
+        {
+            name:"Semana",
+            isSelected:false,
+            onSelect:() => {}
+        } 
+        ,
+        {
+            name:"Mês",
+            isSelected:false,
+            onSelect:() => {}
+        }
+        ,
+        {
+            name:"Tudo",
+            isSelected:false,
+            onSelect:() => {}
+        }       
+    ]);
+
+    
     const staticRegisters = [
         {
             id: "0",
@@ -55,45 +137,55 @@ const Client = (props: any) => {
             title: "Chateado com fome",
             date: "23/06/2021 às 14:00",
             completed: 20
+        },
+        {
+            id: "32",
+            title: "ffff com fome",
+            date: "23/06/2021 às 14:00",
+            completed: 20
         }
     ]
 
     return (
         <BackGroundPage>
             <HeaderContainer>
-                <GoBackText onPress={() => navigation.goBack()}><FontAwesomeIcon name="chevron-left"/>   Voltar</GoBackText>
+                <GoBackText onPress={() => navigation.goBack()}><FontAwesomeIcon name="chevron-left" />   Voltar</GoBackText>
                 <SettingsContainer>
-                        <Row>
-                            <Avatar source={profilePicture}></Avatar>
-                            <Column>
-                                <HeaderBaseText style={{fontSize: 18, lineHeight: 21, marginLeft: 10}}>{params.name}</HeaderBaseText>
-                                <HeaderBaseText style={{fontSize: 12, lineHeight: 16, marginLeft: 14}}>{params.nickname}</HeaderBaseText>
-                            </Column>
-                        </Row>
-                        <FeatherIcon name="settings" style={{color: '#FCFCFF', fontSize: 24}}/>
+                    <Row>
+                        <Avatar source={profilePicture}></Avatar>
+                        <Column>
+                            <HeaderBaseText style={{ fontSize: 18, lineHeight: 21, marginLeft: 10 }}>{params.name}</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize: 12, lineHeight: 16, marginLeft: 14 }}>{params.nickname}</HeaderBaseText>
+                        </Column>
+                    </Row>
+                    <TouchableOpacity onPress={() => unbindClient()}>
+                        <FeatherIcon name="settings" style={{ color: '#FCFCFF', fontSize: 24 }} />
+                    </TouchableOpacity>
                 </SettingsContainer>
                 <ContactContainer>
                     <Row>
-                        <IconContainer><FeatherIcon name="file-text" style={{color: '#FCFCFF', fontSize: 24}}/></IconContainer>
+                        <IconContainer><FeatherIcon name="file-text" style={{ color: '#FCFCFF', fontSize: 24 }} /></IconContainer>
                         <Column>
-                            <HeaderBaseText style={{fontSize: 14, lineHeight: 14, margin: 2}}>{params.user.email}</HeaderBaseText>
-                            <HeaderBaseText style={{fontSize: 12, lineHeight: 11, margin: 2}}>{params.phone}</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize: 14, lineHeight: 14, margin: 2 }}>{params.email}</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize: 12, lineHeight: 11, margin: 2 }}>{params.phone}</HeaderBaseText>
                         </Column>
                     </Row>
                     <Row>
-                        <IconContainer><FeatherIcon name="link" style={{color: '#FCFCFF', fontSize: 20}}/></IconContainer>
+                        <IconContainer><FeatherIcon name="link" style={{ color: '#FCFCFF', fontSize: 20 }} /></IconContainer>
                         <Column>
-                            <HeaderBaseText style={{fontSize: 14, lineHeight: 14, margin: 2}}>Consultório Virtual</HeaderBaseText>
-                            <HeaderBaseText style={{fontSize: 12, lineHeight: 11, margin: 2}}>Ter/Qui 14:30h</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize: 14, lineHeight: 14, margin: 2 }}>Consultório Virtual</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize: 12, lineHeight: 11, margin: 2 }}>Ter/Qui 14:30h</HeaderBaseText>
                         </Column>
                     </Row>
                 </ContactContainer>
             </HeaderContainer>
             <RegistersContainer>
                 <Info>
-                    <RegistersBaseText style={{fontSize: 14, lineHeight: 18, fontWeight:'normal',  color: '#292B2D'}}>Registros</RegistersBaseText>
-                    <RegistersBaseText style={{fontSize: 11, lineHeight: 14, fontWeight:'bold', color: '#91919F'}}>Total 10</RegistersBaseText>
+                    <RegistersBaseText style={{ fontSize: 14, lineHeight: 18, fontWeight: 'normal', color: '#292B2D' }}>Registros</RegistersBaseText>
+                    <RegistersBaseText style={{ fontSize: 11, lineHeight: 14, fontWeight: 'bold', color: '#91919F' }}>Total 10</RegistersBaseText>
                 </Info>
+                
+
                 <FlatList
                     data={staticRegisters}
                     keyExtractor={(item) => item.id}
@@ -103,7 +195,6 @@ const Client = (props: any) => {
                         title={item.title} 
                         date={item.date} 
                         completed={item.completed} 
-                        onPressDelete={onPressDelete} 
                         onPress={onPressCard}
                     />
                     }
@@ -111,9 +202,68 @@ const Client = (props: any) => {
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
                         paddingHorizontal:30,
+                        paddingBottom:15,
+                        marginTop:0,
+                        paddingTop:0
                     }}
+                    ListHeaderComponentStyle={{
+                        marginTop:0,
+                        paddingBottom:0,
+                        marginBottom:0
+                    }}
+                    ListHeaderComponent={
+                        <View 
+                            style={{     
+                                alignItems:"center",
+                                justifyContent: 'center',
+                                marginTop:Dimensions.get('window').width/30,
+                                paddingBottom:0,
+                                marginBottom:0,
+                                marginHorizontal:0
+                            }}
+                        >
+                             <View 
+                                style={{
+                                    width:"100%",
+                                    alignItems:"center",
+                                    justifyContent: 'center',
+                                    marginBottom:Dimensions.get('window').width/20,
+                                }}
+                            >
+                                <RadioButtonsComponent radioButtons={filter} />
+                            </View>
+                    
+                            <View 
+                                style={{
+                                    flex:2,
+                                }}
+                            >
+                                
+                            <ScrollView                                    
+                                    contentContainerStyle={{ 
+                                        alignItems:"center", 
+                                        justifyContent: 'center',                
+                                    }}
+                                    horizontal={true}
+                                > 
+                                    <LineChartComponent 
+                                        labels={['January', 'February', 'March', 'April', 'May', 'June']} 
+                                        data={[20, 45, 28, 80, 99, 43]} 
+                                    />
+                                </ScrollView>
+                            </View>
+                            
+                        </View>
+                    }
                 />
             </RegistersContainer>
+            <Alert2Options
+                visible={modalIsVisible}
+                close={() => setModalIsVisible(false)}
+                onConfirm={handleUnbind}
+                title={"Atenção!"}
+                content="Você tem certeza de que deseja desvincular este paciente?"
+            />
         </BackGroundPage>
     )
 }

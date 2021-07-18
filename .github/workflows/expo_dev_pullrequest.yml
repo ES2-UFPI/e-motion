@@ -1,0 +1,41 @@
+name: Expo Dev Pull request - Build
+on:
+ pull_request:
+   branches:
+     - dev
+     
+defaults:
+  run:
+    working-directory: ./frontend
+jobs:
+ build:
+   name: Build
+   runs-on: ubuntu-latest
+   strategy:
+     matrix: 
+       node-version: [14.x]
+   steps:
+   - uses: actions/checkout@v2
+
+   - name: Use Node.js ${{ matrix.node-version }}
+     uses: actions/setup-node@v2
+     with:
+       node-version: ${{ matrix.node-version }}
+     
+   - uses: expo/expo-github-action@v5
+     with:
+       expo-version: 4.x
+       expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+       expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+       expo-cache: true
+   - name: Install Dependencies
+   - run: npm install
+   
+   - name: Publish to Expo
+   - run: expo publish --release-channel production
+     
+   - name: Upload production-ready build files
+     uses: actions/upload-artifact@v2
+     with:
+       name: production-files
+       path: ./build

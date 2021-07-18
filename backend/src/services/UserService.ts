@@ -48,6 +48,8 @@ class UserService {
             throw new Error("Email já cadastrado!")
         }
 
+        password = await bcrypt.hash(password,10);
+
         const newUser = this.userRepository.create({ email, password, type, avatar });
         await this.userRepository.save(newUser);
 
@@ -148,6 +150,9 @@ class UserService {
             accessToken,
             email: user.email,
             name: specificUser.name,
+            nickname: specificUser.nickname,
+            speciality: specificUser.speciality,
+            crm_crp: specificUser.crm_crp,
             phone: specificUser.phone,
             type: user.type
         }
