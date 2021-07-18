@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { ProfessionalService } from '../services/ProfessionalService';
 import { UserService } from '../services/UserService';
+import { EmotionalReactionService } from '../services/EmotionalReactionService';
 
 class ProfessionalController {
 
@@ -17,6 +18,25 @@ class ProfessionalController {
 
             return response.status(200).json({clients});
         } catch(error) {
+            return response.status(400).json({message: error.message});
+        }
+    }
+
+    async getClientReactions(request: Request, response: Response) {
+        try {
+            const user = request.app.get('user');
+
+            if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
+
+            const { id } = request.params;
+
+            const emotionalReactionService = new EmotionalReactionService();
+
+            const emotionalReactions = await emotionalReactionService.listByUser(id);
+
+            return response.json(emotionalReactions);
+
+        } catch(error){
             return response.status(400).json({message: error.message});
         }
     }
