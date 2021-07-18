@@ -41,11 +41,11 @@ class ProfessionalController {
 
             if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
             
-            const {name,email,password,crm_crp,speciality,association_code} = request.body;
+            const {name,nickname,email,password,crm_crp,speciality,association_code} = request.body;
 
             const professionalService = new ProfessionalService();
 
-            await professionalService.update({name,crm_crp,speciality,email,password,association_code,id: user?.id})
+            await professionalService.update({name,nickname,crm_crp,speciality,email,password,association_code,id: user?.id})
 
             return response.status(200).json({ message:"Profissional atualizado com sucesso!"});
 

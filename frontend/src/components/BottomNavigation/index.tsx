@@ -6,14 +6,16 @@ import Profile from '../../views/profile';
 import { Dimensions } from 'react-native'
 import RecordsList from '../../views/RecordsList';
 import ClientList from '../../views/ClientList';
+import { useSelector } from 'react-redux';
 
 const Tab = createMaterialBottomTabNavigator<RoutesList>();
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconSize = SCREEN_WIDTH * 0.07;
 
-const isClient = true;
-
 export default function BottomNavigation() {
+
+  const user = useSelector((state: any) => state.user)
+
   return (
       <Tab.Navigator
         shifting
@@ -30,14 +32,14 @@ export default function BottomNavigation() {
         }}
 
       >
-        <Tab.Screen name="Home" component={isClient ? HomeCliente : () => <></>} options={{
+        <Tab.Screen name="Home" component={user.type === 0 ? HomeCliente : () => <></>} options={{
           tabBarLabel: 'Início',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home-outline" color={color} size={iconSize} />
           ),
         }} />
-        <Tab.Screen name="History" component={isClient ? RecordsList : ClientList} options={{
-          tabBarLabel: isClient ? 'Histórico' : 'Clientes',
+        <Tab.Screen name="History" component={user.type === 0 ? RecordsList : ClientList} options={{
+          tabBarLabel: user.type === 0 ? 'Histórico' : 'Clientes',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="file-document-outline" color={color} size={iconSize} />
           ),
