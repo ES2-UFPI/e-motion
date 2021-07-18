@@ -53,8 +53,6 @@ export default function SignUp() {
     const [loading, setLoading] = useState<boolean>(false);
     const [alertErrorMessage, setAlertErrorMessage] = useState<string>("");
     const navigate = useNavigation();
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
     const [inputUserForm, setInputUserForm] = useState<InputUserForm>({
         'cliente':[
             {
@@ -182,19 +180,7 @@ export default function SignUp() {
             [type]:inputUserSelected
         });
     }
-
-    function onChangeTextPassword(value:string,index:number,isValid:boolean){
-        const userInput = inputUserForm[getInputSelectd(typeOfUser)]
-        const previous_password = userInput[userInput.length - 1].value
-        
-        if(value.length >= previous_password.length && previous_password  !== value){
-            setConfirmPasswordError(true)
-        }else{
-            setConfirmPasswordError(false)
-        }
-        
-        setConfirmPassword(value);
-    }   
+ 
 
     function setUserUserType(){        
         let clone = typeOfUser;
@@ -203,11 +189,6 @@ export default function SignUp() {
         setTypeOfUser(clone);
         setType(getInputSelectd(typeOfUser));      
     }
-
-    useEffect(() => {
-     setConfirmPassword("");
-    }, [type])
-
 
     function getInputSelectd(itens:RadioButtons[]){
         return itens.filter((option)=> option.isSelected)[0].name as keyof typeof inputUserForm
@@ -228,16 +209,16 @@ export default function SignUp() {
 
     useEffect(() => {
         const fields_filled = inputUserForm[type].filter(
-            (option)=> !option.isConfirmPassword && option.value !== "" && option.isValid)
-        const aux = confirmPassword !== "" && !confirmPasswordError ? 1:0;
+            (option)=> option.value !== "" && option.isValid)
+        
+        setAllFieldsFilled(fields_filled.length === inputUserForm[type].length);
 
-        setAllFieldsFilled(fields_filled.length + aux === inputUserForm[type].length);
-
-    }, [inputUserForm,confirmPassword]);
+    }, [inputUserForm]);
 
     
     async function registerUser() {
-        if(!allFieldsFilled) {
+            
+        if(!allFieldsFilled ) {
             setAlertErrorMessage("Você deve preencher todos os campos de forma correta para concluir seu cadastro!");
             alertRef.current.show();
 
@@ -253,8 +234,9 @@ export default function SignUp() {
         })
         .catch((err: AxiosError) => { 
             setLoading(false); 
-            console.log(err.message);
-            setAlertErrorMessage(err.message);
+            console.log(err.response?.data);
+            setAlertErrorMessage(err.response?.data.message);
+            alertRef.current.show();
         });   
 
     }
@@ -303,13 +285,14 @@ export default function SignUp() {
                             <InputValidator 
                                 key={input.name_database+type}
                                 index={index} 
-                                value={!input.isConfirmPassword?input.value:confirmPassword}
+                                value={input.value}
                                 pattern={input.pattern}
-                                onChangeText={!input.isConfirmPassword?onChangeText:onChangeTextPassword}
+                                onChangeText={onChangeText}
                                 placeholder={input.placeholder} 
                                 isPassword={input.isPassword}
                                 error_message={input.error_message}
-                                force_error={input.isConfirmPassword?confirmPasswordError:false}
+                                isConfirmPassword={input.isConfirmPassword}
+                                password={inputUserForm[type][inputUserForm[type].length-2].value}
                             />
                         ))
                     }
