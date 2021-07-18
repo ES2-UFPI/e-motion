@@ -108,3 +108,16 @@ export const RegistersBaseText = styled.Text`
     margin: ${height * 0.04}px;
     margin-bottom: ${height * 0.01}px;
 `
+
+export const NothingFound = styled.View`
+    width:100%;
+    alignItems: center;
+    justifyContent: center;
+     font-size: ${width/16}px;
+    flex: 1;
+`
+
+export const TextNothingFound = styled.Text`
+     font-size: ${width/21}px;
+
+`

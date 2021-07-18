@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -13,14 +13,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconSize = SCREEN_WIDTH * 0.075;
 
-export default function AcompanharAntecedentes({ navigation }: any) {
+export default function AcompanharAntecedentes({ route, navigation }: any) {
 
-    const [questao1, onChangeQuestao1] = useState("Foi a primeira vez que aconteceu.");
-    const [questao2, onChangeQuestao2] = useState("Aconteceu uma vez somente, no shopping.");
-    const [questao3, onChangeQuestao3] = useState("Meu irmão.");
-    const [questao4, onChangeQuestao4] = useState("Eu estava andando de carro.");
-    const [questao5, onChangeQuestao5] = useState("Estavam torcendo por mim.");
-    const [questao6, onChangeQuestao6] = useState("Não.");
+    const params = route.params;
 
     return (
         <View style={styles.generalView}>
@@ -35,8 +30,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>Quando isso costuma ocorrer.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao1}
-                        value={questao1}
+                        value={params.when_this_usually_occurs}
                         editable={false}
                         multiline={true}
                     />
@@ -44,8 +38,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>Onde isso ocorre.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao2}
-                        value={questao2}
+                        value={params.where_this_occurs}
                         editable={false}
                         multiline={true}
                     />
@@ -53,8 +46,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>Quem está presente quando isso ocorre.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao3}
-                        value={questao3}
+                        value={params.who_is_present_when_this_occurs}
                         editable={false}
                         multiline={true}
                     />
@@ -62,8 +54,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que aconteceu antes disso.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao4}
-                        value={questao4}
+                        value={params.what_happened_before_that}
                         editable={false}
                         multiline={true}
                     />
@@ -71,8 +62,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que as outras pessoas dizem ou fazem antes disso acontecer.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao5}
-                        value={questao5}
+                        value={params.what_other_people_say_or_do_before_that_happens}
                         editable={false}
                         multiline={true}
                     />
@@ -80,8 +70,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O cliente se envolve em algum outro comportamento antes disso acontecer?</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao6}
-                        value={questao6}
+                        value={params.does_the_client_engage_in_any_other_behavior_before_this_happens}
                         editable={false}
                         multiline={true}
                     />
@@ -91,7 +80,7 @@ export default function AcompanharAntecedentes({ navigation }: any) {
                         <MaterialCommunityIcons style={styles.previousIcon} name="chevron-left" color={'#FCFCFF'} size={iconSize} />
                         <Text style={styles.previousText}>Anterior</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('AcompanharConsequencias')}>
+                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('AcompanharConsequencias', params)}>
                         <Text style={styles.continueText}>Continuar</Text>
                         <MaterialCommunityIcons style={styles.continueIcon} name="chevron-right" color={'#FCFCFF'} size={iconSize} />
                     </TouchableOpacity>
