@@ -14,7 +14,7 @@
 
 </p>
 
-## :computer: Projeto
+## 💻 Projeto
 
 <p align="justify">
     O e-motion é um aplicativo criado para facilitar o acompanhamento e interação entre psicólogos e clientes. Nele é possível fazer registros emocionais de situações vividas pelo cliente: quais os sentimentos envolvidos, contextos, causas e consequências. Todos os registros podem ser acessados pelo psicólogo responsável pelo cliente.
@@ -24,7 +24,7 @@
     O psicólogo pode ter acesso a todos os registros emocionais de seus pacientes e, consequentemente, fazer um acompanhamento mais próximo. O e-motion não tem a intenção de substituir sessões de terapia, pelo contrário, é uma ferramenta que visa auxiliar o psicólogo no acompanhamento de seu cliente durante o período entre cada sessão.
 </p>
 
-## :pencil: Design do Projeto
+## 📝 Design do Projeto
 
 <p align="justify">
     O design do projeto foi desenvolvido na ferramenta Figma. O design pode ser acessado no link a seguir:
@@ -32,7 +32,7 @@
 
 - [Figma](https://www.figma.com/file/zrPp9YGbieg5SpGiZte6QR/e-motion?node-id=0%3A1)
 
-## :rocket: Tecnologias
+## 🚀 Tecnologias
 
 
 <p align="justify">
