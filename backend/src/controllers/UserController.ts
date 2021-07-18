@@ -21,10 +21,13 @@ class UserController {
 
     async login(request: Request, response: Response) {
         try {
-            const { email, password, type } = request.body;
+            const { email, password } = request.body;
+
+            console.log(email, password);
+
             const userService = new UserService();
 
-            const userInformations = userService.login(email, password, type);
+            const userInformations = await userService.login(email, password);
 
             return response.status(200).json({ userInformations });
 

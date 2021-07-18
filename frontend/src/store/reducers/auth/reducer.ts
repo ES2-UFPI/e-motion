@@ -1,14 +1,20 @@
 const INITIAL_STATE = {
-    accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJpYXQiOjE2MjU5NTY5OTJ9.1y3VR6CCAYNLoCIoKb_JOxWi7TaPON4o7bDqYUMGem0'
+    accessToken: ''
 };
 
 const auth = (state = INITIAL_STATE, action: any) => {
     const baseAction = '@auth/';
+    console.log(action.payload);
     switch (action.type) {
         case `${baseAction}SET_TOKEN`:
             return {
                 ...state,
-                accessToken: action.payload.auth.accessToken || "",
+                accessToken: action.payload.tokens.accessToken || "",
+            };
+        case `${baseAction}CLEAR_TOKEN`:
+            return {
+                ...state,
+                ...INITIAL_STATE
             };
         default:
             return state;

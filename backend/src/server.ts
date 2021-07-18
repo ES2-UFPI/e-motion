@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { routes } from "./routes";
 import * as jsonwebtoken from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
+
 require('dotenv/config');
 import './database';
 
@@ -34,6 +36,10 @@ app.use(async (req, res, next) => {
 
 app.use(routes);
 
-console.log(jsonwebtoken.sign({ id: 'f625692e-3aeb-4fa9-a489-7f0e40fa5270' }, process.env.JWT_SECRET || ''));
+async function print() {
+    console.log(jsonwebtoken.sign({ id: '1' }, process.env.JWT_SECRET || ''))
+    console.log(await bcrypt.hash('senha', 10));
+}
+print();
 
 app.listen(process.env.PORT, () => console.log("Server Started!"));

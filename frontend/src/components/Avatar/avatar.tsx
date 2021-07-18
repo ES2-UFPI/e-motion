@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         height: PROFILE_PICTURE_DIMENSION,
         borderRadius: PROFILE_PICTURE_DIMENSION / 2,
     },
-    name: {
+    nickname: {
         color: '#FCFCFF',
         fontSize: 24,
         fontWeight: 'bold',
@@ -83,7 +83,7 @@ const Avatar = (props: any) => {
                 </View> : <></>}
             </View>
             <View style={styles.textContainer}>
-                <Text style={styles.name}>{props.name}</Text>
+                <Text style={styles.nickname}>{props.nickname}</Text>
                 <Text style={styles.email}>{props.email}</Text>
             </View >
         </View >
