@@ -14,6 +14,13 @@
 
 </p>
 
+<p align="center">
+  <a href="#-projeto">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-design-do-projeto">Design do Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#-desenvolvedores">Desenvolvedores</a>
+</p>
+
 ## 💻 Projeto
 
 <p align="justify">
