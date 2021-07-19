@@ -29,7 +29,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Dimensions } from 'react-native';
 import RadioButtonsComponent from '../../../../components/RadioButtonsComponent';
 import { ThemeConsumer } from 'styled-components/native';
-
+import moment from 'moment';
 
 interface RadioButtons{
     name:string;
@@ -95,7 +95,7 @@ const Client = (props: any) => {
     ]);
 
     async function getEmotionalReactions() {
-
+        
         try {
             setLoading(true)
             const reaponse = await api.get(`/professionals/client-reactions`,{
@@ -159,7 +159,7 @@ const Client = (props: any) => {
     useEffect(() => {
         //faz o processamento e transformação dos dadso para o gráfico
         
-       // setGraphData(process_data())
+        setGraphData(process_data())
         setRecordsFilteredEmotion(undefined)
 
     }, [recordsFiltered,records,loading2]);
@@ -340,7 +340,7 @@ const Client = (props: any) => {
                     <Record_card 
                         id={item.id} 
                         title={item.title} 
-                        date={new Date(item.data_registro).toLocaleDateString('pt-br')} 
+                        date={moment(item.data_registro).format('DD/MM/YYYY _ HH:mm').replace("_","às")} 
                         completed={item.completed} 
                         onPress={() => onPressCard(item.id)}
                     />

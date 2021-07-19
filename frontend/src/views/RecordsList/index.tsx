@@ -5,6 +5,7 @@ import Record_card from '../../components/Record_card';
 import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
 import api from '../../services/api'
 import { useNavigation,useIsFocused } from '@react-navigation/native';
+import moment from 'moment';
 
 interface Record{
     id:string;
@@ -119,7 +120,7 @@ export default function RecordsList({navigation}:any) {
                 <Record_card 
                     id={item.id} 
                     title={item.title} 
-                    date={new Date(item.data_registro).toLocaleDateString()} 
+                    date={moment(item.data_registro).format('DD/MM/YYYY _ HH:mm').replace("_","às")} 
                     completed={item.completed} 
                     hasDeleteIcon={true}
                     onPressDelete={onPressDelete} 
