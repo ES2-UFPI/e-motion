@@ -44,6 +44,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
+    profilePictureContainer: {
+        paddingBottom: 0,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
     textContainer: {
         alignItems: 'center',
     }
@@ -73,19 +78,25 @@ function getProfilePicture(profilePicture: any) {
 const Avatar = (props: any) => {
     return (
         <View style={styles.componentContainer}>
-            <View style={styles.profilePictureAndLabelContainer}>
+            <View style={props.hasUserDetails ? styles.profilePictureAndLabelContainer : styles.profilePictureContainer}>
                 <Image
-                    style={styles.profilePicture}
+                    style={{width: props.dimension, height: props.dimension, borderRadius: props.dimension/2}}
                     source={getProfilePicture(props.profilePicture)}
                 />
-                {props.isProfessional ? <View style={styles.label}>
+                {
+                props.isProfessional && 
+                <View style={styles.label}>
                     <Text style={styles.labelText}>PROFISSIONAL</Text>
-                </View> : <></>}
+                </View> 
+                }
             </View>
+            {
+            props.hasUserDetails &&
             <View style={styles.textContainer}>
                 <Text style={styles.nickname}>{props.nickname}</Text>
                 <Text style={styles.email}>{props.email}</Text>
             </View >
+            }
         </View >
 
     )
