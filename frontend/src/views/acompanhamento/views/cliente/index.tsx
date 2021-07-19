@@ -55,7 +55,7 @@ const Client = (props: any) => {
     const profilePicture = require('../../../../assets/profile.png');
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
-    const [graphData, setGraphData] = useState<number[]>([0,2,2,0,0,0,0,1]);
+    const [graphData, setGraphData] = useState<number[]>([1,2,2,0,5,1,1,1]);
     const [loading, setLoading] = useState<boolean>(true);
     const [loading2, setLoading2] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
@@ -159,7 +159,7 @@ const Client = (props: any) => {
     useEffect(() => {
         //faz o processamento e transformação dos dadso para o gráfico
         
-        setGraphData(process_data())
+       // setGraphData(process_data())
         setRecordsFilteredEmotion(undefined)
 
     }, [recordsFiltered,records,loading2]);
