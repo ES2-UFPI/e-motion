@@ -16,6 +16,8 @@ interface UpdateClientInterface {
     password?: string;
     professional_id?: string;
     id: string;
+    nickname?: string;
+    avatar?: number;
 }
 
 
@@ -32,15 +34,12 @@ class ClientService {
         await this.clientRepository.save(newClient);
     }
 
-    async update({ id, email, password, name, professional_id, phone }: UpdateClientInterface) {
+    async update({ id, email, password, name, professional_id, phone, nickname, avatar }: UpdateClientInterface) {
 
-        const client = await this.clientRepository.findOne({ 
-            join: { alias: 'clients', innerJoin: { user: 'clients.user' } },
-            where: qb => {
-              qb.where('user.id = :user_id', { user_id:id });
-            },relations: ['user'] })
+        console.log(avatar, nickname)
+        const client = await this.clientRepository.findOne({where: { id }, relations: ['user']})
             
-        const client_new_values = { name, professional_id, phone }
+        const client_new_values = { name, professional_id, phone, nickname }
 
         if (client) {
             await this.clientRepository.save({
@@ -53,7 +52,8 @@ class ClientService {
             await userService.updateUser({
                 id: client.user_id,
                 email,
-                password
+                password,
+                avatar
             })
         } else
             throw new Error(`Cliente não encontrado`)

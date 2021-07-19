@@ -5,7 +5,8 @@ const INITIAL_STATE = {
     crm_crp: "",
     email: "",
     phone: "",
-    type: null
+    type: null,
+    avatar: 1
 };
 
 const user = (state = INITIAL_STATE, action: any) => {

@@ -55,9 +55,9 @@ export const Input = styled.TextInput`
 `
 
 export const Column = styled.View`
-    display: flex;
     flex-direction: column;
     align-items: center;
+    width: 90%;
 `
 
 export const Row = styled.View`

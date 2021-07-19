@@ -11,6 +11,7 @@ interface ClientInterface {
     phone?: string;
     professional_code?: string;
     avatar?: number;
+    nickname?: string;
 }
 
 class ClientController {
@@ -34,13 +35,13 @@ class ClientController {
 
     async update(request: Request, response: Response) {
         try {
-
+            console.log('1');
             const user = request.app.get('user');
 
             if (!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
 
-            const { name, phone, email, password, professional_code } = request.body as ClientInterface;
-
+            const { name, phone, email, password, professional_code, avatar, nickname } = request.body as ClientInterface;
+            console.log(name, phone, email, password, professional_code, avatar, nickname);
             const professionalService = new ProfessionalService();
 
             let professional_id = null;
@@ -55,7 +56,7 @@ class ClientController {
 
             const clientService = new ClientService();
 
-            await clientService.update({ name, phone, email, password, professional_id, id: user.id })
+            await clientService.update({ name, phone, email, password, professional_id, id: user.id, avatar, nickname })
 
             return response.status(200).json({ message: "Cliente atualizado com sucesso!" });
 

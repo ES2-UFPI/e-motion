@@ -232,6 +232,7 @@ const HoAmI = () => {
         
         api.post(userRoute, userData).then((res: AxiosResponse) => {
             setLoading(false); 
+            console.log(res.data);
             navigateToNextStep(res.data.accessToken);
         })
         .catch((err: AxiosError) => { 

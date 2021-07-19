@@ -25,6 +25,7 @@ interface UpdateUserInterface {
     email?: string;
     password?: string;
     id: string;
+    avatar?: number;
 }
 
 class UserService {
@@ -150,7 +151,8 @@ class UserService {
             speciality: specificUser.speciality,
             crm_crp: specificUser.crm_crp,
             phone: specificUser.phone,
-            type: user.type
+            type: user.type,
+            avatar: user.avatar
         }
 
     }

@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
-    Switch,
-    ActivityIndicator
+    Switch
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Avatar from '../../components/Avatar/avatar';
 import { Dimensions } from 'react-native';
 
-import { store } from '../../store'; //Variaveis do redux
-import api from '../../services/api';
 import { clearToken, clearUser } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#91919F';
@@ -28,6 +26,8 @@ export default function Profile({ navigation }: any) {
     const dispatch = useDispatch();
 
     const user = useSelector((state: any) => state.user)
+
+    useEffect(() => {console.log(user)}, [])
 
     function navigateToGenerateCode() {
         navigation.navigate('GenerateAssociationCode')
@@ -52,7 +52,7 @@ export default function Profile({ navigation }: any) {
             {
                  <View style={styles.container}>
                     <View style={styles.avatarContainer}>
-                        <Avatar profilePicture={user.avatar} nickname={user.nickname} email={user.email} isProfessional={user.isProfessional} />
+                        <Avatar profilePicture={user.avatar} dimension={Dimensions.get('window').width*0.3} hasUserDetails nickname={user.nickname} email={user.email} isProfessional={user.isProfessional} />
                     </View>
                     <View style={styles.settingsContainer}>
                         <View style={styles.accountSettingsContainer}>
