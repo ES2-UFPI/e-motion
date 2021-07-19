@@ -16,8 +16,7 @@ import {
     IconContainer,
     NothingFound,
     TextNothingFound,
-    Info,
-    Avatar
+    Info
 } from './styles';
 import Record_card from '../../../../components/Record_card';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -29,6 +28,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Dimensions } from 'react-native';
 import RadioButtonsComponent from '../../../../components/RadioButtonsComponent';
 import { ThemeConsumer } from 'styled-components/native';
+import Avatar from '../../../../components/Avatar/avatar';
 import moment from 'moment';
 
 interface RadioButtons{
@@ -52,7 +52,6 @@ const Client = (props: any) => {
 
     const params = props.route.params;
     const navigation = useNavigation();
-    const profilePicture = require('../../../../assets/profile.png');
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
     const [graphData, setGraphData] = useState<number[]>([1,2,2,0,5,1,1,1]);
@@ -63,6 +62,9 @@ const Client = (props: any) => {
 
     const [recordsFiltered, setRecordsFiltered] = useState<Record[]|undefined>([]);
     const [recordsFilteredEmotion, setRecordsFilteredEmotion] = useState<Record[]|undefined>(undefined);
+
+    const SCREEN_WIDTH = Dimensions.get("window").width;
+    const PROFILE_PICTURE_DIMENSION = SCREEN_WIDTH * 0.175;
 
     const [filter, setFilter] = useState<RadioButtons[]>([
         {
@@ -292,7 +294,7 @@ const Client = (props: any) => {
                 <GoBackText onPress={() => navigation.goBack()}><FontAwesomeIcon name="chevron-left" />   Voltar</GoBackText>
                 <SettingsContainer>
                     <Row>
-                        <Avatar source={profilePicture}></Avatar>
+                        <Avatar profilePicture={params.user.avatar} dimension={PROFILE_PICTURE_DIMENSION}></Avatar>
                         <Column>
                             <HeaderBaseText style={{ fontSize: 18, lineHeight: 21, marginLeft: 10 }}>{params.name}</HeaderBaseText>
                             <HeaderBaseText style={{ fontSize: 12, lineHeight: 16, marginLeft: 14 }}>{params.nickname}</HeaderBaseText>

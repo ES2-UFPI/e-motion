@@ -36,10 +36,4 @@ app.use(async (req, res, next) => {
 
 app.use(routes);
 
-async function print() {
-   // console.log(jsonwebtoken.sign({ id: '1' }, process.env.JWT_SECRET || ''))
-    //console.log(await bcrypt.hash('senha', 10));
-}
-print();
-
 app.listen(process.env.PORT || 3333, () => console.log("Server Started!"));

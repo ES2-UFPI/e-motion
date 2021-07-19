@@ -54,9 +54,10 @@ const RegistrationStepZero = (props: any) => {
     const handleConfirmation = () => {
 
         const emotions = getEmotions();
+        
 
         let data: EmotionalReaction = { ...formInput, emotions };
-
+        console.log(data);
         if(formInput?.title?.length === 0) {
             data = {...formInput, title: '(Sem nome)'};
         }

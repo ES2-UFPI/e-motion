@@ -64,7 +64,8 @@ const Authentication = () => {
                     crm_crp: res.data.userInformations.crm_crp,
                     email: res.data.userInformations.email,
                     phone: res.data.userInformations.phone,
-                    type: res.data.userInformations.type
+                    type: res.data.userInformations.type,
+                    avatar: res.data.userInformations.avatar,
                 }));
                 setIsLoading(false);
             })
@@ -132,7 +133,7 @@ const Authentication = () => {
                             Todos os direitos reservados
                         </CopyrightText>
                         <CopyrightText>
-                            &copy; SemNome
+                            &copy; Core Tech
                         </CopyrightText>
                     </CopyrightBox>
                 </InputsContainer>

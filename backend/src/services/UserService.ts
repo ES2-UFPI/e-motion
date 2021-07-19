@@ -25,6 +25,7 @@ interface UpdateUserInterface {
     email?: string;
     password?: string;
     id: string;
+    avatar?: number;
 }
 
 class UserService {
@@ -142,8 +143,6 @@ class UserService {
             specificUser = await professionalRepository.findOne({ where: { user_id: user.id } });
         }
 
-        console.log('specific: ', specificUser.user_id)
-
         const accessToken = await jsonwebtoken.sign({ id: specificUser.id }, process.env.JWT_SECRET || 'secret');
 
         return {
@@ -154,7 +153,8 @@ class UserService {
             speciality: specificUser.speciality,
             crm_crp: specificUser.crm_crp,
             phone: specificUser.phone,
-            type: user.type
+            type: user.type,
+            avatar: user.avatar
         }
 
     }

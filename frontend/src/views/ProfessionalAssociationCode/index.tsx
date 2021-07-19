@@ -15,11 +15,10 @@ import {
 } from './styles';
 import { Dimensions,ActivityIndicator } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Clipboard from 'expo-clipboard';
 import { GlobalContext } from '../../context/GlobalSnackbar';
-
-
 import api from '../../services/api'
+import { AxiosError, AxiosResponse } from 'axios';
+import * as Clipboard2 from 'expo-clipboard';
 
 
 export default function ProfessionalAssociationCode({ navigation }: any) {
@@ -31,12 +30,6 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
 
     const {showSuccess} = useContext<any>(GlobalContext);
 
-    function copyCOodeToClipboard() {
-
-        Clipboard.setString("Este é o meu código de profissional no e-motion: "+code.join("") + "." + "\n\nUse ele para se associar a mim e permitir que lhe acompanhe pelo app.");
-        showSuccess('Seu código foi copiado para a área de transferência.');
-    }
-
     function goBack( ){
         navigation.goBack()
    }
@@ -46,21 +39,29 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
         const code_chars = [] as string[];
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const charactersLength = characters.length;
+        let code_chars_back = "";
 
         while(code_chars.length < 5) {
             const newChar =  characters.charAt(Math.floor(Math.random() * charactersLength)).toUpperCase();
 
             if(code_chars.indexOf(newChar) == -1 ){
                 code_chars.push(newChar) ;  
+                code_chars_back += newChar
             }
-
         }
 
         //fazer req para atualizar o codigo no back
-        setCode(code_chars);
-        setLoading(false);
+        api.put('professionals', {association_code:code_chars_back})
+        .then((res: AxiosResponse) => {
+            setCode(code_chars);
+            setLoading(false);
+        })
+        .catch((err: AxiosError) => {
+            console.log(err.response?.data);
+            setLoading(false)
+            setCode([]);
+        });
     }
-
     
     return (
         <ContainerAll>
@@ -98,15 +99,7 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
                             )
                         })}
 
-                        <GoBackButton onPress={copyCOodeToClipboard}> 
-                            <MaterialCommunityIcons  
-                                name="content-copy" 
-                                color={iconColor} 
-                                size={iconSize} 
-                                style={{marginLeft:10,marginBottom:5}}/>
-
-                        </GoBackButton>
-                    
+                                          
                     </CodeNumbersContainer>
                 }
 

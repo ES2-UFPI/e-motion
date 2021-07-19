@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
-    Switch,
-    ActivityIndicator
+    Switch
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Avatar from '../../components/Avatar/avatar';
 import { Dimensions } from 'react-native';
-
-import { store } from '../../store'; //Variaveis do redux
-import api from '../../services/api';
+import Alert from '../../components/Alert2Options';
 import { clearToken, clearUser } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#91919F';
@@ -22,6 +21,8 @@ const iconSize = SCREEN_WIDTH * 0.075;
 
 export default function Profile({ navigation }: any) {
     const [isEnabled, setIsEnabled] = useState(false);
+
+    const [alertVisible, setAlertVisible] = useState<boolean>(false);
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -45,14 +46,14 @@ export default function Profile({ navigation }: any) {
     return (
         <View style={styles.container}>
             <View style={styles.leaveContainer}>
-                <TouchableOpacity onPress={handleLogout}>
+                <TouchableOpacity onPress={() => setAlertVisible(true)}>
                     <Text style={styles.leaveText}>Sair</Text>
                 </TouchableOpacity>
             </View>
             {
                  <View style={styles.container}>
                     <View style={styles.avatarContainer}>
-                        <Avatar profilePicture={user.avatar} nickname={user.nickname} email={user.email} isProfessional={user.isProfessional} />
+                        <Avatar profilePicture={user.avatar} dimension={Dimensions.get('window').width*0.3} hasUserDetails nickname={user.nickname} email={user.email} isProfessional={user.type === 1 ? true : false} />
                     </View>
                     <View style={styles.settingsContainer}>
                         <View style={styles.accountSettingsContainer}>
@@ -108,6 +109,13 @@ export default function Profile({ navigation }: any) {
                     </View>
                 </View>
             }
+            <Alert
+                visible={alertVisible}
+                title="Atenção"
+                content={"Deseja sair da sua conta?"}
+                close={() => setAlertVisible(false)}
+                onConfirm={()=> { handleLogout(); setAlertVisible(false) }}
+            />
         </View>
     );
 }

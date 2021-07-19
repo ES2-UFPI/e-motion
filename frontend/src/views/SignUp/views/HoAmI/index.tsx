@@ -105,9 +105,8 @@ const HoAmI = () => {
                 'name_database':"email",
                 'placeholder':"Email",
                 'value':"",
-                'pattern':".+@.+\.\w{2,3}$",
-                'error_message':"Email inválido!",
-                'isValid':true
+                'pattern':"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+                'error_message':"Email inválido!"
             },
             {
                 'name_database':"crm_crp",
@@ -126,9 +125,7 @@ const HoAmI = () => {
                 'name_database':"phone",
                 'placeholder':"Telefone",
                 'value':"",
-                'pattern':".?\d{2}.?\s\d\s\d{4}-\d{4}",
-                'error_message':"Telefone inválido!",
-                'isValid':true
+                'error_message':"Telefone inválido!"
             }
             ,
             {
@@ -240,7 +237,6 @@ const HoAmI = () => {
         })
         .catch((err: AxiosError) => { 
             setLoading(false); 
-            console.log(err.response?.data);
             setAlertErrorMessage(err.response?.data.message);
             alertRef.current.show();
         });   
