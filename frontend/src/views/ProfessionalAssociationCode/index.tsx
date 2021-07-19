@@ -15,12 +15,10 @@ import {
 } from './styles';
 import { Dimensions,ActivityIndicator } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Clipboard from 'expo-clipboard';
 import { GlobalContext } from '../../context/GlobalSnackbar';
-
-
 import api from '../../services/api'
 import { AxiosError, AxiosResponse } from 'axios';
+import * as Clipboard2 from 'expo-clipboard';
 
 
 export default function ProfessionalAssociationCode({ navigation }: any) {
@@ -31,12 +29,6 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
     const [loading, setLoading] = useState<boolean>(false)
 
     const {showSuccess} = useContext<any>(GlobalContext);
-
-    function copyCOodeToClipboard() {
-
-        Clipboard.setString("Este é o meu código de profissional no e-motion: "+code.join("") + "." + "\n\nUse ele para se associar a mim e permitir que lhe acompanhe pelo app.");
-        showSuccess('Seu código foi copiado para a área de transferência.');
-    }
 
     function goBack( ){
         navigation.goBack()
@@ -107,15 +99,7 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
                             )
                         })}
 
-                        <GoBackButton onPress={copyCOodeToClipboard}> 
-                            <MaterialCommunityIcons  
-                                name="content-copy" 
-                                color={iconColor} 
-                                size={iconSize} 
-                                style={{marginLeft:10,marginBottom:5}}/>
-
-                        </GoBackButton>
-                    
+                                          
                     </CodeNumbersContainer>
                 }
 
