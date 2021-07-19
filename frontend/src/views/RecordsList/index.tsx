@@ -48,7 +48,7 @@ export default function RecordsList({navigation}:any) {
 
                 const fields = Object.entries(record);
 
-                const fields_cont = fields.filter( field => (field[1] !== "")).length -3;
+                const fields_cont = fields.filter( field => (field[1] !== "") && (field[0] !== "title")).length -3;
 
                 const fields_completed = Math.round(fields_cont / (fields.length-3) * 100);
 

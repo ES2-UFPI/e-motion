@@ -42,7 +42,6 @@ const AvatarAndNickname = (props: any) => {
 
     async function handleChange() {
         setLoading(true);
-        console.log(params.accessToken);
         api.put(params.type !== 'cliente' ? 'professionals' : 'clients', { avatar: chosedAvatar, nickname: nickName }, { headers: { authorization: params.accessToken } })
             .then((res: AxiosResponse) => {
                 params.type === 'cliente' ?

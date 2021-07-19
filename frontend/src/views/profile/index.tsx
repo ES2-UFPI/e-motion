@@ -9,10 +9,11 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Avatar from '../../components/Avatar/avatar';
 import { Dimensions } from 'react-native';
-
+import Alert from '../../components/Alert2Options';
 import { clearToken, clearUser } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#91919F';
@@ -20,6 +21,8 @@ const iconSize = SCREEN_WIDTH * 0.075;
 
 export default function Profile({ navigation }: any) {
     const [isEnabled, setIsEnabled] = useState(false);
+
+    const [alertVisible, setAlertVisible] = useState<boolean>(false);
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -45,7 +48,7 @@ export default function Profile({ navigation }: any) {
     return (
         <View style={styles.container}>
             <View style={styles.leaveContainer}>
-                <TouchableOpacity onPress={handleLogout}>
+                <TouchableOpacity onPress={() => setAlertVisible(true)}>
                     <Text style={styles.leaveText}>Sair</Text>
                 </TouchableOpacity>
             </View>
@@ -108,6 +111,13 @@ export default function Profile({ navigation }: any) {
                     </View>
                 </View>
             }
+            <Alert
+                visible={alertVisible}
+                title="Atenção"
+                content={"Deseja sair da sua conta?"}
+                close={() => setAlertVisible(false)}
+                onConfirm={()=> { handleLogout(); setAlertVisible(false) }}
+            />
         </View>
     );
 }

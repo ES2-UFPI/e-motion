@@ -10,7 +10,7 @@ const CheckBoxGroup = forwardRef((props: any, ref: any) => {
     const { sentimentos } = props;
 
     const [values, setValues] = useState<boolean[]>(new Array(sentimentos.length).fill(false));
-    const [outroValue, setOutroValue] = useState<boolean>(false);
+    // const [outroValue, setOutroValue] = useState<boolean>(false);
 
     const makeArrayOfTrueValues = (): string => {
 
@@ -76,36 +76,37 @@ const CheckBoxGroup = forwardRef((props: any, ref: any) => {
             horizontal={false}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
-                paddingTop: 10
+                paddingTop: 10,
+                paddingBottom: 20
             }}
             ListFooterComponentStyle={{
                 marginBottom: 16
             }}
-            ListFooterComponent={
-                <>
-                    <Group>
-                        <CheckBox
-                            disabled={false}
-                            value={outroValue}
-                            onValueChange={(newValue: boolean) => setOutroValue(newValue)}
-                            tintColors={{ true: '#E1948B', false: '#91919F' }}
-                        />
-                        <Text>Outro(s)</Text>
-                    </Group>
-                    {
-                        outroValue &&
-                        <>
-                            <SectionTtile>
-                                Quais?
-                            </SectionTtile>
-                            <Input
-                                placeholder="Digite aqui seus pensamentos"
-                                selectionColor="#91919F"
-                            />
-                        </>
-                    }
-                </>
-            }
+            // ListFooterComponent={
+            //     <>
+            //         <Group>
+            //             <CheckBox
+            //                 disabled={false}
+            //                 value={outroValue}
+            //                 onValueChange={(newValue: boolean) => setOutroValue(newValue)}
+            //                 tintColors={{ true: '#E1948B', false: '#91919F' }}
+            //             />
+            //             <Text>Outro(s)</Text>
+            //         </Group>
+            //         {
+            //             outroValue &&
+            //             <>
+            //                 <SectionTtile>
+            //                     Quais?
+            //                 </SectionTtile>
+            //                 <Input
+            //                     placeholder="Digite aqui seus pensamentos"
+            //                     selectionColor="#91919F"
+            //                 />
+            //             </>
+            //         }
+            //     </>
+            // }
         />
     )
 })
