@@ -74,7 +74,7 @@ test("store a Client and update it", async () => {
 
   const clientService = new ClientService();
 
-  await clientService.update({id:joe.user_id, name:"Joe Atualizado",phone:"(98)8988-8989"});
+  await clientService.update({id:joe.id, name:"Joe Atualizado",phone:"(98)8988-8989"});
 
   let joe2 = await getRepository(Client).findOne({
     where: {

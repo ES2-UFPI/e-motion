@@ -9,7 +9,7 @@ class ProfessionalController {
         try {
 
             const user = request.app.get('user');
-
+            console.log(user)
             if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
 
             const professionalService = new ProfessionalService();
@@ -28,11 +28,11 @@ class ProfessionalController {
 
             if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
 
-            const { id } = request.params;
+            const { client_id } = request.headers;
 
             const emotionalReactionService = new EmotionalReactionService();
 
-            const emotionalReactions = await emotionalReactionService.listByUser(id);
+            const emotionalReactions = await emotionalReactionService.listByUser(client_id.toString());
 
             return response.json(emotionalReactions);
 
@@ -60,7 +60,7 @@ class ProfessionalController {
     async update(request: Request, response: Response){
         try{
             const user = request.app.get('user');
-
+            
             if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
             
             const {name,nickname,email,password,crm_crp,speciality,association_code} = request.body;

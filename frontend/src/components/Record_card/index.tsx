@@ -14,12 +14,14 @@ interface Props {
 }
 
 export default function Record_card({id,title,date,completed,hasDeleteIcon,onPressDelete,onPress}:Props) {
+
     return (
         <Container onPress={onPress} >
             <Row>
                 <DataContainer>
-                    <Title> {title} </Title>
-                    <Date> {date} </Date>
+                    <Date>  {title} </Date>
+                    <Title> {date} </Title>
+                   
                 </DataContainer>
 
             {hasDeleteIcon && <DeleteButton onPress={(e) => onPressDelete != undefined && onPressDelete(id)}>
