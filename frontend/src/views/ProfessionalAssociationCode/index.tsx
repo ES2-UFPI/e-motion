@@ -20,6 +20,7 @@ import { GlobalContext } from '../../context/GlobalSnackbar';
 
 
 import api from '../../services/api'
+import { AxiosError, AxiosResponse } from 'axios';
 
 
 export default function ProfessionalAssociationCode({ navigation }: any) {
@@ -46,21 +47,29 @@ export default function ProfessionalAssociationCode({ navigation }: any) {
         const code_chars = [] as string[];
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const charactersLength = characters.length;
+        let code_chars_back = "";
 
         while(code_chars.length < 5) {
             const newChar =  characters.charAt(Math.floor(Math.random() * charactersLength)).toUpperCase();
 
             if(code_chars.indexOf(newChar) == -1 ){
                 code_chars.push(newChar) ;  
+                code_chars_back += newChar
             }
-
         }
 
         //fazer req para atualizar o codigo no back
-        setCode(code_chars);
-        setLoading(false);
+        api.put('professionals', {association_code:code_chars_back})
+        .then((res: AxiosResponse) => {
+            setCode(code_chars);
+            setLoading(false);
+        })
+        .catch((err: AxiosError) => {
+            console.log(err.response?.data);
+            setLoading(false)
+            setCode([]);
+        });
     }
-
     
     return (
         <ContainerAll>
