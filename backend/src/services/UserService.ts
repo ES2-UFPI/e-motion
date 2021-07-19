@@ -126,8 +126,6 @@ class UserService {
                 throw new Error("Usuário não encontrado.")
             })
 
-        console.log('user: ', user);
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) throw new Error("Senha incorreta.");
@@ -141,8 +139,6 @@ class UserService {
             const professionalRepository = getRepository(Professional);
             specificUser = await professionalRepository.findOne({ where: { user_id: user.id } });
         }
-
-        console.log('specific: ', specificUser)
 
         const accessToken = await jsonwebtoken.sign({ id: specificUser.id }, process.env.JWT_SECRET || 'secret');
 

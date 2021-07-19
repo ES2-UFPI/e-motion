@@ -104,6 +104,13 @@ class ProfessionalService {
             throw new Error("Profissional não encontrado!")
         }
     }
+
+    async getByCode(professional_code) {
+        const professional = await getRepository(Professional).findOne({where: {association_code: professional_code}});
+        if(professional)
+            return professional.id;
+        throw new Error('Profissional não encontrado.');
+    }
 }
 
 export { ProfessionalService }

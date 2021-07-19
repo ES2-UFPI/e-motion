@@ -232,11 +232,10 @@ export default function SignUp() {
         
         api.post(userRoute, userData).then((res: AxiosResponse) => {
             setLoading(false); 
-            navigateToNextStep();
+            navigateToNextStep(res.data.accessToken);
         })
         .catch((err: AxiosError) => { 
             setLoading(false); 
-            console.log(err.response?.data);
             setAlertErrorMessage(err.response?.data.message);
             alertRef.current.show();
         });   
@@ -246,8 +245,11 @@ export default function SignUp() {
     async function navigateTologin() {
        navigate.navigate("Authentication")
     }
-    async function navigateToNextStep() {
-        //adicionar navegação pro passo depois do cadastro
+    async function navigateToNextStep(accessToken: string) {
+        navigate.navigate("Authentication", {
+            accessToken,
+            type
+        })
     }
 
     return (
