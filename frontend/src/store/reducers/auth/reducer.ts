@@ -4,7 +4,6 @@ const INITIAL_STATE = {
 
 const auth = (state = INITIAL_STATE, action: any) => {
     const baseAction = '@auth/';
-    console.log(action.payload);
     switch (action.type) {
         case `${baseAction}SET_TOKEN`:
             return {

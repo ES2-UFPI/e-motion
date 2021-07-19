@@ -61,4 +61,5 @@ type RootStackParamList = {
   FAQ: undefined
   Authentication: undefined
   SignUp: undefined;
+  VincularProfissional: undefined
 };

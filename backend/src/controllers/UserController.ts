@@ -23,8 +23,6 @@ class UserController {
         try {
             const { email, password } = request.body;
 
-            console.log(email, password);
-
             const userService = new UserService();
 
             const userInformations = await userService.login(email, password);
