@@ -9,7 +9,7 @@ import { useNavigation,useIsFocused } from '@react-navigation/native';
 interface Record{
     id:string;
     title:string;
-    date:string;
+    data_registro:string;
     completed:number;
 }
 
@@ -54,7 +54,7 @@ export default function RecordsList({navigation}:any) {
                return {
                 id:record.id.toString(),
                 title:record.title,
-                date:record.date,
+                data_registro:record.data_registro,
                 completed:fields_completed
                }
            });
@@ -119,7 +119,7 @@ export default function RecordsList({navigation}:any) {
                 <Record_card 
                     id={item.id} 
                     title={item.title} 
-                    date={item.date} 
+                    date={new Date(item.data_registro).toLocaleDateString()} 
                     completed={item.completed} 
                     hasDeleteIcon={true}
                     onPressDelete={onPressDelete} 

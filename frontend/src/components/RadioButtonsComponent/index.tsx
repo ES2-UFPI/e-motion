@@ -7,8 +7,10 @@ const { width } = Dimensions.get('window');
 
 interface RadioButtons{
     name:string;
+    id:string;
     isSelected:boolean;
-    onSelect:()=>void;
+    onSelect:(id?:string)=>void;
+    isAll?:boolean;
 }
 
 interface RadioButtonsComponentProps{
@@ -41,8 +43,8 @@ const RadioButtonsComponent = (props: RadioButtonsComponentProps) => {
                 return (
                     <Button 
                         key={option.name}  
-                        onPress={e => {e.preventDefault(); option.onSelect()}} 
-                        disabled={option.isSelected}
+                        onPress={e => {e.preventDefault(); option.onSelect(option.id)}} 
+                        disabled={option.isSelected && !option.isAll}
                     > 
                         <RadioButton  selected={option.isSelected} />
                         <RadioButtonText> {option.name} </RadioButtonText>

@@ -33,28 +33,19 @@ import { ThemeConsumer } from 'styled-components/native';
 
 interface RadioButtons{
     name:string;
+    id:string;
     isSelected:boolean;
-    onSelect:()=>void;
+    onSelect:(id?:string)=>void;
+    isAll?:boolean;
 }
 
 interface Record{
     id:string;
     title:string;
-    date:string;
+    emotions?:string;
+    data_registro:string;
     completed:number;
 }
-
-interface RecordGraph{
-    data:string;
-    value:number;
-
-}
-
-interface UserRecordList{
-    records:Record[];
-    graphData:any;
-}
-
 
 
 const Client = (props: any) => {
@@ -64,16 +55,53 @@ const Client = (props: any) => {
     const profilePicture = require('../../../../assets/profile.png');
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
+    const [graphData, setGraphData] = useState<number[]>([0,2,2,0,0,0,0,1]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [loading2, setLoading2] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
-    const [clientRegisters, setClientRegisters] = useState();
-    const [clientRegistersFiltered, setClientRegistersFiltered] = useState();
+    const labels = ["Felicidade", "Tristeza", "Alívio","Angústia","Raiva","Medo","Aflição","Indiferença"];
+
+    const [recordsFiltered, setRecordsFiltered] = useState<Record[]|undefined>([]);
+    const [recordsFilteredEmotion, setRecordsFilteredEmotion] = useState<Record[]|undefined>(undefined);
+
+    const [filter, setFilter] = useState<RadioButtons[]>([
+        {
+            id:"1",
+            name:"Dia",
+            isSelected:false,
+            onSelect:setUserUserType
+        },
+        {
+            id:"2",
+            name:"Semana",
+            isSelected:false,
+            onSelect:setUserUserType
+        } 
+        ,
+        {
+            id:"3",
+            name:"Mês",
+            isSelected:false,
+            onSelect:setUserUserType
+        }
+        ,
+        {
+            id:"4",
+            name:"Tudo",
+            isSelected:true,
+            onSelect:setUserUserType,
+            isAll:true
+        }       
+    ]);
 
     async function getEmotionalReactions() {
 
         try {
             setLoading(true)
-            const reaponse = await api.get(`/professionals/client-reactions/${params.id}`);
+            const reaponse = await api.get(`/professionals/client-reactions`,{
+                headers:{
+                    client_id:params.id
+            }});
 
            const data = reaponse.data as [any];
 
@@ -94,8 +122,9 @@ const Client = (props: any) => {
                return {
                 id:record.id.toString(),
                 title:record.title,
-                date:record.date,
+                data_registro:record.data_registro,
                 completed:fields_completed,
+                emotions:record.emotions,
                 what_the_client_felt: record.what_did_you_feel,
                 what_the_client_thought: record.what_did_you_think,
                 what_the_client_did: record.what_did_you_do,
@@ -114,7 +143,8 @@ const Client = (props: any) => {
                }
            });
 
-           setRecords(records_from_user);
+           setRecordsFiltered(records_from_user);
+           setRecords(records_from_user);    
            setLoading(false)
         } catch (error) {
             console.log(error)
@@ -126,8 +156,16 @@ const Client = (props: any) => {
         getEmotionalReactions();
     }, []);
 
+    useEffect(() => {
+        //faz o processamento e transformação dos dadso para o gráfico
+        
+        setGraphData(process_data())
+        setRecordsFilteredEmotion(undefined)
+
+    }, [recordsFiltered,records,loading2]);
+
     function onPressCard(id_record: string) {
-        navigation.navigate('AcompanharComportamento', records?.filter(record => record['id'] === id_record)[0]);
+        navigation.navigate('AcompanharComportamento', recordsFiltered?.filter(record => record['id'] === id_record)[0]);
     }
 
     function unbindClient() {
@@ -145,30 +183,108 @@ const Client = (props: any) => {
         }
     }
 
-    const [filter, setFilter] = useState<RadioButtons[]>([
-        {
-            name:"Dia",
-            isSelected:true,
-            onSelect:() =>{}
-        },
-        {
-            name:"Semana",
-            isSelected:false,
-            onSelect:() => {}
-        } 
-        ,
-        {
-            name:"Mês",
-            isSelected:false,
-            onSelect:() => {}
+    function setUserUserType(id:string|undefined){  
+         if(id){
+             const clone = filter.map((filtro) =>{
+                if(filtro.isAll) setLoading2(!loading2) 
+                if(id === filtro.id)
+                    filtro.isSelected = true;
+                  else
+                    filtro.isSelected = false;
+
+                
+                 return filtro
+             })
+
+             
+
+             setFilter(clone)
+         }
+    }
+
+    function getWeekDates() {
+        let now = new Date();
+        let dayOfWeek = 7; //0-6
+        let numDay = now.getDate();
+      
+        let start = new Date(now); //copy
+        start.setDate(numDay - dayOfWeek);
+        start.setHours(0, 0, 0, 0);
+      
+      
+        let end = new Date(now); //copy
+        end.setDate(numDay + (7 - dayOfWeek));
+        end.setHours(0, 0, 0, 0);
+      
+        return [start, end];
+    }
+
+    function getMonthDates() {
+        let now = new Date();
+        let dayOfWeek = now.getDay(); //0-6
+        let numDay = now.getDate();
+      
+        let start = new Date(now); //copy
+        start.setDate(numDay - 30);
+        start.setHours(0, 0, 0, 0);
+      
+      
+        let end = new Date(now); //copy
+        end.setDate(numDay + (7 - dayOfWeek));
+        end.setHours(0, 0, 0, 0);
+      
+        return [start, end];
+    }
+
+    useEffect(() => {
+        const filter_selected = filter.filter((filtro) => filtro.isSelected)[0];
+        const today = new Date().getTime(); 
+
+        if(filter_selected.id === "1"){
+            setRecordsFiltered(records?.filter((record) => {
+                return new Date(record.data_registro).getTime() - today > 0.1
+            })); 
+
+        }else if(filter_selected.id === "2"){
+            const  [start, end] = getWeekDates();
+
+            setRecordsFiltered(records?.filter(
+                (record) => {
+                    return new Date(record.data_registro).getTime() >= start.getTime() 
+                    && new Date(record.data_registro).getTime() <= end.getTime() 
+                }
+            )); 
+
+        }else if(filter_selected.id === "3"){
+            const  [start, end] = getMonthDates() ;
+            const result = records?.filter(
+                (record) => new Date(record.data_registro).getTime() >= start.getTime() 
+                && new Date(record.data_registro).getTime() <= end.getTime() 
+            )   
+            setRecordsFiltered(result); 
+
+        }else if(filter_selected.id === "4"){
+            setRecordsFiltered(records);  
         }
-        ,
-        {
-            name:"Tudo",
-            isSelected:false,
-            onSelect:() => {}
-        }       
-    ]);
+    }, [filter])
+
+    function onPressDataPoint(index:number){
+        setRecordsFilteredEmotion(filterEmotion(labels[index]))
+    }
+
+    function process_data(){
+        return labels.map((emotion)=> {
+            const result = filterEmotion(emotion);
+            return result ? result.length : 0
+        })
+    }
+
+    function filterEmotion(emotion:string){
+        return recordsFiltered?.filter((record)=> {
+            const result = record.emotions?.toLocaleLowerCase()?.search(emotion.toLocaleLowerCase()) ;
+            return result !=  undefined && result >= 0;
+        })
+    }
 
     return (
         <BackGroundPage>
@@ -218,13 +334,13 @@ const Client = (props: any) => {
                 :
                 records && records.length > 0 ?
                 <FlatList
-                    data={records}
+                    data={recordsFilteredEmotion !== undefined ? recordsFilteredEmotion : recordsFiltered }
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) =>
                     <Record_card 
                         id={item.id} 
                         title={item.title} 
-                        date={item.date} 
+                        date={new Date(item.data_registro).toLocaleDateString('pt-br')} 
                         completed={item.completed} 
                         onPress={() => onPressCard(item.id)}
                     />
@@ -278,8 +394,9 @@ const Client = (props: any) => {
                                     horizontal={true}
                                 > 
                                     <LineChartComponent 
-                                        labels={['January', 'February', 'March', 'April', 'May', 'June']} 
-                                        data={[20, 45, 28, 80, 99, 43]} 
+                                        labels={labels} 
+                                        data={graphData} 
+                                        onPressDataPoint={onPressDataPoint}
                                     />
                                 </ScrollView>
                             </View>

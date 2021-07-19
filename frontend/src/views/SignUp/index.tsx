@@ -24,6 +24,7 @@ const Logo = require('../../assets/logo-with-name.png');
 
 interface RadioButtons{
     name:string;
+    id:string;
     isSelected:boolean;
     onSelect:()=>void;
 }
@@ -147,11 +148,13 @@ export default function SignUp() {
 
     const [typeOfUser, setTypeOfUser] = useState<RadioButtons[]>([
         {
+            id:"asdasd",
             name:"cliente",
             isSelected:true,
             onSelect:setUserUserType
         },
         {
+            id:"as3dasd",
             name:"profissional",
             isSelected:false,
             onSelect:setUserUserType
