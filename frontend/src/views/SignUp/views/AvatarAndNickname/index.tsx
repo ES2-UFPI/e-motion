@@ -103,6 +103,7 @@ const AvatarAndNickname = (props: any) => {
                                     idImages1.map(image => {
                                         return (
                                             <TouchableOpacity
+                                                key={image}
                                                 style={{
                                                     backgroundColor: chosedAvatar === image ? '#61C08C' : 'transparent',
                                                     width: PROFILE_PICTURE_DIMENSION,
@@ -125,6 +126,7 @@ const AvatarAndNickname = (props: any) => {
                                     idImages2.map(image => {
                                         return (
                                             <TouchableOpacity
+                                                key={image}
                                                 style={{
                                                     backgroundColor: chosedAvatar === image ? '#61C08C' : 'transparent',
                                                     width: PROFILE_PICTURE_DIMENSION,
