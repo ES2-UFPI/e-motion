@@ -33,13 +33,10 @@ class ProfessionalService {
     }
 
 
-    async getClients(user_id: string): Promise<Client[]>{
+    async getClients(professional_id: string): Promise<Client[]>{
 
         const clients = await this.clientRepository.find({
-            join: { alias: 'clients', innerJoin: { professional: 'clients.professional' } },
-            where: qb => {
-              qb.where('professional.user_id = :user_id', { user_id });
-            },
+            where:{professional_id},
             relations:['user']
         });
      
@@ -67,10 +64,7 @@ class ProfessionalService {
     async update({ name, nickname, crm_crp, speciality, association_code, email, password, id }: UpdateProfessionalInterface) {
 
         const professional = await this.professionalRepository.findOne({ 
-            join: { alias: 'professionals', innerJoin: { user: 'professionals.user' } },
-            where: qb => {
-              qb.where('user.id = :user_id', { user_id:id });
-            },
+            where:{id},
             relations: ['user'] 
         })
 
