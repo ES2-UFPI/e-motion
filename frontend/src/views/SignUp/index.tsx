@@ -6,12 +6,12 @@ import ToBind from './views/ToBind';
 
 const StackSettings = createStackNavigator<RoutesList>();
 
-export default function SignUp(props: any) {
+export default function SignUp() {
     return (
 
         <StackSettings.Navigator screenOptions={{ headerShown: false }}>
+            <StackSettings.Screen name="HoAmI" component={HoAmI}/>
             <StackSettings.Screen name="AvatarAndNickname" component={AvatarAndNickname} />
-            <StackSettings.Screen name="HoAmI" component={HoAmI} initialParams={props.route.params} />
             <StackSettings.Screen name="ToBind" component={ToBind} />
         </StackSettings.Navigator>
     );

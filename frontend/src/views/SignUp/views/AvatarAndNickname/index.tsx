@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Image, Dimensions, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { AxiosResponse, AxiosError } from 'axios';
 import { 
     ContainerAll,
     Container,
@@ -21,6 +23,7 @@ const Logo = require('../../../../assets/logo-with-name.png');
 
 const AvatarAndNickname = (props: any) => {
 
+    const params = props.route.params;
     const SCREEN_WIDTH = Dimensions.get("window").width;
     const PROFILE_PICTURE_DIMENSION = SCREEN_WIDTH * 0.25;
     const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -32,11 +35,20 @@ const AvatarAndNickname = (props: any) => {
     const [nickName, setNickname] = useState<string>("");
     const [chosedAvatar, setChosedAvatar] = useState<string>("");
 
+    const navigate = useNavigation();
+
     const idImages1 = ['1', '2', '3'];
     const idImages2 = ['4', '5', '6'];
 
     async function handleChange(){
-
+        api.put(params.type !== 'cliente' ? '/professionals' : '/clients', {avatar: chosedAvatar, nickname: nickName}, {headers: {authorization: params.accessToken}})
+        .then((res: AxiosResponse) => {
+            params.type === 'cliente' ?
+                navigate.navigate("ToBind", {accessToken: params.accessToken})
+            :
+                navigate.navigate("Authentication")
+        })
+        .catch((err: AxiosError) => console.log(err.message));
     }
 
     return (

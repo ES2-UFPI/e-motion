@@ -232,7 +232,7 @@ const HoAmI = () => {
         
         api.post(userRoute, userData).then((res: AxiosResponse) => {
             setLoading(false); 
-            navigateToNextStep();
+            navigateToNextStep(res.data.accessToken);
         })
         .catch((err: AxiosError) => { 
             setLoading(false); 
@@ -246,8 +246,8 @@ const HoAmI = () => {
     async function navigateTologin() {
        navigate.navigate("Authentication")
     }
-    async function navigateToNextStep() {
-        navigate.navigate("AvatarAndNickname", { type });
+    async function navigateToNextStep(accessToken: string) {
+        navigate.navigate("AvatarAndNickname", { type, accessToken });
     }
 
     return (
