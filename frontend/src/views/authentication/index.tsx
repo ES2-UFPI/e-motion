@@ -69,7 +69,8 @@ const Authentication = () => {
                 setIsLoading(false);
             })
             .catch((err: AxiosError) => { 
-                setAlertErrorMessage(err.response?.data.message);
+                setAlertErrorMessage(err.response?.data.message ? err.response?.data.message : "Verifique sua conexão com a internet!" );
+                console.log(err)
                 setIsLoading(false) 
                 alertRef.current.show();
             });
