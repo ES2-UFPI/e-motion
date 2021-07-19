@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -13,14 +13,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconSize = SCREEN_WIDTH * 0.075;
 
-export default function AcompanharConsequencias({ navigation }: any) {
+export default function AcompanharConsequencias({ route, navigation }: any) {
 
-    const [questao1, onChangeQuestao1] = useState("Fui para casa.");
-    const [questao2, onChangeQuestao2] = useState("Comemorei.");
-    const [questao3, onChangeQuestao3] = useState("Ficaram felizes por mim.");
-    const [questao4, onChangeQuestao4] = useState("Me sinto mais seguro.");
-    const [questao5, onChangeQuestao5] = useState("Tranquilidade");
-    const [questao6, onChangeQuestao6] = useState("Fui para casa.");
+    const params = route.params;
 
     return (
         <View style={styles.generalView}>
@@ -35,17 +30,15 @@ export default function AcompanharConsequencias({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que aconteceu depois disso.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao1}
-                        value={questao1}
+                        value={params.what_happened_after_that}
                         editable={false}
                         multiline={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.questionText}>O que você fez quando isso ocorreu.</Text>
+                    <Text style={styles.questionText}>O que fez quando isso ocorreu.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao2}
-                        value={questao2}
+                        value={params.what_the_client_did_when_this_occurred}
                         editable={false}
                         multiline={true}
                     />
@@ -53,8 +46,7 @@ export default function AcompanharConsequencias({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que as outras pessoas fizeram quando isso ocorreu.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao3}
-                        value={questao3}
+                        value={params.what_other_people_did_when_this_occurred}
                         editable={false}
                         multiline={true}
                     />
@@ -62,17 +54,15 @@ export default function AcompanharConsequencias({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que mudou depois que isso aconteceu.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao4}
-                        value={questao4}
+                        value={params.what_changed_after_that_happened}
                         editable={false}
                         multiline={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.questionText}>O que você obteve depois que isso aconteceu.</Text>
+                    <Text style={styles.questionText}>O que obteve depois que isso aconteceu.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao5}
-                        value={questao5}
+                        value={params.what_the_customer_got_after_it_happened}
                         editable={false}
                         multiline={true}
                     />
@@ -80,8 +70,7 @@ export default function AcompanharConsequencias({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que fez ou evitou depois que isso aconteceu.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao6}
-                        value={questao6}
+                        value={params.what_the_customer_did_or_avoided_after_it_happened}
                         editable={false}
                         multiline={true}
                     />

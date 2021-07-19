@@ -1,36 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList,ActivityIndicator} from 'react-native';
+import { FlatList,ActivityIndicator, RefreshControl} from 'react-native';
 import Alert2Options from '../../components/Alert2Options';
 import Record_card from '../../components/Record_card';
 import { Title,Container,NothingFound,ContainerAll,TextNothingFound } from './styles';
 import api from '../../services/api'
+import { useNavigation,useIsFocused } from '@react-navigation/native';
+import moment from 'moment';
 
 interface Record{
     id:string;
     title:string;
-    date:string;
+    data_registro:string;
     completed:number;
 }
 
-export default function RecordsList() {
-
-    const client_id = "1avb";
+export default function RecordsList({navigation}:any) {
+    const isFocused = useIsFocused();
+    const [refresh, setRefresh] = useState<boolean>(false);
     const [idCurrent, setIdCurrent] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
 
-    async function getRecordsFromUser(client_id:string) {
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+                setRefresh(!refresh);           
+        });
+
+    }, [navigation]);
+
+    async function getRecordsFromUser() {
 
         try {
             setLoading(true)
-            const reaponse = await api.get(`/reactions/${client_id}`);
+            const reaponse = await api.get(`clients/reactions`);
 
            const data = reaponse.data as [any];
 
            if(data.length < 1){
                setRecords(undefined)
+               setLoading(false);
                 return
            }
 
@@ -38,14 +48,14 @@ export default function RecordsList() {
 
                 const fields = Object.entries(record);
 
-                const fields_cont = fields.filter( field => field[1] != null).length;
+                const fields_cont = fields.filter( field => (field[1] !== "") && (field[0] !== "title")).length -3;
 
-                const fields_completed = Math.round(fields_cont / fields.length * 100);
+                const fields_completed = Math.round(fields_cont / (fields.length-3) * 100);
 
                return {
                 id:record.id.toString(),
                 title:record.title,
-                date:record.date,
+                data_registro:record.data_registro,
                 completed:fields_completed
                }
            });
@@ -60,15 +70,13 @@ export default function RecordsList() {
 
 
     useEffect(() => {
-        if(client_id){
-            getRecordsFromUser(client_id)
-        }
-    }, [])
+        getRecordsFromUser()
+    }, [refresh,isFocused])
 
 
     async function handleDelete(){
 
-        await api.delete(`/reactions/${client_id}/${idCurrent}`)
+        await api.delete(`reactions/${idCurrent}`)
         .then(()=>{
             const filteredRecord = records?.filter((record) => record.id != idCurrent );
             setRecords(filteredRecord);
@@ -78,14 +86,17 @@ export default function RecordsList() {
 
     }
 
+    const navigate = useNavigation();
+
     function onPressDelete(id:string){
         setIdCurrent(id);
         setModalIsVisible(true);
     }
 
-    function onPressCard(){
-
+    function onPressCard(id: string){
+        navigate.navigate('Registration', { id })
     }
+
 
     return (
        <ContainerAll>
@@ -108,16 +119,20 @@ export default function RecordsList() {
                 <Record_card 
                     id={item.id} 
                     title={item.title} 
-                    date={item.date} 
+                    date={moment(item.data_registro).format('DD/MM/YYYY _ HH:mm').replace("_","às")} 
                     completed={item.completed} 
+                    hasDeleteIcon={true}
                     onPressDelete={onPressDelete} 
-                    onPress={onPressCard}
+                    onPress={() => onPressCard(item.id)}
                 />}
              horizontal={false}
              contentContainerStyle={{
                 paddingHorizontal:4,
                 paddingVertical:5
               }}
+              refreshControl={
+                <RefreshControl colors={['#fad2d2']} refreshing={loading} onRefresh={()=> setRefresh(!refresh)} />
+            }
            />
            :
             <NothingFound>

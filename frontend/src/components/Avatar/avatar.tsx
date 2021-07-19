@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         height: PROFILE_PICTURE_DIMENSION,
         borderRadius: PROFILE_PICTURE_DIMENSION / 2,
     },
-    name: {
+    nickname: {
         color: '#FCFCFF',
         fontSize: 24,
         fontWeight: 'bold',
@@ -44,27 +44,59 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
+    profilePictureContainer: {
+        paddingBottom: 0,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
     textContainer: {
         alignItems: 'center',
     }
 });
 
+function getProfilePicture(profilePicture: any) {
+    if (profilePicture == 1) {
+        return require('../../assets/profilePictures/1.png');
+    }
+    else if (profilePicture == 2) {
+        return require('../../assets/profilePictures/2.png');
+    }
+    else if (profilePicture == 3) {
+        return require('../../assets/profilePictures/3.png');
+    }
+    else if (profilePicture == 4) {
+        return require('../../assets/profilePictures/4.png');
+    }
+    else if (profilePicture == 5) {
+        return require('../../assets/profilePictures/5.png');
+    }
+    else if (profilePicture == 6) {
+        return require('../../assets/profilePictures/6.png');
+    }
+}
+
 const Avatar = (props: any) => {
     return (
         <View style={styles.componentContainer}>
-            <View style={styles.profilePictureAndLabelContainer}>
+            <View style={props.hasUserDetails ? styles.profilePictureAndLabelContainer : styles.profilePictureContainer}>
                 <Image
-                    style={styles.profilePicture}
-                    source={props.profilePicture}
+                    style={{width: props.dimension, height: props.dimension, borderRadius: props.dimension/2}}
+                    source={getProfilePicture(props.profilePicture)}
                 />
-                {props.isProfessional ? <View style={styles.label}>
+                {
+                props.isProfessional && 
+                <View style={styles.label}>
                     <Text style={styles.labelText}>PROFISSIONAL</Text>
-                </View> : <></>}
+                </View> 
+                }
             </View>
+            {
+            props.hasUserDetails &&
             <View style={styles.textContainer}>
-                <Text style={styles.name}>{props.name}</Text>
+                <Text style={styles.nickname}>{props.nickname}</Text>
                 <Text style={styles.email}>{props.email}</Text>
             </View >
+            }
         </View >
 
     )

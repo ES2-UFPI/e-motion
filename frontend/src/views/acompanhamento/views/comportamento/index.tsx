@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -13,11 +13,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconSize = SCREEN_WIDTH * 0.075;
 
-export default function AcompanharComportamento({ navigation }: any) {
+export default function AcompanharComportamento({ route, navigation }: any) {
 
-    const [questao1, onChangeQuestao1] = useState("Felicidade, alívio.");
-    const [questao2, onChangeQuestao2] = useState("Pensei em quanto esperei por este momento e ele finalmente aconteceu.");
-    const [questao3, onChangeQuestao3] = useState("Liguei para a minha mãe para dar a notícia.");
+    const params = route.params;
 
     return (
         <View style={styles.generalView}>
@@ -32,8 +30,7 @@ export default function AcompanharComportamento({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que o cliente sentiu.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao1}
-                        value={questao1}
+                        value={params.what_the_client_felt}
                         editable={false}
                         multiline={true}
                     />
@@ -41,8 +38,7 @@ export default function AcompanharComportamento({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que o cliente pensou.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao2}
-                        value={questao2}
+                        value={params.what_the_client_thought}
                         editable={false}
                         multiline={true}
                     />
@@ -50,14 +46,13 @@ export default function AcompanharComportamento({ navigation }: any) {
                 <View style={styles.inputContainer}>
                     <Text style={styles.questionText}>O que o cliente fez.</Text>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeQuestao3}
-                        value={questao3}
+                        value={params.what_the_client_did}
                         editable={false}
                         multiline={true}
                     />
                 </View>
                 <View style={styles.navigationButton}>
-                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('AcompanharAntecedentes')}>
+                    <TouchableOpacity style={styles.continueContainer} onPress={() => navigation.navigate('AcompanharAntecedentes', params)}>
                         <Text style={styles.continueText}>Continuar</Text>
                         <MaterialCommunityIcons style={styles.continueIcon} name="chevron-right" color={'#FCFCFF'} size={iconSize} />
                     </TouchableOpacity>

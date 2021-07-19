@@ -4,17 +4,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
     placeholder: string;
-    searchQuery: string;
-    setSearchQuery?: Dispatch<SetStateAction<string>>;
+    setSearchQuery: Dispatch<SetStateAction<string>>;
 }
 
-export default function SearchBar({placeholder, searchQuery, setSearchQuery}: Props) {
+export default function SearchBar({placeholder, setSearchQuery}: Props) {
     return(
         <Container>
             <InputSearch
                 placeholder={placeholder}
-                value={searchQuery}
-                onChangeText={setSearchQuery}
+                onChangeText={(e) => {setSearchQuery(e)}}
             >
             </InputSearch>
             <Icon name="search" size={20}/>

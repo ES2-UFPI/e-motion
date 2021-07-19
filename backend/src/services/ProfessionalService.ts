@@ -5,14 +5,16 @@ import { UserService } from './UserService';
 
 interface ProfessionalInterface {
     name: string;
+    nickname?: string;
     crm_crp: string;
     speciality: string;
     association_code?: string;
     user_id: string;
 }
 
-interface UpdateClientInterface {
+interface UpdateProfessionalInterface {
     name?: string;
+    nickname?: string;
     crm_crp?: string;
     speciality?: string;
     association_code?: string;
@@ -33,9 +35,18 @@ class ProfessionalService {
 
     async getClients(professional_id: string): Promise<Client[]>{
 
-        const clients = await this.clientRepository.find({where: { professional_id: professional_id }, relations:['user']});
-
-        return clients;
+        const clients = await this.clientRepository.find({
+            where:{professional_id},
+            relations:['user']
+        });
+     
+        return clients.map((client)=>{ return {
+            ...client,
+            user:{
+                ...client.user,
+                password:""
+            }
+        }});
     }
 
     async createProfessional({ name, crm_crp, speciality, user_id, association_code }: ProfessionalInterface) {
@@ -50,10 +61,14 @@ class ProfessionalService {
 
     }
 
-    async update({ name, crm_crp, speciality, association_code, email, password, id }: UpdateClientInterface) {
+    async update({ name, nickname, crm_crp, speciality, association_code, email, password, id }: UpdateProfessionalInterface) {
 
-        const professional = await this.professionalRepository.findOne({ where: [{ id }], relations: ['user'] })
-        const professional_new_values = { name, crm_crp, speciality, association_code }
+        const professional = await this.professionalRepository.findOne({ 
+            where:{id},
+            relations: ['user'] 
+        })
+
+        const professional_new_values = { name, nickname, crm_crp, speciality, association_code }
 
         if (professional) {
             await this.professionalRepository.save({
@@ -82,6 +97,13 @@ class ProfessionalService {
         else {
             throw new Error("Profissional não encontrado!")
         }
+    }
+
+    async getByCode(professional_code) {
+        const professional = await getRepository(Professional).findOne({where: {association_code: professional_code}});
+        if(professional)
+            return professional.id;
+        throw new Error('Profissional não encontrado.');
     }
 }
 

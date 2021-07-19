@@ -30,8 +30,10 @@ test("store a Client and fetch it", async () => {
       name: "Joe",
       email:"joe2@gmail.com",
       phone:"(86)8988-8989",
+      nickbame:"joezinho",
       password:"doidinho123",
-      type:0
+      type:0,
+      avatar: 1
   }
 
   const userService = new UserService();
@@ -54,8 +56,10 @@ test("store a Client and update it", async () => {
       name: "Joe",
       email:"joe2@gmail.com",
       phone:"(86)8988-8989",
+      nickbame:"joezinho",
       password:"doidinho123",
-      type:0
+      type:0,
+      avatar: 1
   }
 
   const userService = new UserService();

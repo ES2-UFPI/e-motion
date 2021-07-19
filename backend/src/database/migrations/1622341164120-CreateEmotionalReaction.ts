@@ -22,7 +22,7 @@ export class CreateEmotionalReaction1622341164120 implements MigrationInterface 
                     generationStrategy: 'uuid'
 
                 },
-                {name:"title",type:"varchar",length:'150',default:"'(Sem nome)'"},
+                {name:"title",type:"varchar",length:'150',default:"''"},
 
                 {name:"emotions",type:"varchar",length:'200',default:"''"},
 

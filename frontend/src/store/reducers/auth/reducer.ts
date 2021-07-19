@@ -1,6 +1,5 @@
 const INITIAL_STATE = {
-    accessToken: '',
-    refreshToken: ''
+    accessToken: ''
 };
 
 const auth = (state = INITIAL_STATE, action: any) => {
@@ -9,8 +8,12 @@ const auth = (state = INITIAL_STATE, action: any) => {
         case `${baseAction}SET_TOKEN`:
             return {
                 ...state,
-                accessToken: action.payload.auth.accessToken || "",
-                refreshToken: action.payload.auth.refreshToken || ""
+                accessToken: action.payload.tokens.accessToken || "",
+            };
+        case `${baseAction}CLEAR_TOKEN`:
+            return {
+                ...state,
+                ...INITIAL_STATE
             };
         default:
             return state;

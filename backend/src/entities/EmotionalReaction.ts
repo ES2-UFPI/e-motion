@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne,} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, CreateDateColumn,} from 'typeorm';
 import { Client } from './Client';
 
   @Entity("emotional_reactions") 
@@ -60,6 +60,9 @@ import { Client } from './Client';
 
     @Column({default:""})
     wdyd_or_avoid_after_tb:string;
+
+    @CreateDateColumn()
+    data_registro: string;
       
     @Column()
     client_id:string;

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    ActivityIndicator
 } from 'react-native';
 import { Dimensions } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AxiosError, AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../store/actions';
+import api from '../../services/api';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const iconColor = '#212325';
@@ -17,10 +22,50 @@ export default function EditProfile({ navigation, route }: any) {
 
     const { user } = route.params;
 
-    const [nome, onChangeNome] = useState(user.isProfessional ? user.professional.name : user.client.name);
-    const [telefone, onChangeTelefone] = useState(user.isProfessional ? user.professional.phone : user.client.phone);
+    const [loading, setLoading] = useState(false);
+
+    //Todo usuário tem
+    const [name, onChangeNome] = useState(user.name);
+    const [nickname, onChangeNickname] = useState(user.nickname);
     const [email, onChangeEmail] = useState(user.email);
-    const [endereco, onChangeEndereco] = useState("");
+
+    //Apenas cliente tem
+    const [telefone, onChangeTelefone] = useState(!(user.type === 1) ? user.phone : "");
+
+    //Apenas profissional tem speciality crm_crp
+    const [speciality, onChangeSpeciality] = useState(user.type === 1 ? user.speciality : "");
+    const [crm_crp, onChangeCrm_crp] = useState(user.type === 1 ? user.crm_crp : "");
+
+    const dispatch = useDispatch();
+
+    async function updateUserInformation() {
+        try {
+            setLoading(true);
+            const data = {
+                name: name,
+                nickname: nickname,
+                crm_crp: crm_crp,
+                speciality: speciality,
+            }
+            api.put('professionals', data)
+                .then((res: AxiosResponse) => {
+                    dispatch(updateUser({
+                         name: data.name,
+                         nickname: data.nickname,
+                         speciality: data.speciality,
+                         crm_crp: data.crm_crp,
+                     }));
+                    navigation.goBack()
+                })
+                .catch((err: AxiosError) => console.log(err.message));
+
+            setLoading(false);
+        }
+        catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -29,24 +74,9 @@ export default function EditProfile({ navigation, route }: any) {
                 <Text style={styles.goBackText}>Voltar</Text>
             </TouchableOpacity>
             <View style={styles.titleContainer} >
-                <Text style={styles.text}>{user.isProfessional ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
+                <Text style={styles.text}>{user.type === 1 ? 'Perfil Profissional' : 'Editar Perfil'}</Text>
             </View>
             <View style={styles.inputsContainer}>
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.input}
-                        onChangeText={onChangeNome}
-                        value={nome}
-                        placeholder='Nome'
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.input}
-                        onChangeText={onChangeTelefone}
-                        value={telefone}
-                        placeholder='Telefone'
-                        keyboardType='numeric'
-                    />
-                </View>
                 <View style={styles.inputContainer}>
                     <TextInput style={styles.input}
                         onChangeText={onChangeEmail}
@@ -55,17 +85,50 @@ export default function EditProfile({ navigation, route }: any) {
                         editable={false}
                     />
                 </View>
-                {user.isProfessional ? <View style={styles.inputContainer}>
+                <View style={styles.inputContainer}>
                     <TextInput style={styles.input}
-                        onChangeText={onChangeEndereco}
-                        value={endereco}
-                        placeholder='Endereço'
+                        onChangeText={onChangeNome}
+                        value={name}
+                        placeholder='Nome'
                     />
-                </View> : <></>}
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>Salvar Alterações</Text>
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input}
+                        onChangeText={onChangeNickname}
+                        value={nickname}
+                        placeholder='Apelido'
+                    />
+                </View>
+                {user.type === 1 ?
+                    <View>
+                        <View style={styles.inputContainer}>
+                            <TextInput style={styles.input}
+                                onChangeText={onChangeSpeciality}
+                                value={speciality}
+                                placeholder='Especialidade'
+                            />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <TextInput style={styles.input}
+                                onChangeText={onChangeCrm_crp}
+                                value={crm_crp}
+                                placeholder='CRM/CRP'
+                            />
+                        </View>
+                    </View>
+                    :
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.input}
+                            onChangeText={onChangeTelefone}
+                            value={telefone}
+                            placeholder='Telefone'
+                            keyboardType='numeric'
+                        />
+                    </View>}
+                <TouchableOpacity style={styles.buttonContainer} onPress={() => updateUserInformation()} >
+                    {loading ? <ActivityIndicator size={SCREEN_WIDTH * 0.1} color="#fad2d2" /> : <Text style={styles.buttonText}>Salvar Alterações</Text>}
                 </TouchableOpacity>
-            </View>
+            </View >
         </View >
     );
 }

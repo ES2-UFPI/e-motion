@@ -9,12 +9,15 @@ import {
     TextButton
 } from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const img = require('../../assets/home.png');
 
 const HomeClient = () => {
 
     const navigation = useNavigation();
+
+    const user = useSelector((state: any) => state.user);
 
     const navigateToRegistration = () => {
         navigation.navigate('Registration');
@@ -25,7 +28,7 @@ const HomeClient = () => {
         <Container>
             <ContainerMain>
                 <Title>
-                    Olá, Lulu!
+                    Olá, {user.nickname}!
                 </Title>
                 <Image source={img} resizeMode="contain"/>
                 <Content>

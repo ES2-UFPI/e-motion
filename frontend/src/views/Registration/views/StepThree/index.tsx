@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
     Container,
     ScrollView,
@@ -17,24 +17,31 @@ import Input from '../../../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import api from '../../../../services/api';
 import { AxiosResponse, AxiosError } from 'axios';
-
-interface Form {
-    what_happens_after_tb?: string
-    wdyd_when_tb_occurs?: string
-    wd_other_people_do_when_tb_occurs?: string
-    what_changes_after_tb_occurs?: string
-    wd_you_get_after_tb?: string
-}
+import { EmotionalReaction } from '../../../../models/emotionalReaction';
 
 const RegistrationStepThree = (props: any) => {
 
     const { id } = props.route.params;
 
-    const [formInput, setFormInput] = useState<Form>();
+    const [formInput, setFormInput] = useState<EmotionalReaction>();
+
+    const loadEmotionalReaction = async () => {
+        try {
+            const response = await api.get(`reactions/${id}`);
+            const emotionalReaction: EmotionalReaction  = response?.data['emotionalReaction'];
+            setFormInput({ ...formInput, ...emotionalReaction });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        loadEmotionalReaction();
+    }, []);
 
     const handleConfirmation = () => {
-        api.post(`reactions/update/${id}`, formInput) 
-            .then((res: AxiosResponse) => {console.log(res.data.message); navigateToHome()})
+        api.put(`reactions/${id}`, formInput) 
+            .then((res: AxiosResponse) => navigateToHome())
             .catch((err: AxiosError) => console.log(err.message));
     }
 
