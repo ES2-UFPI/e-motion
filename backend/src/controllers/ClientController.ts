@@ -29,6 +29,7 @@ class ClientController {
             return response.status(200).json({ accessToken: userInformations.accessToken});
 
         } catch (error) {
+            console.log(error)
             return response.status(400).json({ message: error.message });
         }
     }
