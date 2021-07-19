@@ -13,17 +13,17 @@ import {
     TextButtonOutline,
     TextError
 } from './styles';
-import Input from '../../components/Input';
-import api from '../../services/api';
+import Input from '../../../../components/Input';
+import api from '../../../../services/api';
 import { useNavigation } from '@react-navigation/native';
-import { GlobalContext } from '../../context/GlobalSnackbar';
+import { GlobalContext } from '../../../../context/GlobalSnackbar';
 import { ActivityIndicator } from 'react-native-paper';
 
-const background = require('../../assets/background.png');
-const logo = require('../../assets/logo-with-name.png');
-const professional = require('../../assets/professional.png')
+const background = require('../../../../assets/background.png');
+const logo = require('../../../../assets/logo-with-name.png');
+const professional = require('../../../../assets/professional.png');
 
-const VincularProfissional = (props: any) => {
+const ToBind = (props: any) => {
 
     const params = props.route.params;
 
@@ -108,4 +108,4 @@ const VincularProfissional = (props: any) => {
     )
 }
 
-export default VincularProfissional;
+export default ToBind;

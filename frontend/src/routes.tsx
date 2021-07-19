@@ -12,7 +12,6 @@ import About from './views/about';
 import FAQ from './views/faq';
 import Authentication from './views/authentication';
 import SignUp from './views/SignUp';
-import VincularProfissional from './views/VincularProfissional';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -30,7 +29,6 @@ export default function Routes() {
         {
           !auth.accessToken ?
             <>
-              <Stack.Screen name='VincularProfissional' component={VincularProfissional} />
               <Stack.Screen name='Authentication' component={Authentication} />
               <Stack.Screen name='SignUp' component={SignUp} />
             </>
