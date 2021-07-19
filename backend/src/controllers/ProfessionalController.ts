@@ -9,7 +9,6 @@ class ProfessionalController {
         try {
 
             const user = request.app.get('user');
-            console.log(user)
             if(!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
 
             const professionalService = new ProfessionalService();
