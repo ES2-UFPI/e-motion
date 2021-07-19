@@ -71,7 +71,6 @@ export default function RecordsList({navigation}:any) {
 
     useEffect(() => {
         getRecordsFromUser()
-        console.log(refresh)
     }, [refresh,isFocused])
 
 

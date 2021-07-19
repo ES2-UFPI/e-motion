@@ -35,13 +35,11 @@ class ClientController {
 
     async update(request: Request, response: Response) {
         try {
-            console.log('1');
             const user = request.app.get('user');
 
             if (!user?.id) return response.status(400).json({ erro: 'Usuário não autenticado' });
 
             const { name, phone, email, password, professional_code, avatar, nickname } = request.body as ClientInterface;
-            console.log(name, phone, email, password, professional_code, avatar, nickname);
             const professionalService = new ProfessionalService();
 
             let professional_id = null;

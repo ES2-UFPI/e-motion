@@ -30,8 +30,6 @@ export default function Profile({ navigation }: any) {
 
     const user = useSelector((state: any) => state.user)
 
-    useEffect(() => {console.log(user)}, [])
-
     function navigateToGenerateCode() {
         navigation.navigate('GenerateAssociationCode')
     }
