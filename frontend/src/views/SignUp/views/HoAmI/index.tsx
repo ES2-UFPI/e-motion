@@ -24,8 +24,10 @@ const Logo = require('../../../../assets/logo-with-name.png');
 
 interface RadioButtons{
     name:string;
+    id:string;
     isSelected:boolean;
-    onSelect:()=>void;
+    onSelect:(id?:string)=>void;
+    isAll?:boolean;
 }
 
 interface InputUser{
@@ -149,11 +151,13 @@ const HoAmI = () => {
 
     const [typeOfUser, setTypeOfUser] = useState<RadioButtons[]>([
         {
+            id:"ffsdfds",
             name:"cliente",
             isSelected:true,
             onSelect:setUserUserType
         },
         {
+            id:"ff555sdfds",
             name:"profissional",
             isSelected:false,
             onSelect:setUserUserType

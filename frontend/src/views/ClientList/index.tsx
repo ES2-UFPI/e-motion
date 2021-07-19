@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
 import { Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 import SearchBarComponent from '../../components/SearchBar';
 import ClientCardComponent from '../../components/ClientCard';
@@ -23,10 +23,19 @@ const ClientList = (props: any) => {
     const [filteredClients, setFilteredClients] = useState<Client[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const isFocused = useIsFocused();
+    const [refresh, setRefresh] = useState<boolean>(false);
 
     const dimensions = Dimensions.get('window');
 
     const navigation = useNavigation();
+
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+                setRefresh(!refresh);           
+        });
+
+    }, [navigation]);
 
     async function getClients() {
         try {
@@ -57,7 +66,7 @@ const ClientList = (props: any) => {
 
     useEffect(() => {
         getClients();
-    }, [searchQuery]);
+    }, [searchQuery,isFocused]);
 
     function onPressClientCard(id:string){
         navigation.navigate('Acompanhamento', clients.filter(user => user['id'] === id)[0]);

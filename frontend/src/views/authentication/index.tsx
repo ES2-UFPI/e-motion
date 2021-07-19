@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
     Container,
     LogoContainer,
@@ -15,8 +15,9 @@ import {
     SignUpButton,
     SignUpText
 } from './styles';
+import Alert from '../../components/AlertConfirm';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Dimensions, ScrollView, Alert } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import { useState } from 'react';
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
@@ -36,6 +37,9 @@ const Authentication = () => {
     const [password, setPassword] = useState<string>('');
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const alertRef = useRef<any>();
+    const [alertErrorMessage, setAlertErrorMessage] = useState<string>("");
 
     const navigation = useNavigation();
 
@@ -65,7 +69,12 @@ const Authentication = () => {
                 }));
                 setIsLoading(false);
             })
-            .catch((err: AxiosError) => { Alert.alert(err.response?.data.message); setIsLoading(false) });
+            .catch((err: AxiosError) => { 
+                setAlertErrorMessage(err.response?.data.message ? err.response?.data.message : "Verifique sua conexão com a internet!" );
+                console.log(err)
+                setIsLoading(false) 
+                alertRef.current.show();
+            });
     }
     return (
         <Container source={background} resizeMode="contain">
@@ -124,11 +133,18 @@ const Authentication = () => {
                             Todos os direitos reservados
                         </CopyrightText>
                         <CopyrightText>
-                            &copy; SemNome
+                            &copy; Core Tech
                         </CopyrightText>
                     </CopyrightBox>
                 </InputsContainer>
             </ScrollView>
+            <Alert
+                ref={alertRef}
+                title="Ops, um erro"
+                content={alertErrorMessage}
+                textButton="Ok"
+                onConfirm={()=>alertRef.current.close()}
+            />
         </Container>
     )
 }

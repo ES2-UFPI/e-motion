@@ -14,7 +14,7 @@ const userController = new UserController();
 routes.post("/professionals",professionalController.create);
 routes.put("/professionals",professionalController.update);
 routes.get("/professionals/clients", professionalController.getClients);
-routes.get("/professionals/client-reactions/:id", professionalController.getClientReactions);
+routes.get("/professionals/client-reactions", professionalController.getClientReactions);
 
 routes.post("/clients", clientController.create);
 routes.put("/clients", clientController.update);

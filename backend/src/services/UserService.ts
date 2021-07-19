@@ -120,6 +120,8 @@ class UserService {
 
     async login(email: string, password: string) {
 
+        if(email === "" || password === "") throw new Error("Dados Vazios!");
+
         const userRepository = await getRepository(User);
 
         const user = await userRepository.findOneOrFail({ email })
@@ -140,6 +142,8 @@ class UserService {
             const professionalRepository = getRepository(Professional);
             specificUser = await professionalRepository.findOne({ where: { user_id: user.id } });
         }
+
+        console.log('specific: ', specificUser.user_id)
 
         const accessToken = await jsonwebtoken.sign({ id: specificUser.id }, process.env.JWT_SECRET || 'secret');
 

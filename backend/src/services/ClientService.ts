@@ -36,8 +36,9 @@ class ClientService {
 
     async update({ id, email, password, name, professional_id, phone, nickname, avatar }: UpdateClientInterface) {
 
-        console.log(avatar, nickname)
-        const client = await this.clientRepository.findOne({where: { id }, relations: ['user']})
+        const client = await this.clientRepository.findOne({ 
+            where:{id}
+            ,relations: ['user'] })
             
         const client_new_values = { name, professional_id, phone, nickname }
 
