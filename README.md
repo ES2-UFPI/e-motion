@@ -1,14 +1,14 @@
 # e-motion
 
 <h1 align="center">
-    <img alt="NextLevelWeek" title="#NextLevelWeek" src="https://user-images.githubusercontent.com/63355595/126077115-dc4f91b1-01e1-43ae-abfc-0bffa278ef4a.png" width="200"/>
+    <img alt="logo" title="logo" src="https://user-images.githubusercontent.com/63355595/126077115-dc4f91b1-01e1-43ae-abfc-0bffa278ef4a.png" width="200"/>
 </h1>
 
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/ES2-UFPI/e-motion?color=%2304D361">
 
 
-  <a href="https://github.com/SamuelSSan28guula-mobile/commits/master">
+  <a href="https://github.com/ES2-UFPI/e-motion/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ES2-UFPI/e-motion">
   </a>
 
@@ -34,7 +34,7 @@
 ## 📝 Design do Projeto
 
 <h1 align="center">
-    <img alt="NextLevelWeek" title="#NextLevelWeek" src="https://user-images.githubusercontent.com/63355595/126077180-eee36013-3030-4fc0-b987-f57357db5aa3.png"/>
+    <img alt="projeto" title="projeto" src="https://user-images.githubusercontent.com/63355595/126077180-eee36013-3030-4fc0-b987-f57357db5aa3.png"/>
 </h1>
 
 <p align="justify">
