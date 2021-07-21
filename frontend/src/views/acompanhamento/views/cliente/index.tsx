@@ -54,7 +54,7 @@ const Client = (props: any) => {
     const navigation = useNavigation();
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
-    const [graphData, setGraphData] = useState<number[]>([1,2,2,0,5,1,1,1]);
+    const [graphData, setGraphData] = useState<number[]>([1,2,2,0,1,1,1,1]);
     const [loading, setLoading] = useState<boolean>(true);
     const [loading2, setLoading2] = useState<boolean>(true);
     const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
@@ -161,7 +161,7 @@ const Client = (props: any) => {
     useEffect(() => {
         //faz o processamento e transformação dos dadso para o gráfico
         
-        setGraphData(process_data())
+        //setGraphData(process_data())
         setRecordsFilteredEmotion(undefined)
 
     }, [recordsFiltered,records,loading2]);
@@ -206,7 +206,7 @@ const Client = (props: any) => {
 
     function getWeekDates() {
         let now = new Date();
-        let dayOfWeek = 7; //0-6
+        let dayOfWeek = now.getDay(); //0-6
         let numDay = now.getDate();
       
         let start = new Date(now); //copy
