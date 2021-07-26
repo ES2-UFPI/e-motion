@@ -109,7 +109,6 @@ const Client = (props: any) => {
 
            if(data.length < 1){
                setRecords(undefined)
-               setLoading(false);
                 return
            }
            
@@ -160,10 +159,8 @@ const Client = (props: any) => {
 
     useEffect(() => {
         //faz o processamento e transformação dos dadso para o gráfico
-        
-        //setGraphData(process_data())
+        setGraphData(process_data())
         setRecordsFilteredEmotion(undefined)
-
     }, [recordsFiltered,records,loading2]);
 
     function onPressCard(id_record: string) {
@@ -197,9 +194,6 @@ const Client = (props: any) => {
                 
                  return filtro
              })
-
-             
-
              setFilter(clone)
          }
     }
@@ -239,6 +233,7 @@ const Client = (props: any) => {
     }
 
     useEffect(() => {
+        setLoading(true)
         const filter_selected = filter.filter((filtro) => filtro.isSelected)[0];
         const today = new Date().getTime(); 
 
@@ -268,6 +263,8 @@ const Client = (props: any) => {
         }else if(filter_selected.id === "4"){
             setRecordsFiltered(records);  
         }
+        setTimeout(function(){ setLoading(false) }, 100);
+        
     }, [filter])
 
     function onPressDataPoint(index:number){
@@ -312,19 +309,22 @@ const Client = (props: any) => {
                             <HeaderBaseText style={{ fontSize: 12, lineHeight: 11, margin: 2 }}>{params.phone}</HeaderBaseText>
                         </Column>
                     </Row>
-                    <Row>
+                    {/*<Row>
                         <IconContainer><FeatherIcon name="link" style={{ color: '#FCFCFF', fontSize: 20 }} /></IconContainer>
                         <Column>
                             <HeaderBaseText style={{ fontSize: 14, lineHeight: 14, margin: 2 }}>Consultório Virtual</HeaderBaseText>
                             <HeaderBaseText style={{ fontSize: 12, lineHeight: 11, margin: 2 }}>Ter/Qui 14:30h</HeaderBaseText>
                         </Column>
-                    </Row>
+                    </Row>*/}
                 </ContactContainer>
             </HeaderContainer>
             <RegistersContainer>
                 <Info>
                     <RegistersBaseText style={{ fontSize: 14, lineHeight: 18, fontWeight: 'normal', color: '#292B2D' }}>Registros</RegistersBaseText>
-                    <RegistersBaseText style={{ fontSize: 11, lineHeight: 14, fontWeight: 'bold', color: '#91919F' }}>Total 10</RegistersBaseText>
+                    <RegistersBaseText style={{ fontSize: 11, lineHeight: 14, fontWeight: 'bold', color: '#91919F' }}>
+                        Total {recordsFilteredEmotion !== undefined ? recordsFilteredEmotion.length : 
+                        recordsFiltered !== undefined ? recordsFiltered.length :0}
+                    </RegistersBaseText>
                 </Info>
                 
 
