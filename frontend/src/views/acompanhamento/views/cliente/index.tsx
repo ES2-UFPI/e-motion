@@ -52,6 +52,8 @@ const Client = (props: any) => {
 
     const params = props.route.params;
     const navigation = useNavigation();
+    
+    const { width } = Dimensions.get('window');
 
     const [records, setRecords] = useState<Record[]|undefined>([]);
     const [graphData, setGraphData] = useState<number[]>([1,2,2,0,1,1,1,1]);
@@ -305,8 +307,8 @@ const Client = (props: any) => {
                     <Row>
                         <IconContainer><FeatherIcon name="file-text" style={{ color: '#FCFCFF', fontSize: 24 }} /></IconContainer>
                         <Column>
-                            <HeaderBaseText style={{ fontSize: 14, lineHeight: 14, margin: 2 }}>{params.user.email}</HeaderBaseText>
-                            <HeaderBaseText style={{ fontSize: 12, lineHeight: 11, margin: 2 }}>{params.phone}</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize: width/25, lineHeight: width/25, margin: 2 }}>{params.user.email}</HeaderBaseText>
+                            <HeaderBaseText style={{ fontSize:  width/30, lineHeight: width/32, margin: 2 }}>{params.phone}</HeaderBaseText>
                         </Column>
                     </Row>
                     {/*<Row>
@@ -320,8 +322,8 @@ const Client = (props: any) => {
             </HeaderContainer>
             <RegistersContainer>
                 <Info>
-                    <RegistersBaseText style={{ fontSize: 14, lineHeight: 18, fontWeight: 'normal', color: '#292B2D' }}>Registros</RegistersBaseText>
-                    <RegistersBaseText style={{ fontSize: 11, lineHeight: 14, fontWeight: 'bold', color: '#91919F' }}>
+                    <RegistersBaseText style={{ fontSize:  width/25, lineHeight:  width/22, fontWeight: 'normal', color: '#292B2D' }}>Registros</RegistersBaseText>
+                    <RegistersBaseText style={{ fontSize:  width/30, lineHeight:  width/25, fontWeight: 'bold', color: '#91919F' }}>
                         Total {recordsFilteredEmotion !== undefined ? recordsFilteredEmotion.length : 
                         recordsFiltered !== undefined ? recordsFiltered.length :0}
                     </RegistersBaseText>
