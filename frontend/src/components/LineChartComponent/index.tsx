@@ -65,7 +65,7 @@ const LineChartComponent = ({labels, data,onPressDataPoint}: LineChartIterface) 
             marginRight:0,
             paddingRight:Dimensions.get('window').width/10
           }}
-          onDataPointClick={(p) => {console.log(p);onPressDataPoint(p.index)}}
+          onDataPointClick={(p) => {onPressDataPoint(p.index)}}
         />
 
     )

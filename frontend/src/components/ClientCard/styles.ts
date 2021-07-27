@@ -18,6 +18,7 @@ export const Container = styled.TouchableOpacity`
 export const Row = styled.View`
     width: 100%;
     display: flex;
+    
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -35,17 +36,16 @@ export const Name = styled.Text`
     font-style: normal;
     font-weight: normal;
     font-size: ${width*0.05}px;
-    line-height: 23px;
+    line-height: ${width/25}px;
 
     color: #161719;
     padding-bottom: ${width*0.02}px;
 `
 
 export const ContactInformations = styled.Text`
-    font-style: normal;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 18px;
+    font-size:  ${width/25}px;
+    line-height: ${width/20}px;
 
     color: #91919F;
     padding-bottom: ${width*0.01}px;
